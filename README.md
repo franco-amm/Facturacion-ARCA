@@ -19,9 +19,9 @@ Open http://127.0.0.1:8002/.
 
 ## Deploy to Render with HTTPS
 
-1. Create a new **public GitHub repository** using the contents of this folder
-   only. Do not publish the parent project repository.
-2. In Render, create a Blueprint from that GitHub repository and use the
+1. This public repository is already the isolated demo package. Do not connect
+   or publish the parent project repository.
+2. In Render, create a Blueprint from this GitHub repository and use the
    included `render.yaml`.
 3. Wait for the deployment and open the HTTPS URL assigned by Render.
 4. Confirm `/health`, the demo UI, filters, and CSV/XLSX downloads work.
