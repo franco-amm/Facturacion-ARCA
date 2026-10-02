@@ -17,16 +17,20 @@ uvicorn demo_app:app --host 127.0.0.1 --port 8002
 
 Open http://127.0.0.1:8002/.
 
-## Deploy to Render with HTTPS
+## Live demo
 
-1. This public repository is already the isolated demo package. Do not connect
-   or publish the parent project repository.
-2. In Render, create a Blueprint from this GitHub repository and use the
-   included `render.yaml`.
-3. Wait for the deployment and open the HTTPS URL assigned by Render.
-4. Confirm `/health`, the demo UI, filters, and CSV/XLSX downloads work.
-5. Confirm no ARCA environment variables, certificates, or private data were
-   added in Render settings or repository files.
+The demo is deployed on Render with HTTPS:
+
+**https://arca-billing-portfolio-demo.onrender.com/**
+
+It is served by the Blueprint in this repository. The free instance may sleep
+after inactivity; the first request after that can take around 50 seconds.
+
+## Deployment maintenance
+
+The Render service uses the Dockerfile and `render.yaml` in this repository.
+Keep this repository limited to the demo package. Do not add the parent project,
+ARCA credentials, `.env`, certificates, or production data.
 
 The container build includes only `demo_app.py` and `static/demo/`. It has no
 ARCA credentials, `.env`, production API, SQLite database, or write endpoint.
