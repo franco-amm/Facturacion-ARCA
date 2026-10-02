@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f6f3">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Demo de facturación | Fiscaldesk</title>
+  <link rel="stylesheet" href="/assets/demo.css">
+  <script src="/assets/demo.js" defer></script>
+</head>
+<body>
+  <div class="demo-shell">
+    <aside class="sidebar" aria-label="Navegación">
+      <a class="brand" href="/" aria-label="Fiscaldesk demo, inicio">
+        <span class="brand-mark" aria-hidden="true">F</span>
+        <span class="brand-name">fiscal<span>desk</span></span>
+      </a>
+      <div class="nav-label">DEMO DE PRODUCTO</div>
+      <nav><a class="nav-item active" href="#history"><span class="nav-indicator" aria-hidden="true"></span>Comprobantes</a></nav>
+      <div class="sidebar-bottom"><span class="demo-dot" aria-hidden="true"></span><div><strong>Modo demostración</strong><small>Sin conexión fiscal</small></div></div>
+    </aside>
+
+    <main class="main-content" id="history">
+      <header class="page-header">
+        <div>
+          <p class="eyebrow">FACTURACIÓN ELECTRÓNICA <span class="eyebrow-rule"></span> HISTORIAL</p>
+          <h1>Comprobantes</h1>
+          <p class="page-subtitle">Consulta y seguimiento de comprobantes emitidos.</p>
+        </div>
+        <span class="environment-badge"><i></i> DEMO</span>
+      </header>
+
+      <section class="demo-disclaimer" role="note" aria-label="Aviso de demostración">
+        <span class="disclaimer-mark" aria-hidden="true">i</span>
+        <div><strong>Demostración interactiva</strong><p>Datos sintéticos. No se conecta a ARCA y no emite comprobantes.</p></div>
+        <span class="sample-stamp">SOLO MUESTRA</span>
+      </section>
+
+      <section class="account-strip" aria-label="Cuenta de demostración">
+        <div class="account-item"><span class="account-label">EMISOR</span><strong id="issuerName">Cargando demo…</strong></div>
+        <span class="strip-divider" aria-hidden="true"></span>
+        <div class="account-item"><span class="account-label">IDENTIFICADOR</span><strong id="issuerCuit">—</strong></div>
+        <span class="strip-divider" aria-hidden="true"></span>
+        <div class="account-item"><span class="account-label">PUNTO DE VENTA</span><strong id="pointOfSale">—</strong></div>
+        <div class="account-count"><strong id="totalCount">—</strong><span>ejemplos</span></div>
+      </section>
+
+      <section class="demo-status" aria-label="Datos de muestra">
+        <div class="status-mark" aria-hidden="true">✓</div>
+        <div><h2>Conjunto de muestra cargado</h2><p id="demoMessage">Los ejemplos incluyen facturas y notas asociadas.</p></div>
+        <button class="button button-secondary" id="reloadDemo" type="button"><span aria-hidden="true">↻</span> Recargar demo</button>
+      </section>
+
+      <section class="filter-section" aria-label="Filtros de comprobantes">
+        <div class="filter-heading">
+          <div><h2>Historial de emisión</h2><p id="resultSummary">Cargando comprobantes…</p></div>
+          <label class="search-field"><span class="search-icon" aria-hidden="true">⌕</span><span class="sr-only">Buscar comprobante, receptor o CAE demo</span><input id="searchInput" type="search" placeholder="Buscar comprobante, receptor o CAE" autocomplete="off"><kbd>⌘ K</kbd></label>
+        </div>
+
+        <form class="filter-bar" id="filterForm">
+          <label class="date-control"><span>Desde</span><input id="fromDate" name="from_date" type="date" required></label>
+          <span class="date-separator" aria-hidden="true">a</span>
+          <label class="date-control"><span>Hasta</span><input id="toDate" name="to_date" type="date" required></label>
+          <span class="filter-divider" aria-hidden="true"></span>
+          <fieldset class="type-filters"><legend class="sr-only">Tipos de comprobante</legend>
+            <label class="type-option"><input type="checkbox" name="types" value="11" checked><span>Factura C</span></label>
+            <label class="type-option"><input type="checkbox" name="types" value="12" checked><span>ND C</span></label>
+            <label class="type-option"><input type="checkbox" name="types" value="13" checked><span>NC C</span></label>
+          </fieldset>
+          <button class="button button-secondary apply-button" type="submit">Aplicar filtros</button>
+        </form>
+
+        <div class="table-toolbar">
+          <div class="table-meta"><span class="demo-live-dot" aria-hidden="true"></span><span>Datos ficticios</span><span class="meta-divider">/</span><span id="visibleCount">0 comprobantes</span></div>
+          <div class="export-actions"><button class="button button-quiet" id="csvButton" type="button" disabled><span aria-hidden="true">↓</span> CSV</button><button class="button button-export" id="xlsxButton" type="button" disabled><span aria-hidden="true">↓</span> Exportar Excel</button></div>
+        </div>
+
+        <div class="table-wrap" id="tableWrap">
+          <table><thead><tr><th scope="col">COMPROBANTE</th><th scope="col">FECHA</th><th scope="col">RECEPTOR</th><th scope="col" class="amount-cell">IMPORTE</th><th scope="col">CAE DE MUESTRA</th><th scope="col">ESTADO</th><th scope="col"><span class="sr-only">Detalle</span></th></tr></thead><tbody id="invoiceRows"></tbody></table>
+          <div class="table-state" id="tableState" hidden></div>
+        </div>
+        <footer class="table-footer"><span id="footerCount">0 resultados</span><span>Conjunto de datos ficticio</span></footer>
+      </section>
+    </main>
+  </div>
+
+  <dialog class="detail-dialog" id="detailDialog" aria-labelledby="detailTitle">
+    <div class="dialog-head"><div><p class="eyebrow">DETALLE · DATOS DE MUESTRA</p><h2 id="detailTitle">Comprobante demo</h2></div><button class="icon-button" id="closeDialog" type="button" aria-label="Cerrar detalle">×</button></div>
+    <div id="detailContent"></div>
+  </dialog>
+</body>
+</html>

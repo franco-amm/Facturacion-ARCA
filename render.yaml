@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: arca-billing-portfolio-demo
+    runtime: docker
+    plan: free
+    healthCheckPath: /health
+    autoDeploy: false
