@@ -1,0 +1,157 @@
+{
+  "escala": {
+    "vigencia": "2026-08-01",
+    "B": 17595182.74
+  },
+  "periodo": {
+    "desde": "2026-01-01",
+    "corte": "2026-12-31",
+    "hasta": "2026-09-30",
+    "cerrado": false,
+    "recategorizacion": "enero 2027"
+  },
+  "contribuyentes": [
+    {
+      "cuit": "20000000011",
+      "nombre": "Ana Muestra",
+      "categoria_padron": "B",
+      "categoria_texto": "B LOCACIONES DE SERVICIOS",
+      "es_monotributista": true,
+      "actividad": "servicios",
+      "origen_actividad": "padron",
+      "consultado_el": "2026-09-30T08:00:00",
+      "facturacion_periodo": 9850000,
+      "origen_facturacion": "comprobantes emitidos (base local)",
+      "facturacion_cargada_el": null,
+      "tope": 17595182.74,
+      "uso": 0.5598123159930307,
+      "categoria_corresponde": "A",
+      "estado": "ok",
+      "alertas": [],
+      "error_padron": null
+    },
+    {
+      "cuit": "20000000029",
+      "nombre": "Bruno Ejemplo",
+      "categoria_padron": "C",
+      "categoria_texto": "C LOCACIONES DE SERVICIOS",
+      "es_monotributista": true,
+      "actividad": "servicios",
+      "origen_actividad": "padron",
+      "consultado_el": "2026-09-30T08:00:00",
+      "facturacion_periodo": 22700000,
+      "origen_facturacion": "carga manual",
+      "facturacion_cargada_el": null,
+      "tope": 24670494.31,
+      "uso": 0.9201274897357337,
+      "categoria_corresponde": "C",
+      "estado": "cercano",
+      "alertas": [
+        {
+          "tipo": "cerca_del_tope",
+          "nivel": "aviso",
+          "mensaje": "Lleva usado el 92% del tope de la categoría C en el período."
+        }
+      ],
+      "error_padron": null
+    },
+    {
+      "cuit": "27000000035",
+      "nombre": "Carla Demo",
+      "categoria_padron": "B",
+      "categoria_texto": "B LOCACIONES DE SERVICIOS",
+      "es_monotributista": true,
+      "actividad": "servicios",
+      "origen_actividad": "padron",
+      "consultado_el": "2026-09-30T08:00:00",
+      "facturacion_periodo": 19400000,
+      "origen_facturacion": "carga manual",
+      "facturacion_cargada_el": null,
+      "tope": 17595182.74,
+      "uso": 1.1025745106867815,
+      "categoria_corresponde": "C",
+      "estado": "excedido",
+      "alertas": [
+        {
+          "tipo": "excede_tope",
+          "nivel": "critico",
+          "mensaje": "Supera el tope de la categoría B (110%). Correspondería: C."
+        }
+      ],
+      "error_padron": null
+    },
+    {
+      "cuit": "20000000043",
+      "nombre": "Diego Ficticio",
+      "categoria_padron": "D",
+      "categoria_texto": "D VENTA DE COSAS MUEBLES",
+      "es_monotributista": true,
+      "actividad": "bienes",
+      "origen_actividad": "padron",
+      "consultado_el": "2026-09-30T08:00:00",
+      "facturacion_periodo": 12100000,
+      "origen_facturacion": "carga manual",
+      "facturacion_cargada_el": null,
+      "tope": 30628651.43,
+      "uso": 0.39505493827091426,
+      "categoria_corresponde": "B",
+      "estado": "ok",
+      "alertas": [
+        {
+          "tipo": "cambio_categoria",
+          "nivel": "aviso",
+          "mensaje": "El padrón cambió de categoría C a D (detectado 2026-09-30)."
+        }
+      ],
+      "error_padron": null
+    },
+    {
+      "cuit": "23000000058",
+      "nombre": "Elena Prueba",
+      "categoria_padron": "A",
+      "categoria_texto": "A LOCACIONES DE SERVICIOS",
+      "es_monotributista": true,
+      "actividad": "servicios",
+      "origen_actividad": "padron",
+      "consultado_el": "2026-09-30T08:00:00",
+      "facturacion_periodo": null,
+      "origen_facturacion": "carga manual",
+      "facturacion_cargada_el": null,
+      "tope": 12009410.45,
+      "uso": null,
+      "categoria_corresponde": null,
+      "estado": "sin_facturacion",
+      "alertas": [
+        {
+          "tipo": "sin_facturacion",
+          "nivel": "info",
+          "mensaje": "Falta la facturación del período para comparar contra el tope."
+        }
+      ],
+      "error_padron": null
+    }
+  ],
+  "alertas": [
+    {
+      "tipo": "excede_tope",
+      "nivel": "critico",
+      "mensaje": "Supera el tope de la categoría B (110%). Correspondería: C.",
+      "cuit": "27000000035",
+      "nombre": "Carla Demo"
+    },
+    {
+      "tipo": "cerca_del_tope",
+      "nivel": "aviso",
+      "mensaje": "Lleva usado el 92% del tope de la categoría C en el período.",
+      "cuit": "20000000029",
+      "nombre": "Bruno Ejemplo"
+    },
+    {
+      "tipo": "cambio_categoria",
+      "nivel": "aviso",
+      "mensaje": "El padrón cambió de categoría C a D (detectado 2026-09-30).",
+      "cuit": "20000000043",
+      "nombre": "Diego Ficticio"
+    }
+  ]
+}

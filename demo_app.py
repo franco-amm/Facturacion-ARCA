@@ -16,6 +16,7 @@ from starlette.responses import FileResponse, Response
 
 DEMO_DIR = Path(__file__).resolve().parent / "static" / "demo"
 DATA_PATH = DEMO_DIR / "demo-data.json"
+MONOTRIBUTO_PATH = DEMO_DIR / "monotributo-demo.json"
 EXPORT_FIELDS = [
     ("Fecha", "Fecha"),
     ("Tipo", "TipoDescripcion"),
@@ -74,6 +75,12 @@ def demo_summary() -> dict[str, Any]:
         "latest_issue_date": max((invoice["Fecha"] for invoice in invoices), default=None),
         "types": [11, 12, 13],
     }
+
+
+@app.get("/api/demo/monotributo")
+def demo_monotributo() -> dict[str, Any]:
+    """Tope y alertas de Monotributo calculados de antemano sobre contribuyentes ficticios."""
+    return json.loads(MONOTRIBUTO_PATH.read_text(encoding="utf-8"))
 
 
 @app.get("/api/demo/invoices")
