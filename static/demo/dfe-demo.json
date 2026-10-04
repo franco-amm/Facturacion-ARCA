@@ -1,0 +1,125 @@
+{
+  "fecha_muestra": "2026-10-02",
+  "clientes": [
+    {
+      "cuit": "20000000011",
+      "nombre": "Ana Muestra",
+      "politica": "detectar",
+      "ultima_consulta": "2026-10-02T08:00:00",
+      "total": 2,
+      "sin_ver": 1,
+      "urgentes": 1,
+      "error": null
+    },
+    {
+      "cuit": "20000000029",
+      "nombre": "Bruno Ejemplo",
+      "politica": "detectar",
+      "ultima_consulta": "2026-10-02T08:00:00",
+      "total": 1,
+      "sin_ver": 1,
+      "urgentes": 0,
+      "error": null
+    },
+    {
+      "cuit": "27000000035",
+      "nombre": "Carla Demo",
+      "politica": "detectar",
+      "ultima_consulta": "2026-10-02T08:00:00",
+      "total": 2,
+      "sin_ver": 2,
+      "urgentes": 1,
+      "error": null
+    },
+    {
+      "cuit": "20000000043",
+      "nombre": "Diego Ficticio",
+      "politica": "detectar",
+      "ultima_consulta": "2026-10-02T08:00:00",
+      "total": 0,
+      "sin_ver": 0,
+      "urgentes": 0,
+      "error": null
+    },
+    {
+      "cuit": "23000000058",
+      "nombre": "Elena Prueba",
+      "politica": "detectar",
+      "ultima_consulta": null,
+      "total": 0,
+      "sin_ver": 0,
+      "urgentes": 0,
+      "error": {
+        "tipo": "delegacion_faltante",
+        "mensaje": "El cliente todavía no delegó el servicio (muestra)."
+      }
+    }
+  ],
+  "comunicaciones": [
+    {
+      "id": "9001",
+      "cuit": "20000000011",
+      "asunto": "Intimación por declaración jurada omitida",
+      "organismo": "ARCA – Dirección General Impositiva (muestra)",
+      "publicada": "2026-10-01",
+      "fecha_limite": "2026-10-05",
+      "dias_para_limite": 3,
+      "tipo": "intimacion",
+      "urgencia": "alta",
+      "con_adjunto": true,
+      "vista": false
+    },
+    {
+      "id": "9004",
+      "cuit": "27000000035",
+      "asunto": "Requerimiento de información sobre ventas",
+      "organismo": "ARCA – Dirección General Impositiva (muestra)",
+      "publicada": "2026-09-30",
+      "fecha_limite": "2026-10-05",
+      "dias_para_limite": 3,
+      "tipo": "requerimiento",
+      "urgencia": "alta",
+      "con_adjunto": true,
+      "vista": false
+    },
+    {
+      "id": "9003",
+      "cuit": "20000000029",
+      "asunto": "Aviso de diferencias en la categoría declarada",
+      "organismo": "ARCA – Dirección General Impositiva (muestra)",
+      "publicada": "2026-09-29",
+      "fecha_limite": "2026-10-05",
+      "dias_para_limite": 3,
+      "tipo": "diferencias",
+      "urgencia": "media",
+      "con_adjunto": false,
+      "vista": false
+    },
+    {
+      "id": "9005",
+      "cuit": "27000000035",
+      "asunto": "Comunicación general del domicilio fiscal",
+      "organismo": "ARCA – Dirección General Impositiva (muestra)",
+      "publicada": "2026-10-02",
+      "fecha_limite": "2026-10-05",
+      "dias_para_limite": 3,
+      "tipo": "sin_clasificar",
+      "urgencia": "sin_clasificar",
+      "con_adjunto": false,
+      "vista": false
+    },
+    {
+      "id": "9002",
+      "cuit": "20000000011",
+      "asunto": "Mensaje informativo: novedades del régimen",
+      "organismo": "ARCA – Dirección General Impositiva (muestra)",
+      "publicada": "2026-09-18",
+      "fecha_limite": "2026-09-21",
+      "dias_para_limite": -11,
+      "tipo": "informativo",
+      "urgencia": "baja",
+      "con_adjunto": false,
+      "vista": true
+    }
+  ]
+}

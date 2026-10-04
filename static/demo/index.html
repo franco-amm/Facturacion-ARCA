@@ -7,7 +7,11 @@
   <meta name="robots" content="noindex, nofollow">
   <title>Demo de facturación | Fiscaldesk</title>
   <link rel="stylesheet" href="/assets/demo.css">
+  <link rel="stylesheet" href="/assets/monotributo-demo.css">
+  <link rel="stylesheet" href="/assets/dfe-demo.css">
   <script src="/assets/demo.js" defer></script>
+  <script src="/assets/monotributo-demo.js" defer></script>
+  <script src="/assets/dfe-demo.js" defer></script>
 </head>
 <body>
   <div class="demo-shell">
@@ -17,7 +21,7 @@
         <span class="brand-name">fiscal<span>desk</span></span>
       </a>
       <div class="nav-label">DEMO DE PRODUCTO</div>
-      <nav><a class="nav-item active" href="#history"><span class="nav-indicator" aria-hidden="true"></span>Comprobantes</a></nav>
+      <nav><a class="nav-item active" href="#history"><span class="nav-indicator" aria-hidden="true"></span>Comprobantes</a><a class="nav-item" href="#monotributo"><span class="nav-indicator" aria-hidden="true"></span>Monotributo</a><a class="nav-item" href="#dfe"><span class="nav-indicator" aria-hidden="true"></span>Domicilio fiscal</a></nav>
       <div class="sidebar-bottom"><span class="demo-dot" aria-hidden="true"></span><div><strong>Modo demostración</strong><small>Sin conexión fiscal</small></div></div>
     </aside>
 
@@ -81,6 +85,101 @@
           <div class="table-state" id="tableState" hidden></div>
         </div>
         <footer class="table-footer"><span id="footerCount">0 resultados</span><span>Conjunto de datos ficticio</span></footer>
+      </section>
+    </main>
+
+    <main class="main-content" id="monotributo" hidden>
+      <header class="page-header">
+        <div>
+          <p class="eyebrow">ADMINISTRACIÓN FISCAL <span class="eyebrow-rule"></span> MONOTRIBUTO</p>
+          <h1>Monotributo</h1>
+          <p class="page-subtitle">Facturación del período de recategorización contra el tope de la categoría, y avisos de cambio.</p>
+        </div>
+        <span class="environment-badge"><i></i> DEMO</span>
+      </header>
+
+      <section class="demo-disclaimer" role="note" aria-label="Aviso de demostración">
+        <span class="disclaimer-mark" aria-hidden="true">i</span>
+        <div><strong>Demostración interactiva</strong><p>Contribuyentes y montos ficticios. No se conecta a ARCA ni al padrón.</p></div>
+        <span class="sample-stamp">SOLO MUESTRA</span>
+      </section>
+
+      <section class="demo-status" aria-label="Escala de categorías">
+        <div class="status-mark" aria-hidden="true">§</div>
+        <div><h2>Escala de categorías</h2><p id="mtEscalaMsg">Cargando…</p></div>
+      </section>
+
+      <section class="mt-period" id="mtPeriodo" aria-label="Período de control"></section>
+
+      <section class="mt-alerts" id="mtAlerts" aria-label="Alertas" hidden>
+        <h2>Alertas</h2>
+        <ul id="mtAlertList"></ul>
+      </section>
+
+      <section class="filter-section" aria-label="CUIT seguidos">
+        <div class="table-wrap">
+          <table>
+            <thead><tr>
+              <th scope="col">CONTRIBUYENTE</th><th scope="col">CATEGORÍA</th>
+              <th scope="col" class="amount-cell">TOPE</th><th scope="col" class="amount-cell">FACTURACIÓN DEL PERÍODO</th>
+              <th scope="col">USO DEL TOPE</th><th scope="col">CORRESPONDE</th><th scope="col">ESTADO</th>
+            </tr></thead>
+            <tbody id="mtRows"></tbody>
+          </table>
+        </div>
+        <footer class="table-footer"><span id="mtFooter">0 CUIT</span><span>Conjunto de datos ficticio</span></footer>
+      </section>
+    </main>
+    <main class="main-content" id="dfe" hidden>
+      <header class="page-header">
+        <div>
+          <p class="eyebrow">ADMINISTRACIÓN FISCAL <span class="eyebrow-rule"></span> VENTANILLA ELECTRÓNICA</p>
+          <h1>Domicilio fiscal</h1>
+          <p class="page-subtitle">Comunicaciones nuevas de ARCA por cliente, con urgencia y fecha límite de notificación.</p>
+        </div>
+        <span class="environment-badge"><i></i> DEMO</span>
+      </header>
+
+      <section class="demo-disclaimer" role="note" aria-label="Aviso de demostración">
+        <span class="disclaimer-mark" aria-hidden="true">i</span>
+        <div><strong>Demostración interactiva</strong><p>Clientes y comunicaciones ficticios. No se conecta a ARCA. «Marcar como visto» solo cambia esta pantalla.</p></div>
+        <span class="sample-stamp">SOLO MUESTRA</span>
+      </section>
+
+      <section class="demo-status" aria-label="Consulta de comunicaciones">
+        <div class="status-mark" aria-hidden="true">✉</div>
+        <div><h2>Consulta de comunicaciones</h2><p id="dfeMsg">Cargando…</p></div>
+      </section>
+
+      <section class="mt-alerts" id="dfeAlerts" aria-label="Comunicaciones urgentes" hidden>
+        <h2>Urgentes sin ver</h2>
+        <ul id="dfeAlertList"></ul>
+      </section>
+
+      <section class="filter-section" aria-label="Comunicaciones">
+        <div class="table-wrap">
+          <table>
+            <thead><tr>
+              <th scope="col">CLIENTE</th><th scope="col">ASUNTO</th><th scope="col">PUBLICADA</th><th scope="col">FECHA LÍMITE</th>
+              <th scope="col">TIPO</th><th scope="col">URGENCIA</th><th scope="col"><span class="sr-only">Acciones</span></th>
+            </tr></thead>
+            <tbody id="dfeRows"></tbody>
+          </table>
+        </div>
+        <footer class="table-footer"><span id="dfeFooter">0 comunicaciones</span><span>Conjunto de datos ficticio · fecha límite: lunes siguiente a la publicación (propuesta)</span></footer>
+      </section>
+
+      <section class="filter-section" aria-label="Clientes">
+        <div class="table-wrap">
+          <table>
+            <thead><tr>
+              <th scope="col">CLIENTE</th><th scope="col">ÚLTIMA CONSULTA</th>
+              <th scope="col" class="amount-cell">SIN VER</th><th scope="col" class="amount-cell">URGENTES</th><th scope="col">ESTADO</th>
+            </tr></thead>
+            <tbody id="dfeClientes"></tbody>
+          </table>
+        </div>
+        <footer class="table-footer"><span id="dfeClientesFooter">0 clientes</span><span>Conjunto de datos ficticio</span></footer>
       </section>
     </main>
   </div>

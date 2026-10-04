@@ -5,6 +5,15 @@ Portfolio demonstration of an invoice-history UI using synthetic data only.
 **This is not connected to ARCA and cannot issue invoices or request CAEs.**
 Every recipient, amount, comprobante, and `DEMO-CAE-*` value is fictional.
 
+## Sections
+
+- **Comprobantes**: invoice history with filters and CSV/Excel export.
+- **Monotributo**: billing for the recategorization period against the category cap,
+  with alerts. Taxpayers, amounts, and the period date are synthetic and fixed.
+- **Domicilio fiscal**: communications from the electronic fiscal domicile (DFE) per client,
+  with urgency and notification deadline. Clients, subjects, and dates are synthetic and fixed;
+  "Marcar como visto" only changes the screen and is not saved.
+
 ## Run locally
 
 ```bash
