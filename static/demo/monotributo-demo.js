@@ -26,6 +26,38 @@
       <div><strong>${esc(a.nombre)}</strong><span class="mt-cuit">${esc(fmtCuit(a.cuit))}</span><p>${esc(a.mensaje)}</p></div></li>`).join("");
   }
 
+
+  function renderMc(mc) {
+    const el = $("mtMc");
+    if (!mc) { el.hidden = true; return; }
+    el.hidden = false;
+    const etiqueta = '<span class="mt-period-label">MIS COMPROBANTES</span>';
+    if (!mc.disponible) {
+      el.innerHTML = `${etiqueta}<strong>No conectado</strong><span>Definí AFIP_SCRAPER_DB en el .env con la base del scraper para sumar los emitidos en línea y analizar compras y gastos.</span>`;
+      return;
+    }
+    if (!mc.con_datos) {
+      el.innerHTML = `${etiqueta}<strong>Sin datos</strong><span>El scraper todavía no sincronizó comprobantes de este CUIT.</span>`;
+      return;
+    }
+    const n = (x) => (x ? x.cantidad : 0);
+    el.innerHTML = `${etiqueta}<strong>${n(mc.emitidos)} emitidos · ${n(mc.recibidos)} recibidos</strong>
+      <span>Última sincronización: ${fmtFecha((mc.ultima_actualizacion || "").slice(0, 10))} · datos desde ${fmtFecha(mc.datos_desde)}</span>`;
+  }
+
+  function celdaCompras(c) {
+    if (!c.compras) return "—";
+    const r = c.compras.relacion;
+    const alta = r != null && r >= c.compras.porcentaje_referencia;
+    return `${money(c.compras.periodo)}<span class="mt-sub ${alta ? "mt-warn" : ""}">${r == null ? "sin facturación para comparar" : Math.round(r * 100) + "% de la facturación"}</span>`;
+  }
+
+  function subFacturacion(c) {
+    if (c.facturacion_periodo == null) return "";
+    const enLinea = c.facturacion_en_linea > 0 ? ` · incluye ${money(c.facturacion_en_linea)} de Comprobantes en línea` : "";
+    return `<span class="mt-sub">${esc(c.origen_facturacion)}${enLinea}</span>`;
+  }
+
   function renderFilas(items) {
     $("mtFooter").textContent = `${items.length} CUIT de muestra`;
     $("mtRows").innerHTML = items.map((c) => {
@@ -41,7 +73,8 @@
           <span class="mt-sub">${esc(c.actividad)} (según padrón)</span></td>
         <td><span class="mt-cat">${esc(c.categoria_padron)}</span></td>
         <td class="amount-cell">${money(c.tope)}</td>
-        <td class="amount-cell">${money(c.facturacion_periodo)}${c.facturacion_periodo == null ? "" : `<span class="mt-sub">${esc(c.origen_facturacion)}</span>`}</td>
+        <td class="amount-cell">${money(c.facturacion_periodo)}${subFacturacion(c)}</td>
+        <td class="amount-cell">${celdaCompras(c)}</td>
         <td class="mt-use">${bar}</td>
         <td>${corresponde}</td>
         <td><span class="mt-state ${tone}">${esc(label)}</span></td></tr>`;
@@ -55,6 +88,7 @@
       const d = await r.json();
       $("mtEscalaMsg").textContent = `Escala de muestra vigente desde ${fmtFecha(d.escala.vigencia)}. En la versión real se lee de ARCA y una persona la aprueba antes de usarla.`;
       renderPeriodo(d.periodo);
+      renderMc(d.mis_comprobantes);
       renderAlertas(d.alertas);
       renderFilas(d.contribuyentes);
       loaded = true;

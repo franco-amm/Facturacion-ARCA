@@ -21,14 +21,32 @@
       "origen_actividad": "padron",
       "consultado_el": "2026-09-30T08:00:00",
       "facturacion_periodo": 9850000,
-      "origen_facturacion": "comprobantes emitidos (base local)",
+      "origen_facturacion": "base local + Mis Comprobantes",
       "facturacion_cargada_el": null,
       "tope": 17595182.74,
       "uso": 0.5598123159930307,
       "categoria_corresponde": "A",
       "estado": "ok",
-      "alertas": [],
-      "error_padron": null
+      "alertas": [
+        {
+          "tipo": "compras_sobre_ventas",
+          "nivel": "aviso",
+          "mensaje": "Las compras y gastos del período ($ 4.040.000) equivalen al 41% de la facturación; la referencia para servicios es 40%. Revisar que sean inherentes a la actividad."
+        }
+      ],
+      "error_padron": null,
+      "facturacion_en_linea": 1850000,
+      "cantidad_en_linea": 3,
+      "compras": {
+        "periodo": 4040000,
+        "doce_meses": 4900000,
+        "relacion": 0.4101522842639594,
+        "porcentaje_referencia": 0.4,
+        "umbral_exclusion": 24840000,
+        "uso_exclusion": 0.1972624798711755,
+        "datos_desde": "2026-01-05",
+        "datos_incompletos": true
+      }
     },
     {
       "cuit": "20000000029",
@@ -53,7 +71,10 @@
           "mensaje": "Lleva usado el 92% del tope de la categoría C en el período."
         }
       ],
-      "error_padron": null
+      "error_padron": null,
+      "facturacion_en_linea": null,
+      "cantidad_en_linea": null,
+      "compras": null
     },
     {
       "cuit": "27000000035",
@@ -78,7 +99,10 @@
           "mensaje": "Supera el tope de la categoría B (110%). Correspondería: C."
         }
       ],
-      "error_padron": null
+      "error_padron": null,
+      "facturacion_en_linea": null,
+      "cantidad_en_linea": null,
+      "compras": null
     },
     {
       "cuit": "20000000043",
@@ -103,7 +127,10 @@
           "mensaje": "El padrón cambió de categoría C a D (detectado 2026-09-30)."
         }
       ],
-      "error_padron": null
+      "error_padron": null,
+      "facturacion_en_linea": null,
+      "cantidad_en_linea": null,
+      "compras": null
     },
     {
       "cuit": "23000000058",
@@ -128,7 +155,10 @@
           "mensaje": "Falta la facturación del período para comparar contra el tope."
         }
       ],
-      "error_padron": null
+      "error_padron": null,
+      "facturacion_en_linea": null,
+      "cantidad_en_linea": null,
+      "compras": null
     }
   ],
   "alertas": [
@@ -152,6 +182,30 @@
       "mensaje": "El padrón cambió de categoría C a D (detectado 2026-09-30).",
       "cuit": "20000000043",
       "nombre": "Diego Ficticio"
+    },
+    {
+      "tipo": "compras_sobre_ventas",
+      "nivel": "aviso",
+      "mensaje": "Las compras y gastos del período ($ 4.040.000) equivalen al 41% de la facturación; la referencia para servicios es 40%. Revisar que sean inherentes a la actividad.",
+      "cuit": "20000000011",
+      "nombre": "Ana Muestra"
     }
-  ]
+  ],
+  "mis_comprobantes": {
+    "disponible": true,
+    "con_datos": true,
+    "ruta": null,
+    "ultima_actualizacion": "2026-09-30T08:00:00+00:00",
+    "datos_desde": "2026-01-05",
+    "emitidos": {
+      "cantidad": 34,
+      "desde": "2026-01-05",
+      "hasta": "2026-09-28"
+    },
+    "recibidos": {
+      "cantidad": 58,
+      "desde": "2026-01-07",
+      "hasta": "2026-09-29"
+    }
+  }
 }

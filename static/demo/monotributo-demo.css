@@ -32,3 +32,5 @@
 /* La navegación de la demo marcaba todos los ítems como activos. */
 .sidebar .nav-item:not(.active) { color: #c3d0c8; background: transparent; }
 .sidebar .nav-item:not(.active) .nav-indicator { border-color: #7f9a8a; background: transparent; }
+
+.mt-warn { color: #7a5b00; font-weight: 700; }
