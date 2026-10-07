@@ -34,3 +34,5 @@
 .sidebar .nav-item:not(.active) .nav-indicator { border-color: #7f9a8a; background: transparent; }
 
 .mt-warn { color: #7a5b00; font-weight: 700; }
+
+.amount-cell .mt-sub { white-space: normal; margin-left: auto; max-width: 240px; }

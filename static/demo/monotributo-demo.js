@@ -55,7 +55,8 @@
   function subFacturacion(c) {
     if (c.facturacion_periodo == null) return "";
     const enLinea = c.facturacion_en_linea > 0 ? ` · incluye ${money(c.facturacion_en_linea)} de Comprobantes en línea` : "";
-    return `<span class="mt-sub">${esc(c.origen_facturacion)}${enLinea}</span>`;
+    const sync = c.sincronizado_el ? `<span class="mt-sub">Sincronizado ${fmtFecha(c.sincronizado_el)}</span>` : "";
+    return `<span class="mt-sub">${esc(c.origen_facturacion)}${enLinea}</span>${sync}`;
   }
 
   function renderFilas(items) {
