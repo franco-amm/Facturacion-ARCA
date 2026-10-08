@@ -59,7 +59,55 @@
     return `<span class="mt-sub">${esc(c.origen_facturacion)}${enLinea}</span>${sync}`;
   }
 
+  const MESES = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
+  const fmtMes = (ym) => `${MESES[Number(ym.slice(5, 7)) - 1]} ${ym.slice(0, 4)}`;
+  const expandidos = new Set();
+
+  function detalleCierre(f) {
+    if (!f) return '<p class="mt-detail-note">Todavía no hay una ventana cerrada con datos automáticos de este CUIT.</p>';
+    const rel = f.relacion_compras == null ? "—" : `${Math.round(f.relacion_compras * 100)}%`;
+    const uso = f.uso == null ? "—" : `${Math.round(f.uso * 100)}%`;
+    const estado = (ESTADOS[f.estado] || [f.estado])[0];
+    return `<dl class="mt-snap">
+      <div><dt>Ventana cerrada</dt><dd>${fmtFecha(f.desde)} al ${fmtFecha(f.corte)} · recategorización de ${esc(f.recategorizacion)}</dd></div>
+      <div><dt>Facturación</dt><dd>${money(f.facturacion)} <span class="mt-sub">${esc(f.origen)}</span></dd></div>
+      <div><dt>Compras y gastos</dt><dd>${money(f.compras)} <span class="mt-sub">${rel} de la facturación</span></dd></div>
+      <div><dt>Categoría y tope</dt><dd>${f.categoria ? esc(f.categoria) : "—"} · ${money(f.tope)} <span class="mt-sub">uso ${uso} · ${esc(estado)}${f.categoria_corresponde ? " · correspondía " + esc(f.categoria_corresponde) : ""}</span></dd></div>
+      <div><dt>Escala aplicada</dt><dd>vigente desde ${esc(f.escala_vigencia || "—")} <span class="mt-sub">${f.provisoria ? "Foto provisoria: se actualiza hasta que cambie la ventana" : f.tardia ? "Calculada después del cierre, con la escala vigente en ese momento" : "Foto fija al cierre"}</span></dd></div>
+    </dl>`;
+  }
+
+  function detalleMensual(m) {
+    if (!m) return '<p class="mt-detail-note">Sin comprobantes automáticos para desglosar por mes.</p>';
+    const a = m.ventanas.activa, b = m.ventanas.alterna;
+    const marca = (f, k) => (f.cuenta_para.includes(k) ? '<span class="mt-check" aria-label="cuenta">●</span>' : '<span class="mt-dash">·</span>');
+    const filas = m.meses.map((f) => `<tr>
+        <td>${esc(fmtMes(f.mes))}</td>
+        <td class="amount-cell">${f.futuro ? "—" : money(f.facturacion)}</td>
+        <td class="amount-cell">${f.futuro ? "—" : money(f.compras)}</td>
+        <td class="mt-mark">${marca(f, "activa")}</td>
+        <td class="mt-mark">${marca(f, "alterna")}</td></tr>`).join("");
+    const total = (v, etiqueta) => `<tr class="mt-total"><td>${esc(etiqueta)}</td>
+        <td class="amount-cell">${money(v.facturacion)}</td><td class="amount-cell">${money(v.compras)}</td><td colspan="2" class="mt-sub">${fmtFecha(v.desde)} al ${fmtFecha(v.corte)}</td></tr>`;
+    return `<table class="mt-month-table">
+      <thead><tr><th>Mes</th><th class="amount-cell">Facturación</th><th class="amount-cell">Compras</th>
+        <th class="mt-mark">Recat. ${esc(a.recategorizacion)}</th><th class="mt-mark">Recat. ${esc(b.recategorizacion)}</th></tr></thead>
+      <tbody>${filas}</tbody>
+      <tfoot>${total(m.ventanas.activa, "Total " + a.recategorizacion)}${total(m.ventanas.alterna, "Acumulado " + b.recategorizacion)}</tfoot>
+    </table>`;
+  }
+
+  function filaDetalle(c) {
+    return `<tr class="mt-detail-row"><td colspan="9"><div class="mt-detail">
+      <section><h3>Cierre anterior</h3>${detalleCierre(c.cierre_anterior)}</section>
+      <section><h3>Mes a mes</h3>${detalleMensual(c.mensual)}</section>
+    </div></td></tr>`;
+  }
+
+  let ultimos = [];
+
   function renderFilas(items) {
+    ultimos = items;
     $("mtFooter").textContent = `${items.length} CUIT de muestra`;
     $("mtRows").innerHTML = items.map((c) => {
       const [label, tone] = ESTADOS[c.estado] || [c.estado, "muted"];
@@ -78,7 +126,9 @@
         <td class="amount-cell">${celdaCompras(c)}</td>
         <td class="mt-use">${bar}</td>
         <td>${corresponde}</td>
-        <td><span class="mt-state ${tone}">${esc(label)}</span></td></tr>`;
+        <td><span class="mt-state ${tone}">${esc(label)}</span></td>
+        <td class="mt-actions"><button class="button button-quiet" data-detalle="${esc(c.cuit)}" type="button" aria-expanded="${expandidos.has(c.cuit)}">${expandidos.has(c.cuit) ? "Ocultar" : "Detalle"}</button></td>
+      </tr>${expandidos.has(c.cuit) ? filaDetalle(c) : ""}`;
     }).join("");
   }
 
@@ -97,6 +147,14 @@
       $("mtEscalaMsg").textContent = `No se pudo cargar la demo: ${e.message}`;
     }
   }
+
+  $("mtRows").addEventListener("click", (event) => {
+    const boton = event.target.closest("[data-detalle]");
+    if (!boton) return;
+    const cuit = boton.dataset.detalle;
+    if (expandidos.has(cuit)) expandidos.delete(cuit); else expandidos.add(cuit);
+    renderFilas(ultimos);
+  });
 
   function route() {
     const mono = location.hash === "#monotributo";

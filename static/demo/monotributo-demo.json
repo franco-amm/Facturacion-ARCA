@@ -39,16 +39,168 @@
       "cantidad_en_linea": 3,
       "compras": {
         "periodo": 4040000,
-        "doce_meses": 4900000,
         "relacion": 0.4101522842639594,
         "porcentaje_referencia": 0.4,
         "umbral_exclusion": 24840000,
-        "uso_exclusion": 0.1972624798711755,
+        "uso_exclusion": 0.16264090177133655,
         "datos_desde": "2026-01-05",
         "datos_incompletos": true
       },
       "sincronizado_el": "2026-09-30",
-      "manual_difiere": null
+      "manual_difiere": null,
+      "mensual": {
+        "meses": [
+          {
+            "mes": "2026-01",
+            "facturacion": 1000000,
+            "compras": 420000,
+            "cuenta_para": [
+              "activa"
+            ],
+            "futuro": false
+          },
+          {
+            "mes": "2026-02",
+            "facturacion": 1100000,
+            "compras": 380000,
+            "cuenta_para": [
+              "activa"
+            ],
+            "futuro": false
+          },
+          {
+            "mes": "2026-03",
+            "facturacion": 950000,
+            "compras": 450000,
+            "cuenta_para": [
+              "activa"
+            ],
+            "futuro": false
+          },
+          {
+            "mes": "2026-04",
+            "facturacion": 1200000,
+            "compras": 500000,
+            "cuenta_para": [
+              "activa"
+            ],
+            "futuro": false
+          },
+          {
+            "mes": "2026-05",
+            "facturacion": 1050000,
+            "compras": 410000,
+            "cuenta_para": [
+              "activa"
+            ],
+            "futuro": false
+          },
+          {
+            "mes": "2026-06",
+            "facturacion": 1150000,
+            "compras": 520000,
+            "cuenta_para": [
+              "activa"
+            ],
+            "futuro": false
+          },
+          {
+            "mes": "2026-07",
+            "facturacion": 1000000,
+            "compras": 470000,
+            "cuenta_para": [
+              "activa",
+              "alterna"
+            ],
+            "futuro": false
+          },
+          {
+            "mes": "2026-08",
+            "facturacion": 1250000,
+            "compras": 440000,
+            "cuenta_para": [
+              "activa",
+              "alterna"
+            ],
+            "futuro": false
+          },
+          {
+            "mes": "2026-09",
+            "facturacion": 1150000,
+            "compras": 450000,
+            "cuenta_para": [
+              "activa",
+              "alterna"
+            ],
+            "futuro": false
+          },
+          {
+            "mes": "2026-10",
+            "facturacion": 0,
+            "compras": 0,
+            "cuenta_para": [
+              "activa",
+              "alterna"
+            ],
+            "futuro": true
+          },
+          {
+            "mes": "2026-11",
+            "facturacion": 0,
+            "compras": 0,
+            "cuenta_para": [
+              "activa",
+              "alterna"
+            ],
+            "futuro": true
+          },
+          {
+            "mes": "2026-12",
+            "facturacion": 0,
+            "compras": 0,
+            "cuenta_para": [
+              "activa",
+              "alterna"
+            ],
+            "futuro": true
+          }
+        ],
+        "ventanas": {
+          "activa": {
+            "recategorizacion": "enero 2027",
+            "desde": "2026-01-01",
+            "corte": "2026-12-31",
+            "facturacion": 9850000,
+            "compras": 4040000
+          },
+          "alterna": {
+            "recategorizacion": "julio 2027",
+            "desde": "2026-07-01",
+            "corte": "2027-06-30",
+            "facturacion": 3400000,
+            "compras": 1360000
+          }
+        }
+      },
+      "cierre_anterior": {
+        "desde": "2025-07-01",
+        "corte": "2026-06-30",
+        "recategorizacion": "julio 2026",
+        "tomado_el": "2026-07-02T09:00:00",
+        "facturacion": 11400000,
+        "origen": "Mis Comprobantes (scraper)",
+        "compras": 3900000,
+        "relacion_compras": 0.34210526315789475,
+        "categoria": "B",
+        "actividad": "servicios",
+        "tope": 17595182.74,
+        "uso": 0.6479046093726447,
+        "estado": "ok",
+        "categoria_corresponde": null,
+        "escala_vigencia": "2026-02-01",
+        "provisoria": false,
+        "tardia": false
+      }
     },
     {
       "cuit": "20000000029",
@@ -78,16 +230,168 @@
       "cantidad_en_linea": 9,
       "compras": {
         "periodo": 6100000,
-        "doce_meses": 8200000,
         "relacion": 0.2687224669603524,
         "porcentaje_referencia": 0.4,
         "umbral_exclusion": 24840000,
-        "uso_exclusion": 0.33011272141706927,
+        "uso_exclusion": 0.24557165861513688,
         "datos_desde": "2026-01-05",
         "datos_incompletos": true
       },
       "sincronizado_el": "2026-09-30",
-      "manual_difiere": null
+      "manual_difiere": null,
+      "mensual": {
+        "meses": [
+          {
+            "mes": "2026-01",
+            "facturacion": 2400000,
+            "compras": 600000,
+            "cuenta_para": [
+              "activa"
+            ],
+            "futuro": false
+          },
+          {
+            "mes": "2026-02",
+            "facturacion": 2300000,
+            "compras": 650000,
+            "cuenta_para": [
+              "activa"
+            ],
+            "futuro": false
+          },
+          {
+            "mes": "2026-03",
+            "facturacion": 2500000,
+            "compras": 700000,
+            "cuenta_para": [
+              "activa"
+            ],
+            "futuro": false
+          },
+          {
+            "mes": "2026-04",
+            "facturacion": 2600000,
+            "compras": 720000,
+            "cuenta_para": [
+              "activa"
+            ],
+            "futuro": false
+          },
+          {
+            "mes": "2026-05",
+            "facturacion": 2450000,
+            "compras": 640000,
+            "cuenta_para": [
+              "activa"
+            ],
+            "futuro": false
+          },
+          {
+            "mes": "2026-06",
+            "facturacion": 2550000,
+            "compras": 680000,
+            "cuenta_para": [
+              "activa"
+            ],
+            "futuro": false
+          },
+          {
+            "mes": "2026-07",
+            "facturacion": 2400000,
+            "compras": 660000,
+            "cuenta_para": [
+              "activa",
+              "alterna"
+            ],
+            "futuro": false
+          },
+          {
+            "mes": "2026-08",
+            "facturacion": 2700000,
+            "compras": 700000,
+            "cuenta_para": [
+              "activa",
+              "alterna"
+            ],
+            "futuro": false
+          },
+          {
+            "mes": "2026-09",
+            "facturacion": 2800000,
+            "compras": 750000,
+            "cuenta_para": [
+              "activa",
+              "alterna"
+            ],
+            "futuro": false
+          },
+          {
+            "mes": "2026-10",
+            "facturacion": 0,
+            "compras": 0,
+            "cuenta_para": [
+              "activa",
+              "alterna"
+            ],
+            "futuro": true
+          },
+          {
+            "mes": "2026-11",
+            "facturacion": 0,
+            "compras": 0,
+            "cuenta_para": [
+              "activa",
+              "alterna"
+            ],
+            "futuro": true
+          },
+          {
+            "mes": "2026-12",
+            "facturacion": 0,
+            "compras": 0,
+            "cuenta_para": [
+              "activa",
+              "alterna"
+            ],
+            "futuro": true
+          }
+        ],
+        "ventanas": {
+          "activa": {
+            "recategorizacion": "enero 2027",
+            "desde": "2026-01-01",
+            "corte": "2026-12-31",
+            "facturacion": 22700000,
+            "compras": 6100000
+          },
+          "alterna": {
+            "recategorizacion": "julio 2027",
+            "desde": "2026-07-01",
+            "corte": "2027-06-30",
+            "facturacion": 7900000,
+            "compras": 2110000
+          }
+        }
+      },
+      "cierre_anterior": {
+        "desde": "2025-07-01",
+        "corte": "2026-06-30",
+        "recategorizacion": "julio 2026",
+        "tomado_el": "2026-07-02T09:00:00",
+        "facturacion": 21300000,
+        "origen": "Mis Comprobantes (scraper)",
+        "compras": 5300000,
+        "relacion_compras": 0.24882629107981222,
+        "categoria": "C",
+        "actividad": "servicios",
+        "tope": 24670494.31,
+        "uso": 0.8633795388269219,
+        "estado": "ok",
+        "categoria_corresponde": null,
+        "escala_vigencia": "2026-02-01",
+        "provisoria": false,
+        "tardia": false
+      }
     },
     {
       "cuit": "27000000035",
@@ -117,7 +421,9 @@
       "cantidad_en_linea": null,
       "compras": null,
       "sincronizado_el": null,
-      "manual_difiere": null
+      "manual_difiere": null,
+      "mensual": null,
+      "cierre_anterior": null
     },
     {
       "cuit": "20000000043",
@@ -147,7 +453,9 @@
       "cantidad_en_linea": null,
       "compras": null,
       "sincronizado_el": null,
-      "manual_difiere": null
+      "manual_difiere": null,
+      "mensual": null,
+      "cierre_anterior": null
     },
     {
       "cuit": "23000000058",
@@ -177,7 +485,9 @@
       "cantidad_en_linea": null,
       "compras": null,
       "sincronizado_el": null,
-      "manual_difiere": null
+      "manual_difiere": null,
+      "mensual": null,
+      "cierre_anterior": null
     }
   ],
   "alertas": [
@@ -226,5 +536,12 @@
       "desde": "2026-01-07",
       "hasta": "2026-09-29"
     }
+  },
+  "periodo_alterno": {
+    "desde": "2026-07-01",
+    "corte": "2027-06-30",
+    "hasta": "2026-09-30",
+    "cerrado": false,
+    "recategorizacion": "julio 2027"
   }
 }
