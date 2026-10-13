@@ -7,7 +7,7 @@ import json
 from datetime import date
 from io import BytesIO, StringIO
 from pathlib import Path
-from typing import Any
+from typing import Any, Optional
 
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.staticfiles import StaticFiles
@@ -39,7 +39,20 @@ def _dataset() -> dict[str, Any]:
     return json.loads(DATA_PATH.read_text(encoding="utf-8"))
 
 
-def _filtered_invoices(from_date: date, to_date: date, types: list[int]) -> list[dict[str, Any]]:
+def _emisor(emisor: Optional[str]) -> dict[str, Any]:
+    emisores = _dataset()["emisores"]
+    if emisor is None:
+        return emisores[0]
+    for item in emisores:
+        if item["id"] == emisor:
+            return item
+    raise HTTPException(status_code=404, detail="Emisor de demostración desconocido.")
+
+
+def _filtered_invoices(
+    from_date: date, to_date: date, types: list[int], emisor: Optional[str] = None
+) -> list[dict[str, Any]]:
+    elegido = _emisor(emisor)["id"]
     if from_date > to_date:
         raise HTTPException(status_code=400, detail="from_date must be on or before to_date.")
     if not types or any(code not in {11, 12, 13} for code in types):
@@ -49,7 +62,8 @@ def _filtered_invoices(from_date: date, to_date: date, types: list[int]) -> list
     return [
         invoice
         for invoice in _dataset()["invoices"]
-        if invoice["Fecha"] >= start
+        if invoice["Emisor"] == elegido
+        and invoice["Fecha"] >= start
         and invoice["Fecha"] <= end
         and int(invoice["TipoComprobante"]) in types
     ]
@@ -65,13 +79,26 @@ def health() -> dict[str, str]:
     return {"status": "ok", "mode": "demo-read-only"}
 
 
-@app.get("/api/demo/summary")
-def demo_summary() -> dict[str, Any]:
+@app.get("/api/demo/emisores")
+def demo_emisores() -> dict[str, Any]:
+    """CUIT de demostración con su cantidad de comprobantes ficticios."""
     dataset = _dataset()
-    invoices = dataset["invoices"]
     return {
         "mode": "demo",
-        "issuer": dataset["issuer"],
+        "emisores": [
+            {**item, "count": sum(1 for inv in dataset["invoices"] if inv["Emisor"] == item["id"])}
+            for item in dataset["emisores"]
+        ],
+    }
+
+
+@app.get("/api/demo/summary")
+def demo_summary(emisor: Optional[str] = None) -> dict[str, Any]:
+    elegido = _emisor(emisor)
+    invoices = [inv for inv in _dataset()["invoices"] if inv["Emisor"] == elegido["id"]]
+    return {
+        "mode": "demo",
+        "issuer": elegido,
         "count": len(invoices),
         "latest_issue_date": max((invoice["Fecha"] for invoice in invoices), default=None),
         "types": [11, 12, 13],
@@ -95,10 +122,12 @@ def demo_invoices(
     from_date: date,
     to_date: date,
     types: list[int] = Query(default=[11, 12, 13]),
+    emisor: Optional[str] = None,
 ) -> dict[str, Any]:
-    invoices = _filtered_invoices(from_date, to_date, types)
+    invoices = _filtered_invoices(from_date, to_date, types, emisor)
     return {
         "mode": "demo",
+        "emisor": _emisor(emisor)["id"],
         "from_date": from_date.isoformat(),
         "to_date": to_date.isoformat(),
         "count": len(invoices),
@@ -123,13 +152,14 @@ def export_demo_csv(
     from_date: date,
     to_date: date,
     types: list[int] = Query(default=[11, 12, 13]),
+    emisor: Optional[str] = None,
 ) -> Response:
-    invoices = _filtered_invoices(from_date, to_date, types)
+    invoices = _filtered_invoices(from_date, to_date, types, emisor)
     output = StringIO()
     writer = csv.writer(output)
     writer.writerow([label for label, _ in EXPORT_FIELDS])
     writer.writerows(_export_response(invoices, from_date, to_date))
-    filename = f"demo_comprobantes_{from_date}_{to_date}.csv"
+    filename = f"demo_comprobantes_{_emisor(emisor)['id']}_{from_date}_{to_date}.csv"
     return Response(
         content="\ufeff" + output.getvalue(),
         media_type="text/csv; charset=utf-8",
@@ -142,8 +172,9 @@ def export_demo_xlsx(
     from_date: date,
     to_date: date,
     types: list[int] = Query(default=[11, 12, 13]),
+    emisor: Optional[str] = None,
 ) -> Response:
-    invoices = _filtered_invoices(from_date, to_date, types)
+    invoices = _filtered_invoices(from_date, to_date, types, emisor)
     workbook = Workbook()
     sheet = workbook.active
     sheet.title = "Demo"
@@ -157,7 +188,7 @@ def export_demo_xlsx(
         sheet.column_dimensions[column[0].column_letter].width = width
     output = BytesIO()
     workbook.save(output)
-    filename = f"demo_comprobantes_{from_date}_{to_date}.xlsx"
+    filename = f"demo_comprobantes_{_emisor(emisor)['id']}_{from_date}_{to_date}.xlsx"
     return Response(
         content=output.getvalue(),
         media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",

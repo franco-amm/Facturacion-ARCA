@@ -41,6 +41,11 @@
         <span class="sample-stamp">SOLO MUESTRA</span>
       </section>
 
+      <section class="emisores" aria-label="CUIT habilitados de demostración">
+        <div class="emisores-head"><div><h2>CUIT habilitados</h2><p>Elige un CUIT para ver su historial de emisión.</p></div></div>
+        <div class="emisor-list" id="emisorList" role="listbox" aria-label="CUIT habilitados"></div>
+      </section>
+
       <section class="account-strip" aria-label="Cuenta de demostración">
         <div class="account-item"><span class="account-label">EMISOR</span><strong id="issuerName">Cargando demo…</strong></div>
         <span class="strip-divider" aria-hidden="true"></span>
@@ -58,7 +63,7 @@
 
       <section class="filter-section" aria-label="Filtros de comprobantes">
         <div class="filter-heading">
-          <div><h2>Historial de emisión</h2><p id="resultSummary">Cargando comprobantes…</p></div>
+          <div><h2 id="tableTitle">Historial de emisión</h2><p id="resultSummary">Cargando comprobantes…</p></div>
           <label class="search-field"><span class="search-icon" aria-hidden="true">⌕</span><span class="sr-only">Buscar comprobante, receptor o CAE demo</span><input id="searchInput" type="search" placeholder="Buscar comprobante, receptor o CAE" autocomplete="off"><kbd>⌘ K</kbd></label>
         </div>
 

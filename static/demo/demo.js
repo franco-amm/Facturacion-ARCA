@@ -4,11 +4,12 @@ const ui = Object.fromEntries([
   "filterForm", "fromDate", "toDate", "searchInput", "resultSummary",
   "visibleCount", "invoiceRows", "tableWrap", "tableState", "footerCount",
   "csvButton", "xlsxButton", "reloadDemo", "detailDialog", "detailTitle",
-  "detailContent", "closeDialog",
+  "detailContent", "closeDialog", "emisorList", "tableTitle",
 ].map((id) => [id, document.getElementById(id)]));
 
 let dataset = null;
 let filteredInvoices = [];
+let selectedId = null;
 
 function escapeHtml(value) {
   return String(value ?? "").replace(/[&<>"']/g, (character) => ({
@@ -36,7 +37,7 @@ function selectedTypes() {
 }
 
 function paramsForExport() {
-  const params = new URLSearchParams({ from_date: ui.fromDate.value, to_date: ui.toDate.value });
+  const params = new URLSearchParams({ from_date: ui.fromDate.value, to_date: ui.toDate.value, emisor: selectedId });
   selectedTypes().forEach((type) => params.append("types", String(type)));
   return params;
 }
@@ -45,11 +46,44 @@ async function loadDataset() {
   const response = await fetch("/assets/demo-data.json", { cache: "no-store" });
   if (!response.ok) throw new Error("No se pudo cargar el conjunto de muestra.");
   dataset = await response.json();
-  ui.issuerName.textContent = dataset.issuer.name;
-  ui.issuerCuit.textContent = dataset.issuer.cuit;
-  ui.pointOfSale.textContent = dataset.issuer.punto_venta;
-  ui.totalCount.textContent = new Intl.NumberFormat("es-AR").format(dataset.invoices.length);
-  ui.demoMessage.textContent = `${dataset.invoices.length} registros ficticios · sin conexión a ARCA`;
+  if (!dataset.emisores.some((item) => item.id === selectedId)) selectedId = dataset.emisores[0].id;
+  renderEmisores();
+  renderIssuer();
+  renderInvoices();
+}
+
+function invoicesOfSelected() {
+  return dataset.invoices.filter((invoice) => invoice.Emisor === selectedId);
+}
+
+function renderIssuer() {
+  const issuer = dataset.emisores.find((item) => item.id === selectedId);
+  const invoices = invoicesOfSelected();
+  ui.issuerName.textContent = issuer.name;
+  ui.issuerCuit.textContent = issuer.cuit;
+  ui.pointOfSale.textContent = issuer.punto_venta;
+  ui.totalCount.textContent = new Intl.NumberFormat("es-AR").format(invoices.length);
+  ui.tableTitle.textContent = issuer.propio ? "Historial de emisión" : `Historial de emisión · ${issuer.name.replace(" (DEMO)", "")}`;
+  ui.demoMessage.textContent = `${invoices.length} registros ficticios de este CUIT · sin conexión a ARCA`;
+}
+
+function renderEmisores() {
+  ui.emisorList.replaceChildren(...dataset.emisores.map((item) => {
+    const selected = item.id === selectedId;
+    const count = dataset.invoices.filter((invoice) => invoice.Emisor === item.id).length;
+    const card = document.createElement("div");
+    card.className = `emisor-card${selected ? " is-selected" : ""}`;
+    card.innerHTML = `<button class="emisor-select" type="button" role="option" aria-selected="${selected}" data-emisor="${escapeHtml(item.id)}"><strong>${escapeHtml(item.name)}</strong><span class="emisor-cuit">${escapeHtml(item.cuit)}</span><small>${count} ${count === 1 ? "comprobante" : "comprobantes"} · PV ${escapeHtml(item.punto_venta)}</small></button>`;
+    return card;
+  }));
+}
+
+function selectEmisor(id) {
+  if (!dataset || id === selectedId) return;
+  selectedId = id;
+  ui.searchInput.value = "";
+  renderEmisores();
+  renderIssuer();
   renderInvoices();
 }
 
@@ -59,7 +93,7 @@ function renderInvoices() {
   const end = ui.toDate.value;
   const types = selectedTypes();
   const term = ui.searchInput.value.trim().toLocaleLowerCase("es-AR");
-  filteredInvoices = dataset.invoices.filter((invoice) => {
+  filteredInvoices = invoicesOfSelected().filter((invoice) => {
     const matchesFilter = invoice.Fecha >= start && invoice.Fecha <= end && types.includes(Number(invoice.TipoComprobante));
     const matchesSearch = !term || [invoice.Receptor, invoice.DocNro, invoice.Numero, invoice.CAE, invoice.TipoDescripcion]
       .some((value) => String(value || "").toLocaleLowerCase("es-AR").includes(term));
@@ -129,6 +163,10 @@ function bindEvents() {
   ui.filterForm.addEventListener("submit", (event) => { event.preventDefault(); renderInvoices(); });
   ui.searchInput.addEventListener("input", renderInvoices);
   ui.reloadDemo.addEventListener("click", loadDataset);
+  ui.emisorList.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-emisor]");
+    if (button) selectEmisor(button.dataset.emisor);
+  });
   ui.csvButton.addEventListener("click", () => exportFile("csv"));
   ui.xlsxButton.addEventListener("click", () => exportFile("xlsx"));
   ui.closeDialog.addEventListener("click", () => ui.detailDialog.close());
@@ -137,7 +175,7 @@ function bindEvents() {
     const button = event.target.closest("[data-detail]");
     if (!button) return;
     const [type, number] = button.dataset.detail.split(":");
-    const invoice = dataset.invoices.find((item) => String(item.TipoComprobante) === type && String(item.Numero) === number);
+    const invoice = invoicesOfSelected().find((item) => String(item.TipoComprobante) === type && String(item.Numero) === number);
     if (invoice) openDetail(invoice);
   });
   document.addEventListener("keydown", (event) => {
