@@ -1,0 +1,4 @@
+/* Sección Granos (WSLPG) del demo. Reutiliza tarjetas/tablas de demo.css. */
+.gr-detail-table { width: 100%; margin: 6px 0 14px; border-collapse: collapse; font-size: 12px; }
+.gr-detail-table th, .gr-detail-table td { padding: 5px 8px; border-bottom: 1px solid var(--line); text-align: left; }
+.gr-detail-table th { color: #78867d; font-weight: 600; }

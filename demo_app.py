@@ -18,6 +18,7 @@ DEMO_DIR = Path(__file__).resolve().parent / "static" / "demo"
 DATA_PATH = DEMO_DIR / "demo-data.json"
 MONOTRIBUTO_PATH = DEMO_DIR / "monotributo-demo.json"
 DFE_PATH = DEMO_DIR / "dfe-demo.json"
+GRANOS_PATH = DEMO_DIR / "granos-demo.json"
 EXPORT_FIELDS = [
     ("Fecha", "Fecha"),
     ("Tipo", "TipoDescripcion"),
@@ -115,6 +116,12 @@ def demo_monotributo() -> dict[str, Any]:
 def demo_dfe() -> dict[str, Any]:
     """Comunicaciones del domicilio fiscal de clientes ficticios, ya clasificadas."""
     return json.loads(DFE_PATH.read_text(encoding="utf-8"))
+
+
+@app.get("/api/demo/granos")
+def demo_granos() -> dict[str, Any]:
+    """Liquidaciones primarias de granos ficticias, con el detalle completo que trae ARCA."""
+    return json.loads(GRANOS_PATH.read_text(encoding="utf-8"))
 
 
 @app.get("/api/demo/invoices")

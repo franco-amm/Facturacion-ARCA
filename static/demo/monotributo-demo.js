@@ -159,9 +159,10 @@
   function route() {
     const mono = location.hash === "#monotributo";
     const dfe = location.hash === "#dfe";
+    const granos = location.hash === "#granos";
     $("monotributo").hidden = !mono;
-    $("history").hidden = mono || dfe;
-    const destino = mono ? "#monotributo" : dfe ? "#dfe" : "#history";
+    $("history").hidden = mono || dfe || granos;
+    const destino = mono ? "#monotributo" : dfe ? "#dfe" : granos ? "#granos" : "#history";
     document.querySelectorAll(".sidebar .nav-item").forEach((a) => {
       const active = a.getAttribute("href") === destino;
       a.classList.toggle("active", active);
