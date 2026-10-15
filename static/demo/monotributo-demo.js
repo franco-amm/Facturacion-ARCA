@@ -101,15 +101,90 @@
     </table>`;
   }
 
+  // ---- Parámetros de la escala: en la demo se calculan en el navegador y no se guardan.
+  const PARAMS = [
+    ["superficie", "Superficie afectada", "m²"],
+    ["energia", "Energía eléctrica consumida", "kW anuales"],
+    ["alquiler", "Alquileres devengados", "$ anuales"],
+  ];
+  const UMBRAL = 0.9;
+  let datos = null;
+
+  function categoriaPor(topes, valor) {
+    return ORDEN.split("").find((l) => valor <= topes[l]) || null;
+  }
+
+  function recomputar(c, valores) {
+    const topes = datos.escala_parametros;
+    const cat = c.categoria_padron;
+    const items = [];
+    const nuevas = [];
+    let peor = "ok", mayor = -1, limitante = null, usoMax = null;
+    const rango = { ok: 0, cercano: 1, excedido: 2 };
+    PARAMS.forEach(([clave, nombre, unidad]) => {
+      const valor = valores[clave];
+      if (valor == null) return;
+      const tope = topes[clave][cat];
+      const uso = valor / tope;
+      const requerida = categoriaPor(topes[clave], valor);
+      const estado = uso > 1 ? "excedido" : uso >= UMBRAL ? "cercano" : "ok";
+      items.push({ clave, nombre, unidad, valor, tope_actual: tope, uso, categoria_requerida: requerida, estado });
+      if (rango[estado] > rango[peor]) peor = estado;
+      if (usoMax == null || uso > usoMax) { usoMax = uso; limitante = clave; }
+      mayor = Math.max(mayor, requerida ? ORDEN.indexOf(requerida) : ORDEN.length);
+      if (estado === "excedido") nuevas.push({ tipo: "excede_parametro", nivel: "critico", mensaje: `${nombre} supera el tope de la categoría ${cat}: ${NUM.format(valor)} sobre ${NUM.format(tope)} ${unidad} (${Math.round(uso * 100)}%). Correspondería: ${requerida || "fuera de escala"}.` });
+      if (estado === "cercano") nuevas.push({ tipo: "cerca_del_parametro", nivel: "aviso", mensaje: `${nombre} lleva usado el ${Math.round(uso * 100)}% del tope de la categoría ${cat}.` });
+    });
+    const base = c.base;
+    c.parametros_manuales = items.length ? Object.fromEntries(PARAMS.map(([k]) => [k, valores[k] ?? null])) : null;
+    c.parametros = items.length ? { cargados_el: new Date().toISOString(), items, limitante } : null;
+    c.alertas = [...nuevas, ...base.alertas];
+    c.estado = base.estado;
+    c.categoria_corresponde = base.categoria_corresponde;
+    c.uso_max = null;
+    c.parametro_limitante = null;
+    if (items.length) {
+      if (rango[peor] > (rango[base.estado] ?? 0) || base.estado === "sin_facturacion" && peor !== "ok") c.estado = peor;
+      c.uso_max = Math.max(base.uso ?? 0, usoMax);
+      c.parametro_limitante = usoMax >= (base.uso ?? 0) ? limitante : null;
+      if (base.categoria_corresponde) {
+        const maxima = ORDEN.indexOf(c.actividad === "bienes" ? "K" : "H");
+        let idx = Math.max(ORDEN.indexOf(base.categoria_corresponde), mayor);
+        c.categoria_corresponde = idx >= ORDEN.length || idx > maxima ? null : ORDEN[idx];
+      }
+    }
+    datos.alertas = datos.alertas.filter((a) => !(a.cuit === c.cuit && ["excede_parametro", "cerca_del_parametro"].includes(a.tipo)));
+    nuevas.slice().reverse().forEach((a) => datos.alertas.unshift({ ...a, cuit: c.cuit, nombre: c.nombre }));
+    renderAlertas(datos.alertas);
+    renderFilas(datos.contribuyentes);
+  }
+
   function seccionParametros(c) {
+    const manual = c.parametros_manuales || {};
+    const campos = PARAMS.map(([clave, etiqueta, unidad]) => `<label class="mt-param">
+        <span>${esc(etiqueta)} <i class="mt-sub">(${esc(unidad)})</i></span>
+        <input name="${clave}" inputmode="decimal" autocomplete="off" value="${manual[clave] != null ? esc(String(manual[clave]).replace(".", ",")) : ""}" placeholder="sin cargar">
+      </label>`).join("");
     const p = c.parametros;
-    if (!p) return '<p class="mt-detail-note">Sin parámetros cargados: la categoría se calcula solo por facturación. En la versión real se cargan a mano desde acá (superficie, energía y alquiler).</p>';
-    const filas = p.items.map((i) => `<tr class="${i.estado === "excedido" ? "mt-bad" : ""}">
-      <td>${esc(i.nombre)}</td><td class="amount-cell">${NUM.format(i.valor)} <span class="mt-sub">${esc(i.unidad)}</span></td>
-      <td class="amount-cell">${NUM.format(i.tope_actual)}</td><td class="amount-cell">${Math.round(i.uso * 100)}%</td>
-      <td>${esc(i.categoria_requerida || "Fuera de escala")}</td></tr>`).join("");
-    return `<table class="mt-month-table"><thead><tr><th>Parámetro</th><th class="amount-cell">Valor</th><th class="amount-cell">Tope cat. ${esc(c.categoria_padron)}</th><th class="amount-cell">Uso</th><th>Categoría</th></tr></thead><tbody>${filas}</tbody></table>
-      <p class="mt-detail-note">Cargado el ${fmtFecha((p.cargados_el || "").slice(0, 10))}. La categoría que corresponde es la más alta entre la facturación y estos parámetros.</p>`;
+    const tabla = p
+      ? `<table class="mt-month-table"><thead><tr><th>Parámetro</th><th class="amount-cell">Valor</th><th class="amount-cell">Tope cat. ${esc(c.categoria_padron)}</th><th class="amount-cell">Uso</th><th>Categoría</th></tr></thead><tbody>${p.items.map((i) => `<tr class="${i.estado === "excedido" ? "mt-bad" : ""}">
+          <td>${esc(i.nombre)}</td><td class="amount-cell">${NUM.format(i.valor)}</td><td class="amount-cell">${NUM.format(i.tope_actual)}</td>
+          <td class="amount-cell">${Math.round(i.uso * 100)}%</td><td>${esc(i.categoria_requerida || "Fuera de escala")}</td></tr>`).join("")}</tbody></table>
+        <p class="mt-detail-note">La categoría que corresponde es la más alta entre la facturación y estos parámetros.</p>`
+      : '<p class="mt-detail-note">Sin parámetros cargados: la categoría se calcula solo por facturación.</p>';
+    return `<form class="mt-params" data-params="${esc(c.cuit)}">
+        <div class="mt-param-fields">${campos}</div>
+        <div class="mt-param-actions"><button class="button button-primary" type="submit">Guardar parámetros</button>
+          <button class="button button-quiet" type="button" data-params-borrar="${esc(c.cuit)}">Borrar</button></div>
+        <p class="mt-detail-note">Demo: probá cargar valores (por ejemplo, energía 7.000 kW). Se calcula en el navegador y no se guarda.</p>
+      </form>${tabla}`;
+  }
+
+  function numero(texto) {
+    const t = String(texto || "").trim().replace(/\./g, "").replace(",", ".");
+    if (!t) return null;
+    const n = Number(t);
+    return Number.isFinite(n) && n >= 0 ? n : NaN;
   }
 
   function filaDetalle(c) {
@@ -155,6 +230,7 @@
       const r = await fetch("/api/demo/monotributo");
       if (!r.ok) throw new Error(`Error HTTP ${r.status}`);
       const d = await r.json();
+      datos = d;
       $("mtEscalaMsg").textContent = `Escala de muestra vigente desde ${fmtFecha(d.escala.vigencia)}. En la versión real se lee de ARCA y una persona la aprueba antes de usarla.`;
       renderPeriodo(d.periodo);
       renderMc(d.mis_comprobantes);
@@ -172,6 +248,20 @@
     const cuit = boton.dataset.detalle;
     if (expandidos.has(cuit)) expandidos.delete(cuit); else expandidos.add(cuit);
     renderFilas(ultimos);
+  });
+
+  $("mtRows").addEventListener("submit", (event) => {
+    const form = event.target.closest("[data-params]");
+    if (!form) return;
+    event.preventDefault();
+    const valores = Object.fromEntries(PARAMS.map(([k]) => [k, numero(form.elements[k].value)]));
+    if (Object.values(valores).some(Number.isNaN)) return;
+    recomputar(datos.contribuyentes.find((x) => x.cuit === form.dataset.params), valores);
+  });
+
+  $("mtRows").addEventListener("click", (event) => {
+    const borrar = event.target.closest("[data-params-borrar]");
+    if (borrar) recomputar(datos.contribuyentes.find((x) => x.cuit === borrar.dataset.paramsBorrar), {});
   });
 
   function route() {

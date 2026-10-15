@@ -241,7 +241,19 @@
         ]
       },
       "uso_max": 1.12,
-      "parametro_limitante": "energia"
+      "parametro_limitante": "energia",
+      "base": {
+        "estado": "ok",
+        "categoria_corresponde": "A",
+        "uso": 0.5598123159930307,
+        "alertas": [
+          {
+            "tipo": "compras_sobre_ventas",
+            "nivel": "aviso",
+            "mensaje": "Las compras y gastos del período ($ 4.040.000) equivalen al 41% de la facturación; la referencia para servicios es 40%. Revisar que sean inherentes a la actividad."
+          }
+        ]
+      }
     },
     {
       "cuit": "20000000029",
@@ -432,6 +444,18 @@
         "escala_vigencia": "2026-02-01",
         "provisoria": false,
         "tardia": false
+      },
+      "base": {
+        "estado": "cercano",
+        "categoria_corresponde": "C",
+        "uso": 0.9201274897357337,
+        "alertas": [
+          {
+            "tipo": "cerca_del_tope",
+            "nivel": "aviso",
+            "mensaje": "Lleva usado el 92% del tope de la categoría C en el período."
+          }
+        ]
       }
     },
     {
@@ -464,7 +488,19 @@
       "sincronizado_el": null,
       "manual_difiere": null,
       "mensual": null,
-      "cierre_anterior": null
+      "cierre_anterior": null,
+      "base": {
+        "estado": "excedido",
+        "categoria_corresponde": "C",
+        "uso": 1.1025745106867815,
+        "alertas": [
+          {
+            "tipo": "excede_tope",
+            "nivel": "critico",
+            "mensaje": "Supera el tope de la categoría B (110%). Correspondería: C."
+          }
+        ]
+      }
     },
     {
       "cuit": "20000000043",
@@ -532,7 +568,19 @@
         ]
       },
       "uso_max": 0.8235294117647058,
-      "parametro_limitante": "superficie"
+      "parametro_limitante": "superficie",
+      "base": {
+        "estado": "ok",
+        "categoria_corresponde": "B",
+        "uso": 0.39505493827091426,
+        "alertas": [
+          {
+            "tipo": "cambio_categoria",
+            "nivel": "aviso",
+            "mensaje": "El padrón cambió de categoría C a D (detectado 2026-09-30)."
+          }
+        ]
+      }
     },
     {
       "cuit": "23000000058",
@@ -564,7 +612,19 @@
       "sincronizado_el": null,
       "manual_difiere": null,
       "mensual": null,
-      "cierre_anterior": null
+      "cierre_anterior": null,
+      "base": {
+        "estado": "sin_facturacion",
+        "categoria_corresponde": null,
+        "uso": null,
+        "alertas": [
+          {
+            "tipo": "sin_facturacion",
+            "nivel": "info",
+            "mensaje": "Falta la facturación del período para comparar contra el tope."
+          }
+        ]
+      }
     }
   ],
   "alertas": [
@@ -627,5 +687,46 @@
     "hasta": "2026-09-30",
     "cerrado": false,
     "recategorizacion": "julio 2027"
+  },
+  "escala_parametros": {
+    "superficie": {
+      "A": 30,
+      "B": 45,
+      "C": 60,
+      "D": 85,
+      "E": 110,
+      "F": 150,
+      "G": 200,
+      "H": 200,
+      "I": 200,
+      "J": 200,
+      "K": 200
+    },
+    "energia": {
+      "A": 3330,
+      "B": 5000,
+      "C": 6700,
+      "D": 10000,
+      "E": 13000,
+      "F": 16500,
+      "G": 20000,
+      "H": 20000,
+      "I": 20000,
+      "J": 20000,
+      "K": 20000
+    },
+    "alquiler": {
+      "A": 2792886,
+      "B": 2792886,
+      "C": 3816944,
+      "D": 3816944,
+      "E": 5000000,
+      "F": 5000000,
+      "G": 6500000,
+      "H": 8378658,
+      "I": 8378658,
+      "J": 8378658,
+      "K": 8378658
+    }
   }
 }
