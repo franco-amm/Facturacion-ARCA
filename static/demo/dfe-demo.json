@@ -68,7 +68,8 @@
       "urgencia": "alta",
       "con_adjunto": true,
       "vista": false,
-      "estado_arca": "Comunicación No Leída"
+      "estado_arca": "Comunicación No Leída",
+      "contenido_demo": "[Texto ficticio de demostración]\n\nSe le informa que no se registra la presentación de la declaración jurada correspondiente al período indicado. Regularice su situación dentro del plazo fijado para evitar la aplicación de sanciones."
     },
     {
       "id": "9004",
@@ -82,7 +83,8 @@
       "urgencia": "alta",
       "con_adjunto": true,
       "vista": false,
-      "estado_arca": "Comunicación Leída"
+      "estado_arca": "Comunicación Leída",
+      "contenido_demo": "[Texto ficticio de demostración]\n\nSe solicita remitir la documentación respaldatoria de la operación de venta informada, dentro del plazo indicado en esta comunicación."
     },
     {
       "id": "9003",
@@ -96,7 +98,8 @@
       "urgencia": "media",
       "con_adjunto": false,
       "vista": false,
-      "estado_arca": "Comunicación No Leída"
+      "estado_arca": "Comunicación No Leída",
+      "contenido_demo": "[Texto ficticio de demostración]\n\nSe detectaron diferencias entre la categoría declarada y los parámetros informados. Verifique su situación."
     },
     {
       "id": "9005",
@@ -110,7 +113,8 @@
       "urgencia": "sin_clasificar",
       "con_adjunto": false,
       "vista": false,
-      "estado_arca": "Comunicación Leída"
+      "estado_arca": "Comunicación Leída",
+      "contenido_demo": "[Texto ficticio de demostración]\n\nComunicación general del domicilio fiscal electrónico."
     },
     {
       "id": "9002",
@@ -124,7 +128,8 @@
       "urgencia": "baja",
       "con_adjunto": false,
       "vista": true,
-      "estado_arca": "Comunicación No Leída"
+      "estado_arca": "Comunicación No Leída",
+      "contenido_demo": "[Texto ficticio de demostración]\n\nNovedades del régimen simplificado. Mensaje informativo."
     }
   ]
 }

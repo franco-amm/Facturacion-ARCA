@@ -37,6 +37,13 @@
     return "";
   }
 
+  function leidaEnArca(c) {
+    const t = String(c.estado_arca || "").toLowerCase();
+    if (/no le[ií]d|sin leer|pendiente/.test(t)) return false;
+    if (/le[ií]d/.test(t)) return true;
+    return null;
+  }
+
   function render() {
     const items = ordenadas();
     const urgentes = items.filter((c) => !c.vista && c.urgencia === "alta");
@@ -44,13 +51,15 @@
     $("dfeAlertList").innerHTML = urgentes.map((c) => `<li class="mt-alert mt-critico dfe-alert">
       <div><strong>${esc(nombreDe(c.cuit))}</strong><span class="mt-cuit">${esc(fmtCuit(c.cuit))}</span>
       <p>${esc(c.asunto)} · fecha límite ${fmtFecha(c.fecha_limite)} ${etiquetaArca(c)}</p></div>
-      <button class="button button-quiet" data-visto="${esc(c.id)}" type="button">Marcar como visto</button></li>`).join("");
+      <button class="mt-close" data-visto="${esc(c.id)}" type="button" title="Cerrar este aviso" aria-label="Cerrar aviso">✕</button></li>`).join("");
 
-    $("dfeFooter").textContent = `${items.length} comunicaciones de muestra · ${items.filter((c) => !c.vista).length} sin ver`;
+    $("dfeFooter").textContent = `${items.length} comunicaciones de muestra · ${items.filter((c) => leidaEnArca(c) === false).length} sin leer en ARCA`;
     $("dfeRows").innerHTML = items.map((c) => {
       const [etiqueta, tono] = URGENCIA[c.urgencia] || [c.urgencia, "muted"];
-      const accion = c.vista ? '<span class="mt-sub">Vista</span>'
-        : `<button class="button button-quiet" data-visto="${esc(c.id)}" type="button">Marcar como visto</button>`;
+      const l = leidaEnArca(c);
+      const accion = l === false ? `<button class="button button-quiet" data-leer="${esc(c.id)}" type="button">Marcar como leído</button>`
+        : l === true ? `<button class="button button-quiet" data-contenido="${esc(c.id)}" type="button">Ver contenido</button>`
+        : '<span class="mt-sub">—</span>';
       return `<tr class="${c.vista ? "dfe-vista" : ""}">
         <td><span class="mt-name">${esc(nombreDe(c.cuit))}</span><span class="mt-doc">${esc(fmtCuit(c.cuit))}</span></td>
         <td>${esc(c.asunto)}<span class="mt-sub">${esc(c.organismo)}${c.con_adjunto ? " · con adjunto" : ""} ${etiquetaArca(c)}</span></td>
@@ -77,7 +86,7 @@
       const r = await fetch("/api/demo/dfe");
       if (!r.ok) throw new Error(`Error HTTP ${r.status}`);
       data = await r.json();
-      $("dfeMsg").textContent = `Datos de muestra al ${fmtFecha(data.fecha_muestra)}. En la versión real se consulta ARCA y solo se detecta: nada se abre ni se marca como leído.`;
+      $("dfeMsg").textContent = `Datos de muestra al ${fmtFecha(data.fecha_muestra)}. Consultar solo detecta; abrir una comunicación («Marcar como leído» o «Ver contenido») es una acción aparte. Aquí todo es simulado.`;
       render();
       loaded = true;
     } catch (e) {
@@ -85,11 +94,28 @@
     }
   }
 
+  $("dfeDialogClose").addEventListener("click", () => $("dfeDialog").close());
+
   $("dfe").addEventListener("click", (event) => {
-    const boton = event.target.closest("[data-visto]");
-    if (!boton || !data) return;
-    const c = data.comunicaciones.find((x) => x.id === boton.dataset.visto);
-    if (c) { c.vista = true; render(); }
+    if (!data) return;
+    const buscar = (id) => data.comunicaciones.find((x) => x.id === id);
+    const visto = event.target.closest("[data-visto]");
+    const leer = event.target.closest("[data-leer]");
+    const ver = event.target.closest("[data-contenido]");
+    if (visto) {
+      const c = buscar(visto.dataset.visto);
+      if (c) { c.vista = true; render(); }
+    } else if (leer) {
+      if (!window.confirm("En la versión real, marcar como leída avisa a ARCA que abriste la comunicación: puede darla por notificada y empezar a correr los plazos. Aquí es solo una simulación. ¿Continuar?")) return;
+      const c = buscar(leer.dataset.leer);
+      if (c) { c.estado_arca = "Comunicación Leída"; render(); }
+    } else if (ver) {
+      const c = buscar(ver.dataset.contenido);
+      if (!c) return;
+      $("dfeDialogTitle").textContent = c.asunto;
+      $("dfeDialogBody").innerHTML = `<pre class="dfe-mensaje">${esc(c.contenido_demo)}</pre><p class="mt-detail-note">Contenido ficticio. En la versión real se muestra el texto y los adjuntos que devuelve ARCA, sin guardarlos.</p>`;
+      $("dfeDialog").showModal();
+    }
   });
 
   function route() {
