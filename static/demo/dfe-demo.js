@@ -28,13 +28,22 @@
       (a.vista - b.vista) || (ORDEN[a.urgencia] - ORDEN[b.urgencia]) || String(a.fecha_limite).localeCompare(String(b.fecha_limite)));
   }
 
+  // Estado de lectura que informa ARCA (distinto de "visto", la marca local del estudio).
+  function etiquetaArca(c) {
+    const t = String(c.estado_arca || "").toLowerCase();
+    if (!t) return "";
+    if (/no le[ií]d|sin leer|pendiente/.test(t)) return '<span class="mt-state warn" title="ARCA la informa sin leer">Sin leer en ARCA</span>';
+    if (/le[ií]d/.test(t)) return '<span class="mt-state muted" title="ARCA la informa leída (por alguien con acceso o de oficio). No implica que el estudio la haya visto.">Leída en ARCA</span>';
+    return "";
+  }
+
   function render() {
     const items = ordenadas();
     const urgentes = items.filter((c) => !c.vista && c.urgencia === "alta");
     $("dfeAlerts").hidden = urgentes.length === 0;
     $("dfeAlertList").innerHTML = urgentes.map((c) => `<li class="mt-alert mt-critico dfe-alert">
       <div><strong>${esc(nombreDe(c.cuit))}</strong><span class="mt-cuit">${esc(fmtCuit(c.cuit))}</span>
-      <p>${esc(c.asunto)} · fecha límite ${fmtFecha(c.fecha_limite)}</p></div>
+      <p>${esc(c.asunto)} · fecha límite ${fmtFecha(c.fecha_limite)} ${etiquetaArca(c)}</p></div>
       <button class="button button-quiet" data-visto="${esc(c.id)}" type="button">Marcar como visto</button></li>`).join("");
 
     $("dfeFooter").textContent = `${items.length} comunicaciones de muestra · ${items.filter((c) => !c.vista).length} sin ver`;
@@ -44,7 +53,7 @@
         : `<button class="button button-quiet" data-visto="${esc(c.id)}" type="button">Marcar como visto</button>`;
       return `<tr class="${c.vista ? "dfe-vista" : ""}">
         <td><span class="mt-name">${esc(nombreDe(c.cuit))}</span><span class="mt-doc">${esc(fmtCuit(c.cuit))}</span></td>
-        <td>${esc(c.asunto)}<span class="mt-sub">${esc(c.organismo)}${c.con_adjunto ? " · con adjunto" : ""}</span></td>
+        <td>${esc(c.asunto)}<span class="mt-sub">${esc(c.organismo)}${c.con_adjunto ? " · con adjunto" : ""} ${etiquetaArca(c)}</span></td>
         <td>${fmtFecha(c.publicada)}</td><td>${limiteTexto(c)}</td>
         <td>${esc(TIPO[c.tipo] || c.tipo)}</td>
         <td><span class="mt-state ${tono}">${esc(etiqueta)}</span></td><td>${accion}</td></tr>`;

@@ -24,9 +24,21 @@
     return `<table class="gr-detail-table"><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table>`;
   }
 
+  const POR_PAGINA = 10;
+  let pagina = 1;
+
   function renderFilas(items) {
-    $("grdFooter").textContent = `${items.length} liquidaci${items.length === 1 ? "ón" : "ones"} de muestra`;
+    const paginas = Math.max(1, Math.ceil(items.length / POR_PAGINA));
+    pagina = Math.min(Math.max(1, pagina), paginas);
+    const desde = (pagina - 1) * POR_PAGINA;
+    const totalNeto = items.reduce((s, f) => s + (f.total_neto_a_pagar || 0), 0);
+    $("grdPager").hidden = paginas <= 1;
+    $("grdPagina").textContent = `Página ${pagina} de ${paginas} · ${desde + 1}–${Math.min(desde + POR_PAGINA, items.length)} de ${items.length}`;
+    $("grdPrev").disabled = pagina <= 1;
+    $("grdNext").disabled = pagina >= paginas;
+    $("grdFooter").textContent = `${items.length} liquidaci${items.length === 1 ? "ón" : "ones"} de muestra · neto a pagar ${dinero.format(totalNeto)}${paginas > 1 ? " (total de todas las páginas)" : ""}`;
     $("grdRows").innerHTML = items
+      .slice(desde, desde + POR_PAGINA)
       .map((f) => `<tr>
         <td>${fmtFecha(f.fecha_liquidacion)}</td>
         <td>${esc(f.coe)}</td>
@@ -132,6 +144,9 @@
       $("grdMsg").textContent = `No se pudo cargar la demo: ${e.message}`;
     }
   }
+
+  $("grdPrev").addEventListener("click", () => { pagina -= 1; renderFilas(liquidaciones); });
+  $("grdNext").addEventListener("click", () => { pagina += 1; renderFilas(liquidaciones); });
 
   $("grdRows").addEventListener("click", (event) => {
     const boton = event.target.closest("[data-detalle]");

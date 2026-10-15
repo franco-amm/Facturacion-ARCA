@@ -67,7 +67,8 @@
       "tipo": "intimacion",
       "urgencia": "alta",
       "con_adjunto": true,
-      "vista": false
+      "vista": false,
+      "estado_arca": "Comunicación No Leída"
     },
     {
       "id": "9004",
@@ -80,7 +81,8 @@
       "tipo": "requerimiento",
       "urgencia": "alta",
       "con_adjunto": true,
-      "vista": false
+      "vista": false,
+      "estado_arca": "Comunicación Leída"
     },
     {
       "id": "9003",
@@ -93,7 +95,8 @@
       "tipo": "diferencias",
       "urgencia": "media",
       "con_adjunto": false,
-      "vista": false
+      "vista": false,
+      "estado_arca": "Comunicación No Leída"
     },
     {
       "id": "9005",
@@ -106,7 +109,8 @@
       "tipo": "sin_clasificar",
       "urgencia": "sin_clasificar",
       "con_adjunto": false,
-      "vista": false
+      "vista": false,
+      "estado_arca": "Comunicación Leída"
     },
     {
       "id": "9002",
@@ -119,7 +123,8 @@
       "tipo": "informativo",
       "urgencia": "baja",
       "con_adjunto": false,
-      "vista": true
+      "vista": true,
+      "estado_arca": "Comunicación No Leída"
     }
   ]
 }

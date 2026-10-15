@@ -11,6 +11,10 @@
     ok: ["En regla", "ok"], cercano: ["Cerca del tope", "warn"], excedido: ["Supera el tope", "bad"],
     sin_facturacion: ["Falta facturación", "muted"], sin_datos: ["Sin consultar", "muted"],
   };
+  const HINT = {
+    sin_facturacion: "No hay facturación para comparar contra el tope. Falta cargar el CUIT y su clave fiscal en Configuraciones → Clientes · Mis Comprobantes (o todavía no se sincronizó). También podés cargar el monto a mano.",
+  };
+  const NUM = new Intl.NumberFormat("es-AR", { maximumFractionDigits: 0 });
   let loaded = false;
 
   function renderPeriodo(p) {
@@ -97,10 +101,22 @@
     </table>`;
   }
 
+  function seccionParametros(c) {
+    const p = c.parametros;
+    if (!p) return '<p class="mt-detail-note">Sin parámetros cargados: la categoría se calcula solo por facturación. En la versión real se cargan a mano desde acá (superficie, energía y alquiler).</p>';
+    const filas = p.items.map((i) => `<tr class="${i.estado === "excedido" ? "mt-bad" : ""}">
+      <td>${esc(i.nombre)}</td><td class="amount-cell">${NUM.format(i.valor)} <span class="mt-sub">${esc(i.unidad)}</span></td>
+      <td class="amount-cell">${NUM.format(i.tope_actual)}</td><td class="amount-cell">${Math.round(i.uso * 100)}%</td>
+      <td>${esc(i.categoria_requerida || "Fuera de escala")}</td></tr>`).join("");
+    return `<table class="mt-month-table"><thead><tr><th>Parámetro</th><th class="amount-cell">Valor</th><th class="amount-cell">Tope cat. ${esc(c.categoria_padron)}</th><th class="amount-cell">Uso</th><th>Categoría</th></tr></thead><tbody>${filas}</tbody></table>
+      <p class="mt-detail-note">Cargado el ${fmtFecha((p.cargados_el || "").slice(0, 10))}. La categoría que corresponde es la más alta entre la facturación y estos parámetros.</p>`;
+  }
+
   function filaDetalle(c) {
     return `<tr class="mt-detail-row"><td colspan="9"><div class="mt-detail">
       <section><h3>Cierre anterior</h3>${detalleCierre(c.cierre_anterior)}</section>
       <section><h3>Mes a mes</h3>${detalleMensual(c.mensual)}</section>
+      <section class="mt-detail-wide"><h3>Parámetros de la escala · carga manual</h3>${seccionParametros(c)}</section>
     </div></td></tr>`;
   }
 
@@ -111,8 +127,10 @@
     $("mtFooter").textContent = `${items.length} CUIT de muestra`;
     $("mtRows").innerHTML = items.map((c) => {
       const [label, tone] = ESTADOS[c.estado] || [c.estado, "muted"];
-      const pct = c.uso == null ? null : Math.round(c.uso * 100);
-      const bar = pct == null ? "—" : `<div class="mt-bar ${tone}"><i style="width:${Math.min(pct, 100)}%"></i></div><span class="mt-pct">${pct}%</span>`;
+      const usoBarra = c.uso_max ?? c.uso;
+      const pct = usoBarra == null ? null : Math.round(usoBarra * 100);
+      const limita = c.parametro_limitante && c.parametros ? c.parametros.items.find((i) => i.clave === c.parametro_limitante) : null;
+      const bar = pct == null ? "—" : `<div class="mt-bar ${tone}"><i style="width:${Math.min(pct, 100)}%"></i></div><span class="mt-pct">${pct}%</span>${limita ? `<span class="mt-sub">limita: ${esc(limita.nombre.toLowerCase())}</span>` : ""}`;
       const sube = c.categoria_corresponde && ORDEN.indexOf(c.categoria_corresponde) > ORDEN.indexOf(c.categoria_padron);
       const baja = c.categoria_corresponde && ORDEN.indexOf(c.categoria_corresponde) < ORDEN.indexOf(c.categoria_padron);
       const corresponde = c.categoria_corresponde
@@ -126,7 +144,7 @@
         <td class="amount-cell">${celdaCompras(c)}</td>
         <td class="mt-use">${bar}</td>
         <td>${corresponde}</td>
-        <td><span class="mt-state ${tone}">${esc(label)}</span></td>
+        <td><span class="mt-state ${tone}"${HINT[c.estado] ? ` title="${esc(HINT[c.estado])}" style="cursor:help"` : ""}>${esc(label)}</span></td>
         <td class="mt-actions"><button class="button button-quiet" data-detalle="${esc(c.cuit)}" type="button" aria-expanded="${expandidos.has(c.cuit)}">${expandidos.has(c.cuit) ? "Ocultar" : "Detalle"}</button></td>
       </tr>${expandidos.has(c.cuit) ? filaDetalle(c) : ""}`;
     }).join("");

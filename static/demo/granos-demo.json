@@ -1,10 +1,10 @@
 {
   "liquidaciones": [
     {
-      "coe": "900000000001",
+      "coe": "900000000027",
       "pto_emision": 1,
-      "nro_orden": 100001,
-      "fecha_liquidacion": "2026-09-15",
+      "nro_orden": 100027,
+      "fecha_liquidacion": "2026-10-13",
       "cuit_comprador": "20000000031",
       "cod_grano": "19",
       "campania": "2526",
@@ -19,7 +19,7 @@
       "detalle": {
         "liquidacion": {
           "ptoEmision": 1,
-          "nroOrden": 100001,
+          "nroOrden": 100027,
           "numeroContrato": "100000123",
           "cuitComprador": "20000000031",
           "cuitVendedor": 20000000099,
@@ -90,6 +90,253 @@
                   "nroCertificadoRetencion": null
                 },
                 "importeRetencion": 230000
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "coe": "900000000026",
+      "pto_emision": 2,
+      "nro_orden": 100026,
+      "fecha_liquidacion": "2026-10-05",
+      "cuit_comprador": "20000000031",
+      "cod_grano": "19",
+      "campania": "2526",
+      "peso_neto": 15000,
+      "sub_total": 3375000,
+      "importe_iva": 354375,
+      "operacion_con_iva": 3729375,
+      "total_deduccion": 0,
+      "total_neto_a_pagar": 3729375,
+      "total_iva_rg4310_18": 0,
+      "total_pago_segun_condicion": 3729375,
+      "detalle": {
+        "liquidacion": {
+          "ptoEmision": 2,
+          "nroOrden": 100026,
+          "numeroContrato": null,
+          "cuitComprador": "20000000031",
+          "cuitVendedor": 20000000099,
+          "actuaCorredor": "N",
+          "cuitCorredor": null,
+          "comisionCorredor": null,
+          "codPuerto": "14",
+          "desPuertoLocalidad": "ROSARIO (DEMO)",
+          "codGradoEnt": "G2",
+          "factorEnt": 100,
+          "valGradoEnt": 1,
+          "precioRefTn": 225000,
+          "precioFleteTn": 0,
+          "campaniaPPal": "2526",
+          "datosAdicionales": "Entrega directa a planta, sin corretaje (dato de muestra).",
+          "certificados": {
+            "certificado": [
+              {
+                "tipoCertificadoDeposito": "332",
+                "nroCertificadoDeposito": 900333444555,
+                "pesoNeto": 15000,
+                "pesoNetoTotalCertificado": null,
+                "codLocalidadProcedencia": 12000,
+                "codProvProcedencia": 1,
+                "campania": 2526,
+                "fechaCierre": "2026-09-25"
+              }
+            ]
+          }
+        },
+        "autorizacion": {
+          "numeroContrato": null,
+          "precioOperacion": 225,
+          "estado": "AC",
+          "totalRetencion": 0,
+          "totalRetencionAfip": 0,
+          "totalOtrasRetenciones": 0,
+          "deducciones": {
+            "deduccionReturn": []
+          },
+          "retenciones": {
+            "retencionReturn": []
+          }
+        }
+      }
+    },
+    {
+      "coe": "900000000003",
+      "pto_emision": 2,
+      "nro_orden": 200001,
+      "fecha_liquidacion": "2026-09-28",
+      "cuit_comprador": "20000000031",
+      "cod_grano": "19",
+      "campania": "2526",
+      "peso_neto": 5000,
+      "sub_total": 1125000,
+      "importe_iva": 118125,
+      "operacion_con_iva": 1243125,
+      "total_deduccion": 0,
+      "total_neto_a_pagar": 1243125,
+      "total_iva_rg4310_18": 0,
+      "total_pago_segun_condicion": 1243125,
+      "detalle": {
+        "liquidacion": {
+          "ptoEmision": 2,
+          "nroOrden": 200001,
+          "numeroContrato": null,
+          "cuitComprador": "20000000031",
+          "cuitVendedor": 20000000099,
+          "actuaCorredor": "N",
+          "cuitCorredor": null,
+          "comisionCorredor": null,
+          "codPuerto": "14",
+          "desPuertoLocalidad": "ROSARIO (DEMO)",
+          "codGradoEnt": "G2",
+          "factorEnt": 100,
+          "valGradoEnt": 1,
+          "precioRefTn": 225000,
+          "precioFleteTn": 0,
+          "campaniaPPal": "2526",
+          "datosAdicionales": "Entrega directa a planta, sin corretaje (dato de muestra).",
+          "certificados": {
+            "certificado": [
+              {
+                "tipoCertificadoDeposito": "332",
+                "nroCertificadoDeposito": 900333444555,
+                "pesoNeto": 5000,
+                "pesoNetoTotalCertificado": null,
+                "codLocalidadProcedencia": 12000,
+                "codProvProcedencia": 1,
+                "campania": 2526,
+                "fechaCierre": "2026-09-25"
+              }
+            ]
+          }
+        },
+        "autorizacion": {
+          "numeroContrato": null,
+          "precioOperacion": 225,
+          "estado": "AC",
+          "totalRetencion": 0,
+          "totalRetencionAfip": 0,
+          "totalOtrasRetenciones": 0,
+          "deducciones": {
+            "deduccionReturn": []
+          },
+          "retenciones": {
+            "retencionReturn": []
+          }
+        }
+      }
+    },
+    {
+      "coe": "900000000025",
+      "pto_emision": 1,
+      "nro_orden": 100025,
+      "fecha_liquidacion": "2026-09-26",
+      "cuit_comprador": "20000000042",
+      "cod_grano": "23",
+      "campania": "2526",
+      "peso_neto": 10000,
+      "sub_total": 3500000,
+      "importe_iva": 367500,
+      "operacion_con_iva": 3867500,
+      "total_deduccion": 79525,
+      "total_neto_a_pagar": 3559642,
+      "total_iva_rg4310_18": 183750,
+      "total_pago_segun_condicion": 3550000,
+      "detalle": {
+        "liquidacion": {
+          "ptoEmision": 1,
+          "nroOrden": 100025,
+          "numeroContrato": "100000456",
+          "cuitComprador": "20000000042",
+          "cuitVendedor": 20000000099,
+          "actuaCorredor": "S",
+          "cuitCorredor": 20000000088,
+          "comisionCorredor": 1.5,
+          "codPuerto": "21",
+          "desPuertoLocalidad": "SAN LORENZO (DEMO)",
+          "codGradoEnt": "G1",
+          "factorEnt": 102,
+          "valGradoEnt": 2,
+          "precioRefTn": 350000,
+          "precioFleteTn": 1200,
+          "campaniaPPal": "2526",
+          "datosAdicionales": null,
+          "certificados": {
+            "certificado": [
+              {
+                "tipoCertificadoDeposito": "332",
+                "nroCertificadoDeposito": 900222333444,
+                "pesoNeto": 10000,
+                "pesoNetoTotalCertificado": null,
+                "codLocalidadProcedencia": 82000,
+                "codProvProcedencia": 8,
+                "campania": 2526,
+                "fechaCierre": "2026-09-18"
+              }
+            ]
+          }
+        },
+        "autorizacion": {
+          "numeroContrato": "100000456",
+          "precioOperacion": 350,
+          "estado": "AC",
+          "totalRetencion": 228333,
+          "totalRetencionAfip": 175000,
+          "totalOtrasRetenciones": 53333,
+          "deducciones": {
+            "deduccionReturn": [
+              {
+                "deduccion": {
+                  "codigoConcepto": "CO",
+                  "detalleAclaratorio": "Comisión de corretaje (dato de muestra)",
+                  "baseCalculo": 52500
+                },
+                "importeIva": 11025,
+                "importeDeduccion": 63525
+              },
+              {
+                "deduccion": {
+                  "codigoConcepto": "FL",
+                  "detalleAclaratorio": "Flete (dato de muestra)",
+                  "baseCalculo": 12000
+                },
+                "importeIva": 0,
+                "importeDeduccion": 12000
+              },
+              {
+                "deduccion": {
+                  "codigoConcepto": "OD",
+                  "detalleAclaratorio": "Tasa de Registro (dato de muestra)",
+                  "baseCalculo": 4000
+                },
+                "importeIva": 0,
+                "importeDeduccion": 4000
+              }
+            ]
+          },
+          "retenciones": {
+            "retencionReturn": [
+              {
+                "retencion": {
+                  "codigoConcepto": "RI",
+                  "detalleAclaratorio": "Retención IVA (dato de muestra)",
+                  "baseCalculo": 3500000,
+                  "alicuota": 5,
+                  "nroCertificadoRetencion": null
+                },
+                "importeRetencion": 175000
+              },
+              {
+                "retencion": {
+                  "codigoConcepto": "OG",
+                  "detalleAclaratorio": "IIBB (dato de muestra)",
+                  "baseCalculo": 2666667,
+                  "alicuota": 2,
+                  "nroCertificadoRetencion": "900900900"
+                },
+                "importeRetencion": 53333
               }
             ]
           }
@@ -212,10 +459,1587 @@
       }
     },
     {
-      "coe": "900000000003",
+      "coe": "900000000024",
+      "pto_emision": 1,
+      "nro_orden": 100024,
+      "fecha_liquidacion": "2026-09-18",
+      "cuit_comprador": "20000000031",
+      "cod_grano": "19",
+      "campania": "2526",
+      "peso_neto": 5000,
+      "sub_total": 1150000,
+      "importe_iva": 120750,
+      "operacion_con_iva": 1270750,
+      "total_deduccion": 36788,
+      "total_neto_a_pagar": 1176462,
+      "total_iva_rg4310_18": 0,
+      "total_pago_segun_condicion": 1175000,
+      "detalle": {
+        "liquidacion": {
+          "ptoEmision": 1,
+          "nroOrden": 100024,
+          "numeroContrato": "100000123",
+          "cuitComprador": "20000000031",
+          "cuitVendedor": 20000000099,
+          "actuaCorredor": "N",
+          "cuitCorredor": null,
+          "comisionCorredor": null,
+          "codPuerto": "14",
+          "desPuertoLocalidad": "ROSARIO (DEMO)",
+          "codGradoEnt": "G2",
+          "factorEnt": 100,
+          "valGradoEnt": 1,
+          "precioRefTn": 230000,
+          "precioFleteTn": 0,
+          "campaniaPPal": "2526",
+          "datosAdicionales": null,
+          "certificados": {
+            "certificado": [
+              {
+                "tipoCertificadoDeposito": "332",
+                "nroCertificadoDeposito": 900111222333,
+                "pesoNeto": 5000,
+                "pesoNetoTotalCertificado": null,
+                "codLocalidadProcedencia": 12000,
+                "codProvProcedencia": 1,
+                "campania": 2526,
+                "fechaCierre": "2026-09-10"
+              }
+            ]
+          }
+        },
+        "autorizacion": {
+          "numeroContrato": "100000123",
+          "precioOperacion": 230,
+          "estado": "AC",
+          "totalRetencion": 57500,
+          "totalRetencionAfip": 57500,
+          "totalOtrasRetenciones": 0,
+          "deducciones": {
+            "deduccionReturn": [
+              {
+                "deduccion": {
+                  "codigoConcepto": "CO",
+                  "detalleAclaratorio": "Comisión (dato de muestra)",
+                  "baseCalculo": 28750
+                },
+                "importeIva": 6038,
+                "importeDeduccion": 34788
+              },
+              {
+                "deduccion": {
+                  "codigoConcepto": "OD",
+                  "detalleAclaratorio": "Derecho de Registro (dato de muestra)",
+                  "baseCalculo": 2000
+                },
+                "importeIva": 0,
+                "importeDeduccion": 2000
+              }
+            ]
+          },
+          "retenciones": {
+            "retencionReturn": [
+              {
+                "retencion": {
+                  "codigoConcepto": "RI",
+                  "detalleAclaratorio": "Retención IVA (dato de muestra)",
+                  "baseCalculo": 1150000,
+                  "alicuota": 5,
+                  "nroCertificadoRetencion": null
+                },
+                "importeRetencion": 57500
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "coe": "900000000001",
+      "pto_emision": 1,
+      "nro_orden": 100001,
+      "fecha_liquidacion": "2026-09-15",
+      "cuit_comprador": "20000000031",
+      "cod_grano": "19",
+      "campania": "2526",
+      "peso_neto": 20000,
+      "sub_total": 4600000,
+      "importe_iva": 483000,
+      "operacion_con_iva": 5083000,
+      "total_deduccion": 147150,
+      "total_neto_a_pagar": 4705850,
+      "total_iva_rg4310_18": 0,
+      "total_pago_segun_condicion": 4700000,
+      "detalle": {
+        "liquidacion": {
+          "ptoEmision": 1,
+          "nroOrden": 100001,
+          "numeroContrato": "100000123",
+          "cuitComprador": "20000000031",
+          "cuitVendedor": 20000000099,
+          "actuaCorredor": "N",
+          "cuitCorredor": null,
+          "comisionCorredor": null,
+          "codPuerto": "14",
+          "desPuertoLocalidad": "ROSARIO (DEMO)",
+          "codGradoEnt": "G2",
+          "factorEnt": 100,
+          "valGradoEnt": 1,
+          "precioRefTn": 230000,
+          "precioFleteTn": 0,
+          "campaniaPPal": "2526",
+          "datosAdicionales": null,
+          "certificados": {
+            "certificado": [
+              {
+                "tipoCertificadoDeposito": "332",
+                "nroCertificadoDeposito": 900111222333,
+                "pesoNeto": 20000,
+                "pesoNetoTotalCertificado": null,
+                "codLocalidadProcedencia": 12000,
+                "codProvProcedencia": 1,
+                "campania": 2526,
+                "fechaCierre": "2026-09-10"
+              }
+            ]
+          }
+        },
+        "autorizacion": {
+          "numeroContrato": "100000123",
+          "precioOperacion": 230,
+          "estado": "AC",
+          "totalRetencion": 230000,
+          "totalRetencionAfip": 230000,
+          "totalOtrasRetenciones": 0,
+          "deducciones": {
+            "deduccionReturn": [
+              {
+                "deduccion": {
+                  "codigoConcepto": "CO",
+                  "detalleAclaratorio": "Comisión (dato de muestra)",
+                  "baseCalculo": 115000
+                },
+                "importeIva": 24150,
+                "importeDeduccion": 139150
+              },
+              {
+                "deduccion": {
+                  "codigoConcepto": "OD",
+                  "detalleAclaratorio": "Derecho de Registro (dato de muestra)",
+                  "baseCalculo": 8000
+                },
+                "importeIva": 0,
+                "importeDeduccion": 8000
+              }
+            ]
+          },
+          "retenciones": {
+            "retencionReturn": [
+              {
+                "retencion": {
+                  "codigoConcepto": "RI",
+                  "detalleAclaratorio": "Retención IVA (dato de muestra)",
+                  "baseCalculo": 4600000,
+                  "alicuota": 5,
+                  "nroCertificadoRetencion": null
+                },
+                "importeRetencion": 230000
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "coe": "900000000023",
       "pto_emision": 2,
-      "nro_orden": 200001,
-      "fecha_liquidacion": "2026-09-28",
+      "nro_orden": 100023,
+      "fecha_liquidacion": "2026-09-09",
+      "cuit_comprador": "20000000031",
+      "cod_grano": "19",
+      "campania": "2526",
+      "peso_neto": 18000,
+      "sub_total": 4050000,
+      "importe_iva": 425250,
+      "operacion_con_iva": 4475250,
+      "total_deduccion": 0,
+      "total_neto_a_pagar": 4475250,
+      "total_iva_rg4310_18": 0,
+      "total_pago_segun_condicion": 4475250,
+      "detalle": {
+        "liquidacion": {
+          "ptoEmision": 2,
+          "nroOrden": 100023,
+          "numeroContrato": null,
+          "cuitComprador": "20000000031",
+          "cuitVendedor": 20000000099,
+          "actuaCorredor": "N",
+          "cuitCorredor": null,
+          "comisionCorredor": null,
+          "codPuerto": "14",
+          "desPuertoLocalidad": "ROSARIO (DEMO)",
+          "codGradoEnt": "G2",
+          "factorEnt": 100,
+          "valGradoEnt": 1,
+          "precioRefTn": 225000,
+          "precioFleteTn": 0,
+          "campaniaPPal": "2526",
+          "datosAdicionales": "Entrega directa a planta, sin corretaje (dato de muestra).",
+          "certificados": {
+            "certificado": [
+              {
+                "tipoCertificadoDeposito": "332",
+                "nroCertificadoDeposito": 900333444555,
+                "pesoNeto": 18000,
+                "pesoNetoTotalCertificado": null,
+                "codLocalidadProcedencia": 12000,
+                "codProvProcedencia": 1,
+                "campania": 2526,
+                "fechaCierre": "2026-09-25"
+              }
+            ]
+          }
+        },
+        "autorizacion": {
+          "numeroContrato": null,
+          "precioOperacion": 225,
+          "estado": "AC",
+          "totalRetencion": 0,
+          "totalRetencionAfip": 0,
+          "totalOtrasRetenciones": 0,
+          "deducciones": {
+            "deduccionReturn": []
+          },
+          "retenciones": {
+            "retencionReturn": []
+          }
+        }
+      }
+    },
+    {
+      "coe": "900000000022",
+      "pto_emision": 1,
+      "nro_orden": 100022,
+      "fecha_liquidacion": "2026-09-01",
+      "cuit_comprador": "20000000042",
+      "cod_grano": "23",
+      "campania": "2526",
+      "peso_neto": 12000,
+      "sub_total": 4200000,
+      "importe_iva": 441000,
+      "operacion_con_iva": 4641000,
+      "total_deduccion": 95430,
+      "total_neto_a_pagar": 4271570,
+      "total_iva_rg4310_18": 220500,
+      "total_pago_segun_condicion": 4260000,
+      "detalle": {
+        "liquidacion": {
+          "ptoEmision": 1,
+          "nroOrden": 100022,
+          "numeroContrato": "100000456",
+          "cuitComprador": "20000000042",
+          "cuitVendedor": 20000000099,
+          "actuaCorredor": "S",
+          "cuitCorredor": 20000000088,
+          "comisionCorredor": 1.5,
+          "codPuerto": "21",
+          "desPuertoLocalidad": "SAN LORENZO (DEMO)",
+          "codGradoEnt": "G1",
+          "factorEnt": 102,
+          "valGradoEnt": 2,
+          "precioRefTn": 350000,
+          "precioFleteTn": 1200,
+          "campaniaPPal": "2526",
+          "datosAdicionales": null,
+          "certificados": {
+            "certificado": [
+              {
+                "tipoCertificadoDeposito": "332",
+                "nroCertificadoDeposito": 900222333444,
+                "pesoNeto": 12000,
+                "pesoNetoTotalCertificado": null,
+                "codLocalidadProcedencia": 82000,
+                "codProvProcedencia": 8,
+                "campania": 2526,
+                "fechaCierre": "2026-09-18"
+              }
+            ]
+          }
+        },
+        "autorizacion": {
+          "numeroContrato": "100000456",
+          "precioOperacion": 350,
+          "estado": "AC",
+          "totalRetencion": 274000,
+          "totalRetencionAfip": 210000,
+          "totalOtrasRetenciones": 64000,
+          "deducciones": {
+            "deduccionReturn": [
+              {
+                "deduccion": {
+                  "codigoConcepto": "CO",
+                  "detalleAclaratorio": "Comisión de corretaje (dato de muestra)",
+                  "baseCalculo": 63000
+                },
+                "importeIva": 13230,
+                "importeDeduccion": 76230
+              },
+              {
+                "deduccion": {
+                  "codigoConcepto": "FL",
+                  "detalleAclaratorio": "Flete (dato de muestra)",
+                  "baseCalculo": 14400
+                },
+                "importeIva": 0,
+                "importeDeduccion": 14400
+              },
+              {
+                "deduccion": {
+                  "codigoConcepto": "OD",
+                  "detalleAclaratorio": "Tasa de Registro (dato de muestra)",
+                  "baseCalculo": 4800
+                },
+                "importeIva": 0,
+                "importeDeduccion": 4800
+              }
+            ]
+          },
+          "retenciones": {
+            "retencionReturn": [
+              {
+                "retencion": {
+                  "codigoConcepto": "RI",
+                  "detalleAclaratorio": "Retención IVA (dato de muestra)",
+                  "baseCalculo": 4200000,
+                  "alicuota": 5,
+                  "nroCertificadoRetencion": null
+                },
+                "importeRetencion": 210000
+              },
+              {
+                "retencion": {
+                  "codigoConcepto": "OG",
+                  "detalleAclaratorio": "IIBB (dato de muestra)",
+                  "baseCalculo": 3200000,
+                  "alicuota": 2,
+                  "nroCertificadoRetencion": "900900900"
+                },
+                "importeRetencion": 64000
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "coe": "900000000021",
+      "pto_emision": 1,
+      "nro_orden": 100021,
+      "fecha_liquidacion": "2026-08-23",
+      "cuit_comprador": "20000000031",
+      "cod_grano": "19",
+      "campania": "2526",
+      "peso_neto": 30000,
+      "sub_total": 6900000,
+      "importe_iva": 724500,
+      "operacion_con_iva": 7624500,
+      "total_deduccion": 220725,
+      "total_neto_a_pagar": 7058775,
+      "total_iva_rg4310_18": 0,
+      "total_pago_segun_condicion": 7050000,
+      "detalle": {
+        "liquidacion": {
+          "ptoEmision": 1,
+          "nroOrden": 100021,
+          "numeroContrato": "100000123",
+          "cuitComprador": "20000000031",
+          "cuitVendedor": 20000000099,
+          "actuaCorredor": "N",
+          "cuitCorredor": null,
+          "comisionCorredor": null,
+          "codPuerto": "14",
+          "desPuertoLocalidad": "ROSARIO (DEMO)",
+          "codGradoEnt": "G2",
+          "factorEnt": 100,
+          "valGradoEnt": 1,
+          "precioRefTn": 230000,
+          "precioFleteTn": 0,
+          "campaniaPPal": "2526",
+          "datosAdicionales": null,
+          "certificados": {
+            "certificado": [
+              {
+                "tipoCertificadoDeposito": "332",
+                "nroCertificadoDeposito": 900111222333,
+                "pesoNeto": 30000,
+                "pesoNetoTotalCertificado": null,
+                "codLocalidadProcedencia": 12000,
+                "codProvProcedencia": 1,
+                "campania": 2526,
+                "fechaCierre": "2026-09-10"
+              }
+            ]
+          }
+        },
+        "autorizacion": {
+          "numeroContrato": "100000123",
+          "precioOperacion": 230,
+          "estado": "AC",
+          "totalRetencion": 345000,
+          "totalRetencionAfip": 345000,
+          "totalOtrasRetenciones": 0,
+          "deducciones": {
+            "deduccionReturn": [
+              {
+                "deduccion": {
+                  "codigoConcepto": "CO",
+                  "detalleAclaratorio": "Comisión (dato de muestra)",
+                  "baseCalculo": 172500
+                },
+                "importeIva": 36225,
+                "importeDeduccion": 208725
+              },
+              {
+                "deduccion": {
+                  "codigoConcepto": "OD",
+                  "detalleAclaratorio": "Derecho de Registro (dato de muestra)",
+                  "baseCalculo": 12000
+                },
+                "importeIva": 0,
+                "importeDeduccion": 12000
+              }
+            ]
+          },
+          "retenciones": {
+            "retencionReturn": [
+              {
+                "retencion": {
+                  "codigoConcepto": "RI",
+                  "detalleAclaratorio": "Retención IVA (dato de muestra)",
+                  "baseCalculo": 6900000,
+                  "alicuota": 5,
+                  "nroCertificadoRetencion": null
+                },
+                "importeRetencion": 345000
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "coe": "900000000020",
+      "pto_emision": 2,
+      "nro_orden": 100020,
+      "fecha_liquidacion": "2026-08-15",
+      "cuit_comprador": "20000000031",
+      "cod_grano": "19",
+      "campania": "2526",
+      "peso_neto": 25000,
+      "sub_total": 5625000,
+      "importe_iva": 590625,
+      "operacion_con_iva": 6215625,
+      "total_deduccion": 0,
+      "total_neto_a_pagar": 6215625,
+      "total_iva_rg4310_18": 0,
+      "total_pago_segun_condicion": 6215625,
+      "detalle": {
+        "liquidacion": {
+          "ptoEmision": 2,
+          "nroOrden": 100020,
+          "numeroContrato": null,
+          "cuitComprador": "20000000031",
+          "cuitVendedor": 20000000099,
+          "actuaCorredor": "N",
+          "cuitCorredor": null,
+          "comisionCorredor": null,
+          "codPuerto": "14",
+          "desPuertoLocalidad": "ROSARIO (DEMO)",
+          "codGradoEnt": "G2",
+          "factorEnt": 100,
+          "valGradoEnt": 1,
+          "precioRefTn": 225000,
+          "precioFleteTn": 0,
+          "campaniaPPal": "2526",
+          "datosAdicionales": "Entrega directa a planta, sin corretaje (dato de muestra).",
+          "certificados": {
+            "certificado": [
+              {
+                "tipoCertificadoDeposito": "332",
+                "nroCertificadoDeposito": 900333444555,
+                "pesoNeto": 25000,
+                "pesoNetoTotalCertificado": null,
+                "codLocalidadProcedencia": 12000,
+                "codProvProcedencia": 1,
+                "campania": 2526,
+                "fechaCierre": "2026-09-25"
+              }
+            ]
+          }
+        },
+        "autorizacion": {
+          "numeroContrato": null,
+          "precioOperacion": 225,
+          "estado": "AC",
+          "totalRetencion": 0,
+          "totalRetencionAfip": 0,
+          "totalOtrasRetenciones": 0,
+          "deducciones": {
+            "deduccionReturn": []
+          },
+          "retenciones": {
+            "retencionReturn": []
+          }
+        }
+      }
+    },
+    {
+      "coe": "900000000019",
+      "pto_emision": 1,
+      "nro_orden": 100019,
+      "fecha_liquidacion": "2026-08-06",
+      "cuit_comprador": "20000000042",
+      "cod_grano": "23",
+      "campania": "2526",
+      "peso_neto": 20000,
+      "sub_total": 7000000,
+      "importe_iva": 735000,
+      "operacion_con_iva": 7735000,
+      "total_deduccion": 159050,
+      "total_neto_a_pagar": 7119283,
+      "total_iva_rg4310_18": 367500,
+      "total_pago_segun_condicion": 7100000,
+      "detalle": {
+        "liquidacion": {
+          "ptoEmision": 1,
+          "nroOrden": 100019,
+          "numeroContrato": "100000456",
+          "cuitComprador": "20000000042",
+          "cuitVendedor": 20000000099,
+          "actuaCorredor": "S",
+          "cuitCorredor": 20000000088,
+          "comisionCorredor": 1.5,
+          "codPuerto": "21",
+          "desPuertoLocalidad": "SAN LORENZO (DEMO)",
+          "codGradoEnt": "G1",
+          "factorEnt": 102,
+          "valGradoEnt": 2,
+          "precioRefTn": 350000,
+          "precioFleteTn": 1200,
+          "campaniaPPal": "2526",
+          "datosAdicionales": null,
+          "certificados": {
+            "certificado": [
+              {
+                "tipoCertificadoDeposito": "332",
+                "nroCertificadoDeposito": 900222333444,
+                "pesoNeto": 20000,
+                "pesoNetoTotalCertificado": null,
+                "codLocalidadProcedencia": 82000,
+                "codProvProcedencia": 8,
+                "campania": 2526,
+                "fechaCierre": "2026-09-18"
+              }
+            ]
+          }
+        },
+        "autorizacion": {
+          "numeroContrato": "100000456",
+          "precioOperacion": 350,
+          "estado": "AC",
+          "totalRetencion": 456667,
+          "totalRetencionAfip": 350000,
+          "totalOtrasRetenciones": 106667,
+          "deducciones": {
+            "deduccionReturn": [
+              {
+                "deduccion": {
+                  "codigoConcepto": "CO",
+                  "detalleAclaratorio": "Comisión de corretaje (dato de muestra)",
+                  "baseCalculo": 105000
+                },
+                "importeIva": 22050,
+                "importeDeduccion": 127050
+              },
+              {
+                "deduccion": {
+                  "codigoConcepto": "FL",
+                  "detalleAclaratorio": "Flete (dato de muestra)",
+                  "baseCalculo": 24000
+                },
+                "importeIva": 0,
+                "importeDeduccion": 24000
+              },
+              {
+                "deduccion": {
+                  "codigoConcepto": "OD",
+                  "detalleAclaratorio": "Tasa de Registro (dato de muestra)",
+                  "baseCalculo": 8000
+                },
+                "importeIva": 0,
+                "importeDeduccion": 8000
+              }
+            ]
+          },
+          "retenciones": {
+            "retencionReturn": [
+              {
+                "retencion": {
+                  "codigoConcepto": "RI",
+                  "detalleAclaratorio": "Retención IVA (dato de muestra)",
+                  "baseCalculo": 7000000,
+                  "alicuota": 5,
+                  "nroCertificadoRetencion": null
+                },
+                "importeRetencion": 350000
+              },
+              {
+                "retencion": {
+                  "codigoConcepto": "OG",
+                  "detalleAclaratorio": "IIBB (dato de muestra)",
+                  "baseCalculo": 5333333,
+                  "alicuota": 2,
+                  "nroCertificadoRetencion": "900900900"
+                },
+                "importeRetencion": 106667
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "coe": "900000000018",
+      "pto_emision": 1,
+      "nro_orden": 100018,
+      "fecha_liquidacion": "2026-07-29",
+      "cuit_comprador": "20000000031",
+      "cod_grano": "19",
+      "campania": "2526",
+      "peso_neto": 15000,
+      "sub_total": 3450000,
+      "importe_iva": 362250,
+      "operacion_con_iva": 3812250,
+      "total_deduccion": 110362,
+      "total_neto_a_pagar": 3529388,
+      "total_iva_rg4310_18": 0,
+      "total_pago_segun_condicion": 3525000,
+      "detalle": {
+        "liquidacion": {
+          "ptoEmision": 1,
+          "nroOrden": 100018,
+          "numeroContrato": "100000123",
+          "cuitComprador": "20000000031",
+          "cuitVendedor": 20000000099,
+          "actuaCorredor": "N",
+          "cuitCorredor": null,
+          "comisionCorredor": null,
+          "codPuerto": "14",
+          "desPuertoLocalidad": "ROSARIO (DEMO)",
+          "codGradoEnt": "G2",
+          "factorEnt": 100,
+          "valGradoEnt": 1,
+          "precioRefTn": 230000,
+          "precioFleteTn": 0,
+          "campaniaPPal": "2526",
+          "datosAdicionales": null,
+          "certificados": {
+            "certificado": [
+              {
+                "tipoCertificadoDeposito": "332",
+                "nroCertificadoDeposito": 900111222333,
+                "pesoNeto": 15000,
+                "pesoNetoTotalCertificado": null,
+                "codLocalidadProcedencia": 12000,
+                "codProvProcedencia": 1,
+                "campania": 2526,
+                "fechaCierre": "2026-09-10"
+              }
+            ]
+          }
+        },
+        "autorizacion": {
+          "numeroContrato": "100000123",
+          "precioOperacion": 230,
+          "estado": "AC",
+          "totalRetencion": 172500,
+          "totalRetencionAfip": 172500,
+          "totalOtrasRetenciones": 0,
+          "deducciones": {
+            "deduccionReturn": [
+              {
+                "deduccion": {
+                  "codigoConcepto": "CO",
+                  "detalleAclaratorio": "Comisión (dato de muestra)",
+                  "baseCalculo": 86250
+                },
+                "importeIva": 18112,
+                "importeDeduccion": 104362
+              },
+              {
+                "deduccion": {
+                  "codigoConcepto": "OD",
+                  "detalleAclaratorio": "Derecho de Registro (dato de muestra)",
+                  "baseCalculo": 6000
+                },
+                "importeIva": 0,
+                "importeDeduccion": 6000
+              }
+            ]
+          },
+          "retenciones": {
+            "retencionReturn": [
+              {
+                "retencion": {
+                  "codigoConcepto": "RI",
+                  "detalleAclaratorio": "Retención IVA (dato de muestra)",
+                  "baseCalculo": 3450000,
+                  "alicuota": 5,
+                  "nroCertificadoRetencion": null
+                },
+                "importeRetencion": 172500
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "coe": "900000000017",
+      "pto_emision": 2,
+      "nro_orden": 100017,
+      "fecha_liquidacion": "2026-07-20",
+      "cuit_comprador": "20000000031",
+      "cod_grano": "19",
+      "campania": "2526",
+      "peso_neto": 10000,
+      "sub_total": 2250000,
+      "importe_iva": 236250,
+      "operacion_con_iva": 2486250,
+      "total_deduccion": 0,
+      "total_neto_a_pagar": 2486250,
+      "total_iva_rg4310_18": 0,
+      "total_pago_segun_condicion": 2486250,
+      "detalle": {
+        "liquidacion": {
+          "ptoEmision": 2,
+          "nroOrden": 100017,
+          "numeroContrato": null,
+          "cuitComprador": "20000000031",
+          "cuitVendedor": 20000000099,
+          "actuaCorredor": "N",
+          "cuitCorredor": null,
+          "comisionCorredor": null,
+          "codPuerto": "14",
+          "desPuertoLocalidad": "ROSARIO (DEMO)",
+          "codGradoEnt": "G2",
+          "factorEnt": 100,
+          "valGradoEnt": 1,
+          "precioRefTn": 225000,
+          "precioFleteTn": 0,
+          "campaniaPPal": "2526",
+          "datosAdicionales": "Entrega directa a planta, sin corretaje (dato de muestra).",
+          "certificados": {
+            "certificado": [
+              {
+                "tipoCertificadoDeposito": "332",
+                "nroCertificadoDeposito": 900333444555,
+                "pesoNeto": 10000,
+                "pesoNetoTotalCertificado": null,
+                "codLocalidadProcedencia": 12000,
+                "codProvProcedencia": 1,
+                "campania": 2526,
+                "fechaCierre": "2026-09-25"
+              }
+            ]
+          }
+        },
+        "autorizacion": {
+          "numeroContrato": null,
+          "precioOperacion": 225,
+          "estado": "AC",
+          "totalRetencion": 0,
+          "totalRetencionAfip": 0,
+          "totalOtrasRetenciones": 0,
+          "deducciones": {
+            "deduccionReturn": []
+          },
+          "retenciones": {
+            "retencionReturn": []
+          }
+        }
+      }
+    },
+    {
+      "coe": "900000000016",
+      "pto_emision": 1,
+      "nro_orden": 100016,
+      "fecha_liquidacion": "2026-07-12",
+      "cuit_comprador": "20000000042",
+      "cod_grano": "23",
+      "campania": "2526",
+      "peso_neto": 5000,
+      "sub_total": 1750000,
+      "importe_iva": 183750,
+      "operacion_con_iva": 1933750,
+      "total_deduccion": 39762,
+      "total_neto_a_pagar": 1779821,
+      "total_iva_rg4310_18": 91875,
+      "total_pago_segun_condicion": 1775000,
+      "detalle": {
+        "liquidacion": {
+          "ptoEmision": 1,
+          "nroOrden": 100016,
+          "numeroContrato": "100000456",
+          "cuitComprador": "20000000042",
+          "cuitVendedor": 20000000099,
+          "actuaCorredor": "S",
+          "cuitCorredor": 20000000088,
+          "comisionCorredor": 1.5,
+          "codPuerto": "21",
+          "desPuertoLocalidad": "SAN LORENZO (DEMO)",
+          "codGradoEnt": "G1",
+          "factorEnt": 102,
+          "valGradoEnt": 2,
+          "precioRefTn": 350000,
+          "precioFleteTn": 1200,
+          "campaniaPPal": "2526",
+          "datosAdicionales": null,
+          "certificados": {
+            "certificado": [
+              {
+                "tipoCertificadoDeposito": "332",
+                "nroCertificadoDeposito": 900222333444,
+                "pesoNeto": 5000,
+                "pesoNetoTotalCertificado": null,
+                "codLocalidadProcedencia": 82000,
+                "codProvProcedencia": 8,
+                "campania": 2526,
+                "fechaCierre": "2026-09-18"
+              }
+            ]
+          }
+        },
+        "autorizacion": {
+          "numeroContrato": "100000456",
+          "precioOperacion": 350,
+          "estado": "AC",
+          "totalRetencion": 114167,
+          "totalRetencionAfip": 87500,
+          "totalOtrasRetenciones": 26667,
+          "deducciones": {
+            "deduccionReturn": [
+              {
+                "deduccion": {
+                  "codigoConcepto": "CO",
+                  "detalleAclaratorio": "Comisión de corretaje (dato de muestra)",
+                  "baseCalculo": 26250
+                },
+                "importeIva": 5512,
+                "importeDeduccion": 31762
+              },
+              {
+                "deduccion": {
+                  "codigoConcepto": "FL",
+                  "detalleAclaratorio": "Flete (dato de muestra)",
+                  "baseCalculo": 6000
+                },
+                "importeIva": 0,
+                "importeDeduccion": 6000
+              },
+              {
+                "deduccion": {
+                  "codigoConcepto": "OD",
+                  "detalleAclaratorio": "Tasa de Registro (dato de muestra)",
+                  "baseCalculo": 2000
+                },
+                "importeIva": 0,
+                "importeDeduccion": 2000
+              }
+            ]
+          },
+          "retenciones": {
+            "retencionReturn": [
+              {
+                "retencion": {
+                  "codigoConcepto": "RI",
+                  "detalleAclaratorio": "Retención IVA (dato de muestra)",
+                  "baseCalculo": 1750000,
+                  "alicuota": 5,
+                  "nroCertificadoRetencion": null
+                },
+                "importeRetencion": 87500
+              },
+              {
+                "retencion": {
+                  "codigoConcepto": "OG",
+                  "detalleAclaratorio": "IIBB (dato de muestra)",
+                  "baseCalculo": 1333333,
+                  "alicuota": 2,
+                  "nroCertificadoRetencion": "900900900"
+                },
+                "importeRetencion": 26667
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "coe": "900000000015",
+      "pto_emision": 1,
+      "nro_orden": 100015,
+      "fecha_liquidacion": "2026-07-03",
+      "cuit_comprador": "20000000031",
+      "cod_grano": "19",
+      "campania": "2526",
+      "peso_neto": 18000,
+      "sub_total": 4140000,
+      "importe_iva": 434700,
+      "operacion_con_iva": 4574700,
+      "total_deduccion": 132435,
+      "total_neto_a_pagar": 4235265,
+      "total_iva_rg4310_18": 0,
+      "total_pago_segun_condicion": 4230000,
+      "detalle": {
+        "liquidacion": {
+          "ptoEmision": 1,
+          "nroOrden": 100015,
+          "numeroContrato": "100000123",
+          "cuitComprador": "20000000031",
+          "cuitVendedor": 20000000099,
+          "actuaCorredor": "N",
+          "cuitCorredor": null,
+          "comisionCorredor": null,
+          "codPuerto": "14",
+          "desPuertoLocalidad": "ROSARIO (DEMO)",
+          "codGradoEnt": "G2",
+          "factorEnt": 100,
+          "valGradoEnt": 1,
+          "precioRefTn": 230000,
+          "precioFleteTn": 0,
+          "campaniaPPal": "2526",
+          "datosAdicionales": null,
+          "certificados": {
+            "certificado": [
+              {
+                "tipoCertificadoDeposito": "332",
+                "nroCertificadoDeposito": 900111222333,
+                "pesoNeto": 18000,
+                "pesoNetoTotalCertificado": null,
+                "codLocalidadProcedencia": 12000,
+                "codProvProcedencia": 1,
+                "campania": 2526,
+                "fechaCierre": "2026-09-10"
+              }
+            ]
+          }
+        },
+        "autorizacion": {
+          "numeroContrato": "100000123",
+          "precioOperacion": 230,
+          "estado": "AC",
+          "totalRetencion": 207000,
+          "totalRetencionAfip": 207000,
+          "totalOtrasRetenciones": 0,
+          "deducciones": {
+            "deduccionReturn": [
+              {
+                "deduccion": {
+                  "codigoConcepto": "CO",
+                  "detalleAclaratorio": "Comisión (dato de muestra)",
+                  "baseCalculo": 103500
+                },
+                "importeIva": 21735,
+                "importeDeduccion": 125235
+              },
+              {
+                "deduccion": {
+                  "codigoConcepto": "OD",
+                  "detalleAclaratorio": "Derecho de Registro (dato de muestra)",
+                  "baseCalculo": 7200
+                },
+                "importeIva": 0,
+                "importeDeduccion": 7200
+              }
+            ]
+          },
+          "retenciones": {
+            "retencionReturn": [
+              {
+                "retencion": {
+                  "codigoConcepto": "RI",
+                  "detalleAclaratorio": "Retención IVA (dato de muestra)",
+                  "baseCalculo": 4140000,
+                  "alicuota": 5,
+                  "nroCertificadoRetencion": null
+                },
+                "importeRetencion": 207000
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "coe": "900000000014",
+      "pto_emision": 2,
+      "nro_orden": 100014,
+      "fecha_liquidacion": "2026-06-25",
+      "cuit_comprador": "20000000031",
+      "cod_grano": "19",
+      "campania": "2526",
+      "peso_neto": 12000,
+      "sub_total": 2700000,
+      "importe_iva": 283500,
+      "operacion_con_iva": 2983500,
+      "total_deduccion": 0,
+      "total_neto_a_pagar": 2983500,
+      "total_iva_rg4310_18": 0,
+      "total_pago_segun_condicion": 2983500,
+      "detalle": {
+        "liquidacion": {
+          "ptoEmision": 2,
+          "nroOrden": 100014,
+          "numeroContrato": null,
+          "cuitComprador": "20000000031",
+          "cuitVendedor": 20000000099,
+          "actuaCorredor": "N",
+          "cuitCorredor": null,
+          "comisionCorredor": null,
+          "codPuerto": "14",
+          "desPuertoLocalidad": "ROSARIO (DEMO)",
+          "codGradoEnt": "G2",
+          "factorEnt": 100,
+          "valGradoEnt": 1,
+          "precioRefTn": 225000,
+          "precioFleteTn": 0,
+          "campaniaPPal": "2526",
+          "datosAdicionales": "Entrega directa a planta, sin corretaje (dato de muestra).",
+          "certificados": {
+            "certificado": [
+              {
+                "tipoCertificadoDeposito": "332",
+                "nroCertificadoDeposito": 900333444555,
+                "pesoNeto": 12000,
+                "pesoNetoTotalCertificado": null,
+                "codLocalidadProcedencia": 12000,
+                "codProvProcedencia": 1,
+                "campania": 2526,
+                "fechaCierre": "2026-09-25"
+              }
+            ]
+          }
+        },
+        "autorizacion": {
+          "numeroContrato": null,
+          "precioOperacion": 225,
+          "estado": "AC",
+          "totalRetencion": 0,
+          "totalRetencionAfip": 0,
+          "totalOtrasRetenciones": 0,
+          "deducciones": {
+            "deduccionReturn": []
+          },
+          "retenciones": {
+            "retencionReturn": []
+          }
+        }
+      }
+    },
+    {
+      "coe": "900000000013",
+      "pto_emision": 1,
+      "nro_orden": 100013,
+      "fecha_liquidacion": "2026-06-16",
+      "cuit_comprador": "20000000042",
+      "cod_grano": "23",
+      "campania": "2526",
+      "peso_neto": 30000,
+      "sub_total": 10500000,
+      "importe_iva": 1102500,
+      "operacion_con_iva": 11602500,
+      "total_deduccion": 238575,
+      "total_neto_a_pagar": 10678925,
+      "total_iva_rg4310_18": 551250,
+      "total_pago_segun_condicion": 10650000,
+      "detalle": {
+        "liquidacion": {
+          "ptoEmision": 1,
+          "nroOrden": 100013,
+          "numeroContrato": "100000456",
+          "cuitComprador": "20000000042",
+          "cuitVendedor": 20000000099,
+          "actuaCorredor": "S",
+          "cuitCorredor": 20000000088,
+          "comisionCorredor": 1.5,
+          "codPuerto": "21",
+          "desPuertoLocalidad": "SAN LORENZO (DEMO)",
+          "codGradoEnt": "G1",
+          "factorEnt": 102,
+          "valGradoEnt": 2,
+          "precioRefTn": 350000,
+          "precioFleteTn": 1200,
+          "campaniaPPal": "2526",
+          "datosAdicionales": null,
+          "certificados": {
+            "certificado": [
+              {
+                "tipoCertificadoDeposito": "332",
+                "nroCertificadoDeposito": 900222333444,
+                "pesoNeto": 30000,
+                "pesoNetoTotalCertificado": null,
+                "codLocalidadProcedencia": 82000,
+                "codProvProcedencia": 8,
+                "campania": 2526,
+                "fechaCierre": "2026-09-18"
+              }
+            ]
+          }
+        },
+        "autorizacion": {
+          "numeroContrato": "100000456",
+          "precioOperacion": 350,
+          "estado": "AC",
+          "totalRetencion": 685000,
+          "totalRetencionAfip": 525000,
+          "totalOtrasRetenciones": 160000,
+          "deducciones": {
+            "deduccionReturn": [
+              {
+                "deduccion": {
+                  "codigoConcepto": "CO",
+                  "detalleAclaratorio": "Comisión de corretaje (dato de muestra)",
+                  "baseCalculo": 157500
+                },
+                "importeIva": 33075,
+                "importeDeduccion": 190575
+              },
+              {
+                "deduccion": {
+                  "codigoConcepto": "FL",
+                  "detalleAclaratorio": "Flete (dato de muestra)",
+                  "baseCalculo": 36000
+                },
+                "importeIva": 0,
+                "importeDeduccion": 36000
+              },
+              {
+                "deduccion": {
+                  "codigoConcepto": "OD",
+                  "detalleAclaratorio": "Tasa de Registro (dato de muestra)",
+                  "baseCalculo": 12000
+                },
+                "importeIva": 0,
+                "importeDeduccion": 12000
+              }
+            ]
+          },
+          "retenciones": {
+            "retencionReturn": [
+              {
+                "retencion": {
+                  "codigoConcepto": "RI",
+                  "detalleAclaratorio": "Retención IVA (dato de muestra)",
+                  "baseCalculo": 10500000,
+                  "alicuota": 5,
+                  "nroCertificadoRetencion": null
+                },
+                "importeRetencion": 525000
+              },
+              {
+                "retencion": {
+                  "codigoConcepto": "OG",
+                  "detalleAclaratorio": "IIBB (dato de muestra)",
+                  "baseCalculo": 8000000,
+                  "alicuota": 2,
+                  "nroCertificadoRetencion": "900900900"
+                },
+                "importeRetencion": 160000
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "coe": "900000000012",
+      "pto_emision": 1,
+      "nro_orden": 100012,
+      "fecha_liquidacion": "2026-06-08",
+      "cuit_comprador": "20000000031",
+      "cod_grano": "19",
+      "campania": "2526",
+      "peso_neto": 25000,
+      "sub_total": 5750000,
+      "importe_iva": 603750,
+      "operacion_con_iva": 6353750,
+      "total_deduccion": 183938,
+      "total_neto_a_pagar": 5882312,
+      "total_iva_rg4310_18": 0,
+      "total_pago_segun_condicion": 5875000,
+      "detalle": {
+        "liquidacion": {
+          "ptoEmision": 1,
+          "nroOrden": 100012,
+          "numeroContrato": "100000123",
+          "cuitComprador": "20000000031",
+          "cuitVendedor": 20000000099,
+          "actuaCorredor": "N",
+          "cuitCorredor": null,
+          "comisionCorredor": null,
+          "codPuerto": "14",
+          "desPuertoLocalidad": "ROSARIO (DEMO)",
+          "codGradoEnt": "G2",
+          "factorEnt": 100,
+          "valGradoEnt": 1,
+          "precioRefTn": 230000,
+          "precioFleteTn": 0,
+          "campaniaPPal": "2526",
+          "datosAdicionales": null,
+          "certificados": {
+            "certificado": [
+              {
+                "tipoCertificadoDeposito": "332",
+                "nroCertificadoDeposito": 900111222333,
+                "pesoNeto": 25000,
+                "pesoNetoTotalCertificado": null,
+                "codLocalidadProcedencia": 12000,
+                "codProvProcedencia": 1,
+                "campania": 2526,
+                "fechaCierre": "2026-09-10"
+              }
+            ]
+          }
+        },
+        "autorizacion": {
+          "numeroContrato": "100000123",
+          "precioOperacion": 230,
+          "estado": "AC",
+          "totalRetencion": 287500,
+          "totalRetencionAfip": 287500,
+          "totalOtrasRetenciones": 0,
+          "deducciones": {
+            "deduccionReturn": [
+              {
+                "deduccion": {
+                  "codigoConcepto": "CO",
+                  "detalleAclaratorio": "Comisión (dato de muestra)",
+                  "baseCalculo": 143750
+                },
+                "importeIva": 30188,
+                "importeDeduccion": 173938
+              },
+              {
+                "deduccion": {
+                  "codigoConcepto": "OD",
+                  "detalleAclaratorio": "Derecho de Registro (dato de muestra)",
+                  "baseCalculo": 10000
+                },
+                "importeIva": 0,
+                "importeDeduccion": 10000
+              }
+            ]
+          },
+          "retenciones": {
+            "retencionReturn": [
+              {
+                "retencion": {
+                  "codigoConcepto": "RI",
+                  "detalleAclaratorio": "Retención IVA (dato de muestra)",
+                  "baseCalculo": 5750000,
+                  "alicuota": 5,
+                  "nroCertificadoRetencion": null
+                },
+                "importeRetencion": 287500
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "coe": "900000000011",
+      "pto_emision": 2,
+      "nro_orden": 100011,
+      "fecha_liquidacion": "2026-05-30",
+      "cuit_comprador": "20000000031",
+      "cod_grano": "19",
+      "campania": "2526",
+      "peso_neto": 20000,
+      "sub_total": 4500000,
+      "importe_iva": 472500,
+      "operacion_con_iva": 4972500,
+      "total_deduccion": 0,
+      "total_neto_a_pagar": 4972500,
+      "total_iva_rg4310_18": 0,
+      "total_pago_segun_condicion": 4972500,
+      "detalle": {
+        "liquidacion": {
+          "ptoEmision": 2,
+          "nroOrden": 100011,
+          "numeroContrato": null,
+          "cuitComprador": "20000000031",
+          "cuitVendedor": 20000000099,
+          "actuaCorredor": "N",
+          "cuitCorredor": null,
+          "comisionCorredor": null,
+          "codPuerto": "14",
+          "desPuertoLocalidad": "ROSARIO (DEMO)",
+          "codGradoEnt": "G2",
+          "factorEnt": 100,
+          "valGradoEnt": 1,
+          "precioRefTn": 225000,
+          "precioFleteTn": 0,
+          "campaniaPPal": "2526",
+          "datosAdicionales": "Entrega directa a planta, sin corretaje (dato de muestra).",
+          "certificados": {
+            "certificado": [
+              {
+                "tipoCertificadoDeposito": "332",
+                "nroCertificadoDeposito": 900333444555,
+                "pesoNeto": 20000,
+                "pesoNetoTotalCertificado": null,
+                "codLocalidadProcedencia": 12000,
+                "codProvProcedencia": 1,
+                "campania": 2526,
+                "fechaCierre": "2026-09-25"
+              }
+            ]
+          }
+        },
+        "autorizacion": {
+          "numeroContrato": null,
+          "precioOperacion": 225,
+          "estado": "AC",
+          "totalRetencion": 0,
+          "totalRetencionAfip": 0,
+          "totalOtrasRetenciones": 0,
+          "deducciones": {
+            "deduccionReturn": []
+          },
+          "retenciones": {
+            "retencionReturn": []
+          }
+        }
+      }
+    },
+    {
+      "coe": "900000000010",
+      "pto_emision": 1,
+      "nro_orden": 100010,
+      "fecha_liquidacion": "2026-05-22",
+      "cuit_comprador": "20000000042",
+      "cod_grano": "23",
+      "campania": "2526",
+      "peso_neto": 15000,
+      "sub_total": 5250000,
+      "importe_iva": 551250,
+      "operacion_con_iva": 5801250,
+      "total_deduccion": 119288,
+      "total_neto_a_pagar": 5339462,
+      "total_iva_rg4310_18": 275625,
+      "total_pago_segun_condicion": 5325000,
+      "detalle": {
+        "liquidacion": {
+          "ptoEmision": 1,
+          "nroOrden": 100010,
+          "numeroContrato": "100000456",
+          "cuitComprador": "20000000042",
+          "cuitVendedor": 20000000099,
+          "actuaCorredor": "S",
+          "cuitCorredor": 20000000088,
+          "comisionCorredor": 1.5,
+          "codPuerto": "21",
+          "desPuertoLocalidad": "SAN LORENZO (DEMO)",
+          "codGradoEnt": "G1",
+          "factorEnt": 102,
+          "valGradoEnt": 2,
+          "precioRefTn": 350000,
+          "precioFleteTn": 1200,
+          "campaniaPPal": "2526",
+          "datosAdicionales": null,
+          "certificados": {
+            "certificado": [
+              {
+                "tipoCertificadoDeposito": "332",
+                "nroCertificadoDeposito": 900222333444,
+                "pesoNeto": 15000,
+                "pesoNetoTotalCertificado": null,
+                "codLocalidadProcedencia": 82000,
+                "codProvProcedencia": 8,
+                "campania": 2526,
+                "fechaCierre": "2026-09-18"
+              }
+            ]
+          }
+        },
+        "autorizacion": {
+          "numeroContrato": "100000456",
+          "precioOperacion": 350,
+          "estado": "AC",
+          "totalRetencion": 342500,
+          "totalRetencionAfip": 262500,
+          "totalOtrasRetenciones": 80000,
+          "deducciones": {
+            "deduccionReturn": [
+              {
+                "deduccion": {
+                  "codigoConcepto": "CO",
+                  "detalleAclaratorio": "Comisión de corretaje (dato de muestra)",
+                  "baseCalculo": 78750
+                },
+                "importeIva": 16538,
+                "importeDeduccion": 95288
+              },
+              {
+                "deduccion": {
+                  "codigoConcepto": "FL",
+                  "detalleAclaratorio": "Flete (dato de muestra)",
+                  "baseCalculo": 18000
+                },
+                "importeIva": 0,
+                "importeDeduccion": 18000
+              },
+              {
+                "deduccion": {
+                  "codigoConcepto": "OD",
+                  "detalleAclaratorio": "Tasa de Registro (dato de muestra)",
+                  "baseCalculo": 6000
+                },
+                "importeIva": 0,
+                "importeDeduccion": 6000
+              }
+            ]
+          },
+          "retenciones": {
+            "retencionReturn": [
+              {
+                "retencion": {
+                  "codigoConcepto": "RI",
+                  "detalleAclaratorio": "Retención IVA (dato de muestra)",
+                  "baseCalculo": 5250000,
+                  "alicuota": 5,
+                  "nroCertificadoRetencion": null
+                },
+                "importeRetencion": 262500
+              },
+              {
+                "retencion": {
+                  "codigoConcepto": "OG",
+                  "detalleAclaratorio": "IIBB (dato de muestra)",
+                  "baseCalculo": 4000000,
+                  "alicuota": 2,
+                  "nroCertificadoRetencion": "900900900"
+                },
+                "importeRetencion": 80000
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "coe": "900000000009",
+      "pto_emision": 1,
+      "nro_orden": 100009,
+      "fecha_liquidacion": "2026-05-13",
+      "cuit_comprador": "20000000031",
+      "cod_grano": "19",
+      "campania": "2526",
+      "peso_neto": 10000,
+      "sub_total": 2300000,
+      "importe_iva": 241500,
+      "operacion_con_iva": 2541500,
+      "total_deduccion": 73575,
+      "total_neto_a_pagar": 2352925,
+      "total_iva_rg4310_18": 0,
+      "total_pago_segun_condicion": 2350000,
+      "detalle": {
+        "liquidacion": {
+          "ptoEmision": 1,
+          "nroOrden": 100009,
+          "numeroContrato": "100000123",
+          "cuitComprador": "20000000031",
+          "cuitVendedor": 20000000099,
+          "actuaCorredor": "N",
+          "cuitCorredor": null,
+          "comisionCorredor": null,
+          "codPuerto": "14",
+          "desPuertoLocalidad": "ROSARIO (DEMO)",
+          "codGradoEnt": "G2",
+          "factorEnt": 100,
+          "valGradoEnt": 1,
+          "precioRefTn": 230000,
+          "precioFleteTn": 0,
+          "campaniaPPal": "2526",
+          "datosAdicionales": null,
+          "certificados": {
+            "certificado": [
+              {
+                "tipoCertificadoDeposito": "332",
+                "nroCertificadoDeposito": 900111222333,
+                "pesoNeto": 10000,
+                "pesoNetoTotalCertificado": null,
+                "codLocalidadProcedencia": 12000,
+                "codProvProcedencia": 1,
+                "campania": 2526,
+                "fechaCierre": "2026-09-10"
+              }
+            ]
+          }
+        },
+        "autorizacion": {
+          "numeroContrato": "100000123",
+          "precioOperacion": 230,
+          "estado": "AC",
+          "totalRetencion": 115000,
+          "totalRetencionAfip": 115000,
+          "totalOtrasRetenciones": 0,
+          "deducciones": {
+            "deduccionReturn": [
+              {
+                "deduccion": {
+                  "codigoConcepto": "CO",
+                  "detalleAclaratorio": "Comisión (dato de muestra)",
+                  "baseCalculo": 57500
+                },
+                "importeIva": 12075,
+                "importeDeduccion": 69575
+              },
+              {
+                "deduccion": {
+                  "codigoConcepto": "OD",
+                  "detalleAclaratorio": "Derecho de Registro (dato de muestra)",
+                  "baseCalculo": 4000
+                },
+                "importeIva": 0,
+                "importeDeduccion": 4000
+              }
+            ]
+          },
+          "retenciones": {
+            "retencionReturn": [
+              {
+                "retencion": {
+                  "codigoConcepto": "RI",
+                  "detalleAclaratorio": "Retención IVA (dato de muestra)",
+                  "baseCalculo": 2300000,
+                  "alicuota": 5,
+                  "nroCertificadoRetencion": null
+                },
+                "importeRetencion": 115000
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "coe": "900000000008",
+      "pto_emision": 2,
+      "nro_orden": 100008,
+      "fecha_liquidacion": "2026-05-05",
       "cuit_comprador": "20000000031",
       "cod_grano": "19",
       "campania": "2526",
@@ -230,7 +2054,7 @@
       "detalle": {
         "liquidacion": {
           "ptoEmision": 2,
-          "nroOrden": 200001,
+          "nroOrden": 100008,
           "numeroContrato": null,
           "cuitComprador": "20000000031",
           "cuitVendedor": 20000000099,
@@ -268,8 +2092,404 @@
           "totalRetencion": 0,
           "totalRetencionAfip": 0,
           "totalOtrasRetenciones": 0,
-          "deducciones": { "deduccionReturn": [] },
-          "retenciones": { "retencionReturn": [] }
+          "deducciones": {
+            "deduccionReturn": []
+          },
+          "retenciones": {
+            "retencionReturn": []
+          }
+        }
+      }
+    },
+    {
+      "coe": "900000000007",
+      "pto_emision": 1,
+      "nro_orden": 100007,
+      "fecha_liquidacion": "2026-04-26",
+      "cuit_comprador": "20000000042",
+      "cod_grano": "23",
+      "campania": "2526",
+      "peso_neto": 18000,
+      "sub_total": 6300000,
+      "importe_iva": 661500,
+      "operacion_con_iva": 6961500,
+      "total_deduccion": 143145,
+      "total_neto_a_pagar": 6407355,
+      "total_iva_rg4310_18": 330750,
+      "total_pago_segun_condicion": 6390000,
+      "detalle": {
+        "liquidacion": {
+          "ptoEmision": 1,
+          "nroOrden": 100007,
+          "numeroContrato": "100000456",
+          "cuitComprador": "20000000042",
+          "cuitVendedor": 20000000099,
+          "actuaCorredor": "S",
+          "cuitCorredor": 20000000088,
+          "comisionCorredor": 1.5,
+          "codPuerto": "21",
+          "desPuertoLocalidad": "SAN LORENZO (DEMO)",
+          "codGradoEnt": "G1",
+          "factorEnt": 102,
+          "valGradoEnt": 2,
+          "precioRefTn": 350000,
+          "precioFleteTn": 1200,
+          "campaniaPPal": "2526",
+          "datosAdicionales": null,
+          "certificados": {
+            "certificado": [
+              {
+                "tipoCertificadoDeposito": "332",
+                "nroCertificadoDeposito": 900222333444,
+                "pesoNeto": 18000,
+                "pesoNetoTotalCertificado": null,
+                "codLocalidadProcedencia": 82000,
+                "codProvProcedencia": 8,
+                "campania": 2526,
+                "fechaCierre": "2026-09-18"
+              }
+            ]
+          }
+        },
+        "autorizacion": {
+          "numeroContrato": "100000456",
+          "precioOperacion": 350,
+          "estado": "AC",
+          "totalRetencion": 411000,
+          "totalRetencionAfip": 315000,
+          "totalOtrasRetenciones": 96000,
+          "deducciones": {
+            "deduccionReturn": [
+              {
+                "deduccion": {
+                  "codigoConcepto": "CO",
+                  "detalleAclaratorio": "Comisión de corretaje (dato de muestra)",
+                  "baseCalculo": 94500
+                },
+                "importeIva": 19845,
+                "importeDeduccion": 114345
+              },
+              {
+                "deduccion": {
+                  "codigoConcepto": "FL",
+                  "detalleAclaratorio": "Flete (dato de muestra)",
+                  "baseCalculo": 21600
+                },
+                "importeIva": 0,
+                "importeDeduccion": 21600
+              },
+              {
+                "deduccion": {
+                  "codigoConcepto": "OD",
+                  "detalleAclaratorio": "Tasa de Registro (dato de muestra)",
+                  "baseCalculo": 7200
+                },
+                "importeIva": 0,
+                "importeDeduccion": 7200
+              }
+            ]
+          },
+          "retenciones": {
+            "retencionReturn": [
+              {
+                "retencion": {
+                  "codigoConcepto": "RI",
+                  "detalleAclaratorio": "Retención IVA (dato de muestra)",
+                  "baseCalculo": 6300000,
+                  "alicuota": 5,
+                  "nroCertificadoRetencion": null
+                },
+                "importeRetencion": 315000
+              },
+              {
+                "retencion": {
+                  "codigoConcepto": "OG",
+                  "detalleAclaratorio": "IIBB (dato de muestra)",
+                  "baseCalculo": 4800000,
+                  "alicuota": 2,
+                  "nroCertificadoRetencion": "900900900"
+                },
+                "importeRetencion": 96000
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "coe": "900000000006",
+      "pto_emision": 1,
+      "nro_orden": 100006,
+      "fecha_liquidacion": "2026-04-18",
+      "cuit_comprador": "20000000031",
+      "cod_grano": "19",
+      "campania": "2526",
+      "peso_neto": 12000,
+      "sub_total": 2760000,
+      "importe_iva": 289800,
+      "operacion_con_iva": 3049800,
+      "total_deduccion": 88290,
+      "total_neto_a_pagar": 2823510,
+      "total_iva_rg4310_18": 0,
+      "total_pago_segun_condicion": 2820000,
+      "detalle": {
+        "liquidacion": {
+          "ptoEmision": 1,
+          "nroOrden": 100006,
+          "numeroContrato": "100000123",
+          "cuitComprador": "20000000031",
+          "cuitVendedor": 20000000099,
+          "actuaCorredor": "N",
+          "cuitCorredor": null,
+          "comisionCorredor": null,
+          "codPuerto": "14",
+          "desPuertoLocalidad": "ROSARIO (DEMO)",
+          "codGradoEnt": "G2",
+          "factorEnt": 100,
+          "valGradoEnt": 1,
+          "precioRefTn": 230000,
+          "precioFleteTn": 0,
+          "campaniaPPal": "2526",
+          "datosAdicionales": null,
+          "certificados": {
+            "certificado": [
+              {
+                "tipoCertificadoDeposito": "332",
+                "nroCertificadoDeposito": 900111222333,
+                "pesoNeto": 12000,
+                "pesoNetoTotalCertificado": null,
+                "codLocalidadProcedencia": 12000,
+                "codProvProcedencia": 1,
+                "campania": 2526,
+                "fechaCierre": "2026-09-10"
+              }
+            ]
+          }
+        },
+        "autorizacion": {
+          "numeroContrato": "100000123",
+          "precioOperacion": 230,
+          "estado": "AC",
+          "totalRetencion": 138000,
+          "totalRetencionAfip": 138000,
+          "totalOtrasRetenciones": 0,
+          "deducciones": {
+            "deduccionReturn": [
+              {
+                "deduccion": {
+                  "codigoConcepto": "CO",
+                  "detalleAclaratorio": "Comisión (dato de muestra)",
+                  "baseCalculo": 69000
+                },
+                "importeIva": 14490,
+                "importeDeduccion": 83490
+              },
+              {
+                "deduccion": {
+                  "codigoConcepto": "OD",
+                  "detalleAclaratorio": "Derecho de Registro (dato de muestra)",
+                  "baseCalculo": 4800
+                },
+                "importeIva": 0,
+                "importeDeduccion": 4800
+              }
+            ]
+          },
+          "retenciones": {
+            "retencionReturn": [
+              {
+                "retencion": {
+                  "codigoConcepto": "RI",
+                  "detalleAclaratorio": "Retención IVA (dato de muestra)",
+                  "baseCalculo": 2760000,
+                  "alicuota": 5,
+                  "nroCertificadoRetencion": null
+                },
+                "importeRetencion": 138000
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "coe": "900000000005",
+      "pto_emision": 2,
+      "nro_orden": 100005,
+      "fecha_liquidacion": "2026-04-09",
+      "cuit_comprador": "20000000031",
+      "cod_grano": "19",
+      "campania": "2526",
+      "peso_neto": 30000,
+      "sub_total": 6750000,
+      "importe_iva": 708750,
+      "operacion_con_iva": 7458750,
+      "total_deduccion": 0,
+      "total_neto_a_pagar": 7458750,
+      "total_iva_rg4310_18": 0,
+      "total_pago_segun_condicion": 7458750,
+      "detalle": {
+        "liquidacion": {
+          "ptoEmision": 2,
+          "nroOrden": 100005,
+          "numeroContrato": null,
+          "cuitComprador": "20000000031",
+          "cuitVendedor": 20000000099,
+          "actuaCorredor": "N",
+          "cuitCorredor": null,
+          "comisionCorredor": null,
+          "codPuerto": "14",
+          "desPuertoLocalidad": "ROSARIO (DEMO)",
+          "codGradoEnt": "G2",
+          "factorEnt": 100,
+          "valGradoEnt": 1,
+          "precioRefTn": 225000,
+          "precioFleteTn": 0,
+          "campaniaPPal": "2526",
+          "datosAdicionales": "Entrega directa a planta, sin corretaje (dato de muestra).",
+          "certificados": {
+            "certificado": [
+              {
+                "tipoCertificadoDeposito": "332",
+                "nroCertificadoDeposito": 900333444555,
+                "pesoNeto": 30000,
+                "pesoNetoTotalCertificado": null,
+                "codLocalidadProcedencia": 12000,
+                "codProvProcedencia": 1,
+                "campania": 2526,
+                "fechaCierre": "2026-09-25"
+              }
+            ]
+          }
+        },
+        "autorizacion": {
+          "numeroContrato": null,
+          "precioOperacion": 225,
+          "estado": "AC",
+          "totalRetencion": 0,
+          "totalRetencionAfip": 0,
+          "totalOtrasRetenciones": 0,
+          "deducciones": {
+            "deduccionReturn": []
+          },
+          "retenciones": {
+            "retencionReturn": []
+          }
+        }
+      }
+    },
+    {
+      "coe": "900000000004",
+      "pto_emision": 1,
+      "nro_orden": 100004,
+      "fecha_liquidacion": "2026-04-01",
+      "cuit_comprador": "20000000042",
+      "cod_grano": "23",
+      "campania": "2526",
+      "peso_neto": 25000,
+      "sub_total": 8750000,
+      "importe_iva": 918750,
+      "operacion_con_iva": 9668750,
+      "total_deduccion": 198812,
+      "total_neto_a_pagar": 8899104,
+      "total_iva_rg4310_18": 459375,
+      "total_pago_segun_condicion": 8875000,
+      "detalle": {
+        "liquidacion": {
+          "ptoEmision": 1,
+          "nroOrden": 100004,
+          "numeroContrato": "100000456",
+          "cuitComprador": "20000000042",
+          "cuitVendedor": 20000000099,
+          "actuaCorredor": "S",
+          "cuitCorredor": 20000000088,
+          "comisionCorredor": 1.5,
+          "codPuerto": "21",
+          "desPuertoLocalidad": "SAN LORENZO (DEMO)",
+          "codGradoEnt": "G1",
+          "factorEnt": 102,
+          "valGradoEnt": 2,
+          "precioRefTn": 350000,
+          "precioFleteTn": 1200,
+          "campaniaPPal": "2526",
+          "datosAdicionales": null,
+          "certificados": {
+            "certificado": [
+              {
+                "tipoCertificadoDeposito": "332",
+                "nroCertificadoDeposito": 900222333444,
+                "pesoNeto": 25000,
+                "pesoNetoTotalCertificado": null,
+                "codLocalidadProcedencia": 82000,
+                "codProvProcedencia": 8,
+                "campania": 2526,
+                "fechaCierre": "2026-09-18"
+              }
+            ]
+          }
+        },
+        "autorizacion": {
+          "numeroContrato": "100000456",
+          "precioOperacion": 350,
+          "estado": "AC",
+          "totalRetencion": 570833,
+          "totalRetencionAfip": 437500,
+          "totalOtrasRetenciones": 133333,
+          "deducciones": {
+            "deduccionReturn": [
+              {
+                "deduccion": {
+                  "codigoConcepto": "CO",
+                  "detalleAclaratorio": "Comisión de corretaje (dato de muestra)",
+                  "baseCalculo": 131250
+                },
+                "importeIva": 27562,
+                "importeDeduccion": 158812
+              },
+              {
+                "deduccion": {
+                  "codigoConcepto": "FL",
+                  "detalleAclaratorio": "Flete (dato de muestra)",
+                  "baseCalculo": 30000
+                },
+                "importeIva": 0,
+                "importeDeduccion": 30000
+              },
+              {
+                "deduccion": {
+                  "codigoConcepto": "OD",
+                  "detalleAclaratorio": "Tasa de Registro (dato de muestra)",
+                  "baseCalculo": 10000
+                },
+                "importeIva": 0,
+                "importeDeduccion": 10000
+              }
+            ]
+          },
+          "retenciones": {
+            "retencionReturn": [
+              {
+                "retencion": {
+                  "codigoConcepto": "RI",
+                  "detalleAclaratorio": "Retención IVA (dato de muestra)",
+                  "baseCalculo": 8750000,
+                  "alicuota": 5,
+                  "nroCertificadoRetencion": null
+                },
+                "importeRetencion": 437500
+              },
+              {
+                "retencion": {
+                  "codigoConcepto": "OG",
+                  "detalleAclaratorio": "IIBB (dato de muestra)",
+                  "baseCalculo": 6666667,
+                  "alicuota": 2,
+                  "nroCertificadoRetencion": "900900900"
+                },
+                "importeRetencion": 133333
+              }
+            ]
+          }
         }
       }
     }

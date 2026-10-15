@@ -25,9 +25,14 @@
       "facturacion_cargada_el": null,
       "tope": 17595182.74,
       "uso": 0.5598123159930307,
-      "categoria_corresponde": "A",
-      "estado": "ok",
+      "categoria_corresponde": "C",
+      "estado": "excedido",
       "alertas": [
+        {
+          "tipo": "excede_parametro",
+          "nivel": "critico",
+          "mensaje": "Energía eléctrica consumida supera el tope de la categoría B: 5.600 sobre 5.000 kW anuales (112%). Correspondería: C."
+        },
         {
           "tipo": "compras_sobre_ventas",
           "nivel": "aviso",
@@ -200,7 +205,43 @@
         "escala_vigencia": "2026-02-01",
         "provisoria": false,
         "tardia": false
-      }
+      },
+      "parametros_manuales": {
+        "superficie": 40,
+        "energia": 5600,
+        "alquiler": null,
+        "cargados_el": "2026-10-14T10:00:00"
+      },
+      "parametros": {
+        "cargados_el": "2026-10-14T10:00:00",
+        "limitante": "energia",
+        "items": [
+          {
+            "clave": "superficie",
+            "nombre": "Superficie afectada",
+            "unidad": "m²",
+            "valor": 40,
+            "tope_actual": 45,
+            "uso": 0.8888888888888888,
+            "categoria_requerida": "B",
+            "fuera_de_escala": false,
+            "estado": "ok"
+          },
+          {
+            "clave": "energia",
+            "nombre": "Energía eléctrica consumida",
+            "unidad": "kW anuales",
+            "valor": 5600,
+            "tope_actual": 5000,
+            "uso": 1.12,
+            "categoria_requerida": "C",
+            "fuera_de_escala": false,
+            "estado": "excedido"
+          }
+        ]
+      },
+      "uso_max": 1.12,
+      "parametro_limitante": "energia"
     },
     {
       "cuit": "20000000029",
@@ -439,7 +480,7 @@
       "facturacion_cargada_el": null,
       "tope": 30628651.43,
       "uso": 0.39505493827091426,
-      "categoria_corresponde": "B",
+      "categoria_corresponde": "D",
       "estado": "ok",
       "alertas": [
         {
@@ -455,7 +496,43 @@
       "sincronizado_el": null,
       "manual_difiere": null,
       "mensual": null,
-      "cierre_anterior": null
+      "cierre_anterior": null,
+      "parametros_manuales": {
+        "superficie": 70,
+        "energia": 4000,
+        "alquiler": null,
+        "cargados_el": "2026-10-14T10:05:00"
+      },
+      "parametros": {
+        "cargados_el": "2026-10-14T10:05:00",
+        "limitante": "superficie",
+        "items": [
+          {
+            "clave": "superficie",
+            "nombre": "Superficie afectada",
+            "unidad": "m²",
+            "valor": 70,
+            "tope_actual": 85,
+            "uso": 0.8235294117647058,
+            "categoria_requerida": "D",
+            "fuera_de_escala": false,
+            "estado": "ok"
+          },
+          {
+            "clave": "energia",
+            "nombre": "Energía eléctrica consumida",
+            "unidad": "kW anuales",
+            "valor": 4000,
+            "tope_actual": 10000,
+            "uso": 0.4,
+            "categoria_requerida": "B",
+            "fuera_de_escala": false,
+            "estado": "ok"
+          }
+        ]
+      },
+      "uso_max": 0.8235294117647058,
+      "parametro_limitante": "superficie"
     },
     {
       "cuit": "23000000058",
@@ -497,6 +574,13 @@
       "mensaje": "Supera el tope de la categoría B (110%). Correspondería: C.",
       "cuit": "27000000035",
       "nombre": "Carla Demo"
+    },
+    {
+      "tipo": "excede_parametro",
+      "nivel": "critico",
+      "mensaje": "Energía eléctrica consumida supera el tope de la categoría B: 5.600 sobre 5.000 kW anuales (112%). Correspondería: C.",
+      "cuit": "20000000011",
+      "nombre": "Ana Muestra"
     },
     {
       "tipo": "cerca_del_tope",
