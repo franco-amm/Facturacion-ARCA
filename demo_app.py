@@ -19,6 +19,7 @@ DATA_PATH = DEMO_DIR / "demo-data.json"
 MONOTRIBUTO_PATH = DEMO_DIR / "monotributo-demo.json"
 DFE_PATH = DEMO_DIR / "dfe-demo.json"
 GRANOS_PATH = DEMO_DIR / "granos-demo.json"
+EMITIR_PATH = DEMO_DIR / "emitir-demo.json"
 EXPORT_FIELDS = [
     ("Fecha", "Fecha"),
     ("Tipo", "TipoDescripcion"),
@@ -122,6 +123,12 @@ def demo_dfe() -> dict[str, Any]:
 def demo_granos() -> dict[str, Any]:
     """Liquidaciones primarias de granos ficticias, con el detalle completo que trae ARCA."""
     return json.loads(GRANOS_PATH.read_text(encoding="utf-8"))
+
+
+@app.get("/api/demo/emitir")
+def demo_emitir() -> dict[str, Any]:
+    """Plantillas y emisor ficticios para la emisión simulada (no hay estado ni envío a ARCA)."""
+    return json.loads(EMITIR_PATH.read_text(encoding="utf-8"))
 
 
 @app.get("/api/demo/invoices")

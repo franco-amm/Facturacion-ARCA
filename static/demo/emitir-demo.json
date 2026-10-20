@@ -1,0 +1,12 @@
+{
+  "mes": "2026-10",
+  "emisor": {"nombre": "Estudio Horizonte (DEMO)", "cuit": "20000000001", "punto_venta": 42, "ultimo_numero": 327},
+  "plantillas": [
+    {"id": "p1", "nombre": "Depto Centro 3° B", "receptor": "Inquilino Ejemplo SRL", "doc_tipo": 80, "documento": "20000000012",
+     "concepto": "Alquiler Depto Centro 3° B correspondiente al mes de octubre de 2026", "vence": "2026-10-10", "importe": 480000, "importe_anterior": 480000},
+    {"id": "p2", "nombre": "Local Calle Muestra 120", "receptor": "María Ejemplo", "doc_tipo": 86, "documento": "27000000023",
+     "concepto": "Alquiler Local Calle Muestra 120 correspondiente al mes de octubre de 2026", "vence": "2026-10-10", "importe": 350000, "importe_anterior": 350000},
+    {"id": "p3", "nombre": "Cochera 14", "receptor": "Juan Ejemplo", "doc_tipo": 96, "documento": "30111222",
+     "concepto": "Alquiler Cochera 14 correspondiente al mes de octubre de 2026", "vence": "2026-10-10", "importe": 99000, "importe_anterior": 90000}
+  ]
+}

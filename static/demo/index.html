@@ -10,10 +10,12 @@
   <link rel="stylesheet" href="/assets/monotributo-demo.css">
   <link rel="stylesheet" href="/assets/dfe-demo.css">
   <link rel="stylesheet" href="/assets/granos-demo.css">
+  <link rel="stylesheet" href="/assets/emitir-demo.css">
   <script src="/assets/demo.js" defer></script>
   <script src="/assets/monotributo-demo.js" defer></script>
   <script src="/assets/dfe-demo.js" defer></script>
   <script src="/assets/granos-demo.js" defer></script>
+  <script src="/assets/emitir-demo.js" defer></script>
 </head>
 <body>
   <div class="demo-shell">
@@ -23,7 +25,7 @@
         <span class="brand-name">fiscal<span>desk</span></span>
       </a>
       <div class="nav-label">DEMO DE PRODUCTO</div>
-      <nav><a class="nav-item active" href="#history"><span class="nav-indicator" aria-hidden="true"></span>Comprobantes</a><a class="nav-item" href="#monotributo"><span class="nav-indicator" aria-hidden="true"></span>Monotributo</a><a class="nav-item" href="#dfe"><span class="nav-indicator" aria-hidden="true"></span>Domicilio fiscal</a><a class="nav-item" href="#granos"><span class="nav-indicator" aria-hidden="true"></span>Granos</a></nav>
+      <nav><a class="nav-item active" href="#history"><span class="nav-indicator" aria-hidden="true"></span>Comprobantes</a><a class="nav-item" href="#monotributo"><span class="nav-indicator" aria-hidden="true"></span>Monotributo</a><a class="nav-item" href="#dfe"><span class="nav-indicator" aria-hidden="true"></span>Domicilio fiscal</a><a class="nav-item" href="#granos"><span class="nav-indicator" aria-hidden="true"></span>Granos</a><a class="nav-item" href="#emitir"><span class="nav-indicator" aria-hidden="true"></span>Emitir</a></nav>
       <div class="sidebar-bottom"><span class="demo-dot" aria-hidden="true"></span><div><strong>Modo demostración</strong><small>Sin conexión fiscal</small></div></div>
     </aside>
 
@@ -235,8 +237,62 @@
         <footer class="table-footer"><span id="grdFooter">0 liquidaciones</span><span>Conjunto de datos ficticio · WSLPG</span></footer>
       </section>
     </main>
+    <main class="main-content" id="emitir" hidden>
+      <header class="page-header">
+        <div>
+          <p class="eyebrow">FACTURACIÓN ELECTRÓNICA <span class="eyebrow-rule"></span> EMISIÓN</p>
+          <h1>Emitir</h1>
+          <p class="page-subtitle">Lote mensual de facturas C desde plantillas: validación previa, confirmación de cantidad y total, y PDF con QR.</p>
+        </div>
+        <span class="environment-badge"><i></i> DEMO</span>
+      </header>
+
+      <section class="demo-disclaimer" role="note" aria-label="Aviso de demostración">
+        <span class="disclaimer-mark" aria-hidden="true">i</span>
+        <div><strong>Demostración interactiva</strong><p>Emisión simulada en tu navegador con datos ficticios. No se conecta a ARCA ni guarda nada. El PDF es un ejemplo sin validez fiscal.</p></div>
+        <span class="sample-stamp">SOLO MUESTRA</span>
+      </section>
+
+      <section class="demo-status" aria-label="Estado de la demo de emisión">
+        <div class="status-mark" aria-hidden="true">✎</div>
+        <div><h2>Lote del mes</h2><p id="emdMsg">Cargando…</p></div>
+        <button class="button button-secondary" id="emdReiniciar" type="button">Reiniciar demo</button>
+      </section>
+
+      <section class="filter-section" aria-label="Lote del mes">
+        <div class="em-acciones">
+          <button class="button button-secondary" id="emdValidar" type="button">Validar</button>
+          <button class="button button-primary" id="emdEmitir" type="button" disabled>Emitir seleccionadas</button>
+          <span id="emdResumen" class="mt-sub"></span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th scope="col"><span class="sr-only">Incluir</span></th><th scope="col">PLANTILLA</th><th scope="col">RECEPTOR</th><th scope="col">VENCE</th><th scope="col" class="amount-cell">IMPORTE</th><th scope="col">ESTADO</th><th scope="col"><span class="sr-only">PDF</span></th></tr></thead>
+            <tbody id="emdRows"></tbody>
+          </table>
+        </div>
+        <footer class="table-footer"><span>Podés cambiar un importe y volver a validar</span><span>Conjunto de datos ficticio · el tipo de documento (CUIT, CUIL, DNI) se usa igual en el envío y en el QR</span></footer>
+      </section>
+
+      <section class="filter-section" aria-label="Emisiones de la demo">
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th scope="col">FECHA</th><th scope="col">TIPO</th><th scope="col">RECEPTOR</th><th scope="col">NÚMERO</th><th scope="col" class="amount-cell">IMPORTE</th><th scope="col">CAE (DEMO)</th><th scope="col"><span class="sr-only">PDF</span></th></tr></thead>
+            <tbody id="emdHistorial"></tbody>
+          </table>
+          <div class="table-state" id="emdHistorialVacio">Todavía no emitiste nada en esta demo.</div>
+        </div>
+      </section>
+    </main>
   </div>
 
+  <dialog class="detail-dialog" id="emdDialog" aria-labelledby="emdDialogTitle">
+    <div class="dialog-head"><div><p class="eyebrow">CONFIRMACIÓN (DEMO)</p><h2 id="emdDialogTitle">Emitir lote</h2></div></div>
+    <div class="em-confirma" id="emitirDlg"><p id="emdConfirmaTexto"></p>
+      <input id="emdCantidad" inputmode="numeric" aria-label="Cantidad de facturas">
+      <button class="button button-secondary" id="emdConfirmaCancel" type="button">Cancelar</button>
+      <button class="button button-primary" id="emdConfirmaOk" type="button" disabled>Emitir</button></div>
+  </dialog>
   <dialog class="detail-dialog" id="dfeDialog" aria-labelledby="dfeDialogTitle">
     <div class="dialog-head"><div><p class="eyebrow">COMUNICACIÓN DE ARCA (DEMO)</p><h2 id="dfeDialogTitle">Contenido</h2></div><button class="icon-button" id="dfeDialogClose" type="button" aria-label="Cerrar">×</button></div>
     <div id="dfeDialogBody" class="dfe-dialog-body"></div>

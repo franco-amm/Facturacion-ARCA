@@ -1,0 +1,13 @@
+/* Sección Emitir de la demo. Todo ocurre en el navegador: no hay emisión real ni se guarda nada. */
+#emitir table { min-width: 880px; }
+#emitir .em-importe { width: 112px; height: 30px; padding: 0 7px; border: 1px solid #e0e6e1; border-radius: 2px; text-align: right; font-variant-numeric: tabular-nums; }
+#emitir .em-aviso { display: block; margin-top: 3px; color: #a86b39; font-size: 10px; }
+#emitir .em-error { display: block; margin-top: 3px; color: #8c2f27; font-size: 10px; }
+#emitir .em-acciones { display: flex; gap: 8px; align-items: center; margin: 14px 0; flex-wrap: wrap; }
+#emitir .button-primary { border-color: #2f6a4a; color: #fff; background: #2f6a4a; }
+#emitir .button-primary:hover:not(:disabled) { background: #265a3e; }
+#emitir .filter-section + .filter-section { margin-top: 18px; }
+#emdDialog .em-confirma { padding: 4px 25px 22px; }
+#emdDialog .em-confirma input { width: 120px; height: 31px; margin: 4px 8px 0 0; padding: 0 7px; border: 1px solid #e0e6e1; border-radius: 2px; }
+#emitir a { color: #234e3c; font-weight: 700; }
+@media (max-width: 820px) { #emitir table { min-width: 760px; } }
