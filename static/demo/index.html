@@ -215,6 +215,21 @@
         <div><h2>Liquidaciones de muestra</h2><p id="grdMsg">Cargando…</p></div>
       </section>
 
+      <section class="gr-export" aria-label="Filtros y exportación">
+        <label class="date-control"><span>Desde</span><input type="date" id="grdDesde"></label>
+        <label class="date-control"><span>Hasta</span><input type="date" id="grdHasta"></label>
+        <button class="button button-quiet" id="grdLimpiar" type="button">Limpiar</button>
+        <label class="date-control"><span>Plantilla</span>
+          <select id="grdPlantilla">
+            <option value="bd">BD Liquidaciones (41 columnas)</option>
+            <option value="simple">Listado simple</option>
+          </select>
+        </label>
+        <button class="button button-secondary" id="grdCopiar" type="button">Copiar para pegar</button>
+        <a class="button button-secondary" id="grdExportar" href="#granos" download>Descargar xlsx</a>
+      </section>
+      <p class="gr-export-note" id="grdAviso" role="status" hidden></p>
+
       <section class="filter-section" aria-label="Liquidaciones">
         <div class="table-wrap">
           <table>

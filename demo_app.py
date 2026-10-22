@@ -9,6 +9,7 @@ from io import BytesIO, StringIO
 from pathlib import Path
 from typing import Any, Optional
 
+import granos_plantilla  # vive en la raíz: lo comparten afip_certs y el repo público de la demo
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.staticfiles import StaticFiles
 from openpyxl import Workbook
@@ -123,6 +124,67 @@ def demo_dfe() -> dict[str, Any]:
 def demo_granos() -> dict[str, Any]:
     """Liquidaciones primarias de granos ficticias, con el detalle completo que trae ARCA."""
     return json.loads(GRANOS_PATH.read_text(encoding="utf-8"))
+
+
+DEMO_VENDEDOR = "VENDEDOR DE MUESTRA S.R.L."
+XLSX = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+
+
+def _granos_rango(desde: Optional[date], hasta: Optional[date]) -> list[dict[str, Any]]:
+    """Liquidaciones ficticias del rango (inclusivo), en orden cronológico."""
+    items = json.loads(GRANOS_PATH.read_text(encoding="utf-8"))["liquidaciones"]
+    d, h = (desde.isoformat() if desde else ""), (hasta.isoformat() if hasta else "")
+    visibles = [f for f in items if (not d or f["fecha_liquidacion"][:10] >= d) and (not h or f["fecha_liquidacion"][:10] <= h)]
+    return sorted(visibles, key=lambda f: (f["fecha_liquidacion"], f["coe"]))
+
+
+def _crudo_granos(f: dict[str, Any]) -> tuple[str, str]:
+    """La demo guarda el detalle recortado y los totales aparte: se rearma la forma que devuelve ARCA."""
+    det = f.get("detalle") or {}
+    liq = {**(det.get("liquidacion") or {}), "codGrano": f["cod_grano"]}
+    auth = {
+        **(det.get("autorizacion") or {}), "coe": f["coe"], "ptoEmision": f.get("pto_emision"), "nroOrden": f.get("nro_orden"),
+        "fechaLiquidacion": f["fecha_liquidacion"], "totalPesoNeto": f.get("peso_neto"), "subTotal": f.get("sub_total"),
+        "importeIva": f.get("importe_iva"), "operacionConIva": f.get("operacion_con_iva"),
+        "totalDeduccion": f.get("total_deduccion"), "totalNetoAPagar": f.get("total_neto_a_pagar"),
+        "totalIvaRg4310_18": f.get("total_iva_rg4310_18"), "totalPagoSegunCondicion": f.get("total_pago_segun_condicion"),
+    }
+    return f["coe"], json.dumps({"liquidacion": liq, "autorizacion": auth})
+
+
+def _filas_bd_demo(desde: Optional[date], hasta: Optional[date]):
+    crudos = [_crudo_granos(f) for f in _granos_rango(desde, hasta)]
+    return granos_plantilla.filas_desde_crudos(crudos, DEMO_VENDEDOR)
+
+
+@app.get("/api/demo/granos/bd-liquidaciones")
+def demo_granos_bd(desde: Optional[date] = None, hasta: Optional[date] = None) -> dict[str, Any]:
+    """Plantilla «BD Liquidaciones» como texto tabulado (41 columnas), lista para pegar desde la columna A."""
+    filas, avisos = _filas_bd_demo(desde, hasta)
+    return {"filas": len(filas), "texto": granos_plantilla.a_tsv(filas), "avisos": avisos}
+
+
+@app.get("/api/demo/granos/bd-liquidaciones.xlsx")
+def demo_granos_bd_xlsx(desde: Optional[date] = None, hasta: Optional[date] = None) -> Response:
+    filas, _ = _filas_bd_demo(desde, hasta)
+    return Response(granos_plantilla.a_xlsx(filas), media_type=XLSX,
+                    headers={"Content-Disposition": 'attachment; filename="bd_liquidaciones_demo.xlsx"'})
+
+
+@app.get("/api/demo/granos/liquidaciones.xlsx")
+def demo_granos_listado_xlsx(desde: Optional[date] = None, hasta: Optional[date] = None) -> Response:
+    """Plantilla «Listado simple»."""
+    libro = Workbook(); ws = libro.active; ws.title = "Liquidaciones"
+    campos = [("fecha_liquidacion", "Fecha"), ("coe", "COE"), ("pto_emision", "Pto. emisión"), ("nro_orden", "Nro. orden"),
+              ("cuit_comprador", "CUIT comprador"), ("cod_grano", "Grano"), ("campania", "Campaña"),
+              ("peso_neto", "Peso neto (kg)"), ("sub_total", "Subtotal"), ("importe_iva", "IVA"),
+              ("operacion_con_iva", "Operación con IVA"), ("total_deduccion", "Deducciones"), ("total_neto_a_pagar", "Neto a pagar")]
+    ws.append([etiqueta for _, etiqueta in campos])
+    for f in _granos_rango(desde, hasta):
+        ws.append([f.get(clave) for clave, _ in campos])
+    salida = BytesIO(); libro.save(salida)
+    return Response(salida.getvalue(), media_type=XLSX,
+                    headers={"Content-Disposition": 'attachment; filename="liquidaciones_demo.xlsx"'})
 
 
 @app.get("/api/demo/emitir")

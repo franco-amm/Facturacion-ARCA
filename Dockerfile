@@ -10,6 +10,7 @@ RUN pip install --no-cache-dir -r requirements.txt \
     && useradd --create-home --uid 10001 demo
 
 COPY --chown=demo:demo demo_app.py ./demo_app.py
+COPY --chown=demo:demo granos_plantilla.py ./granos_plantilla.py
 COPY --chown=demo:demo static/demo ./static/demo
 
 USER demo

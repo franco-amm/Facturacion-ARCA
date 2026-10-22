@@ -6,3 +6,10 @@
 .gr-pager { display: flex; align-items: center; justify-content: center; gap: 14px; padding: 12px 2px 4px; font-size: 12px; color: #64756a; }
 .gr-pager[hidden] { display: none; }
 .gr-pager button:disabled { opacity: .4; cursor: default; }
+
+.gr-export { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin: 12px 0; }
+.gr-export .date-control { display: flex; align-items: center; gap: 8px; }
+.gr-export .date-control span { color: #78867d; font-size: 10px; font-weight: 600; }
+.gr-export input, .gr-export select { height: 31px; padding: 0 7px; border: 1px solid #e0e6e1; border-radius: 2px; color: #304239; background: #fbfcfb; font-size: 11px; }
+.gr-export-note { margin: 0 0 10px; font-size: 12px; color: #4b6355; }
+.gr-export-note.warn { color: #9a5b00; }

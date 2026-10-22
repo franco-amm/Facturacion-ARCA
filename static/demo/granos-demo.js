@@ -10,7 +10,7 @@
   const num = new Intl.NumberFormat("es-AR", { maximumFractionDigits: 0 });
   const dinero = new Intl.NumberFormat("es-AR", { style: "currency", currency: "ARS" });
   // Solo códigos confirmados contra datos reales de producción -- no se adivinan los demás.
-  const CATALOGO_GRANOS = { "19": "Maíz", "23": "Soja" };
+  const CATALOGO_GRANOS = { "19": "Maíz", "22": "Sorgo Granífero", "23": "Soja" };
 
   let liquidaciones = [];
   let loaded = false;
@@ -27,7 +27,37 @@
   const POR_PAGINA = 10;
   let pagina = 1;
 
+  // Filtro por fecha (inclusivo) sobre el listado cargado; las exportaciones usan el mismo rango.
+  function filtradas() {
+    const desde = $("grdDesde").value, hasta = $("grdHasta").value;
+    return liquidaciones.filter((f) => {
+      const dia = String(f.fecha_liquidacion || "").slice(0, 10);
+      return (!desde || dia >= desde) && (!hasta || dia <= hasta);
+    });
+  }
+
+  function paramsFechas() {
+    const q = new URLSearchParams();
+    if ($("grdDesde").value) q.set("desde", $("grdDesde").value);
+    if ($("grdHasta").value) q.set("hasta", $("grdHasta").value);
+    const texto = q.toString();
+    return texto ? `?${texto}` : "";
+  }
+
+  function actualizarExportacion() {
+    const bd = $("grdPlantilla").value === "bd";
+    $("grdCopiar").hidden = !bd;
+    $("grdExportar").href = (bd ? "/api/demo/granos/bd-liquidaciones.xlsx" : "/api/demo/granos/liquidaciones.xlsx") + paramsFechas();
+  }
+
+  function aviso(texto, advertencia = false) {
+    $("grdAviso").textContent = texto;
+    $("grdAviso").classList.toggle("warn", advertencia);
+    $("grdAviso").hidden = !texto;
+  }
+
   function renderFilas(items) {
+    actualizarExportacion();
     const paginas = Math.max(1, Math.ceil(items.length / POR_PAGINA));
     pagina = Math.min(Math.max(1, pagina), paginas);
     const desde = (pagina - 1) * POR_PAGINA;
@@ -138,15 +168,50 @@
       const d = await r.json();
       liquidaciones = d.liquidaciones || [];
       $("grdMsg").textContent = `${liquidaciones.length} liquidaciones de muestra · WSLPG (sin conexión a ARCA)`;
-      renderFilas(liquidaciones);
+      renderFilas(filtradas());
       loaded = true;
     } catch (e) {
       $("grdMsg").textContent = `No se pudo cargar la demo: ${e.message}`;
     }
   }
 
-  $("grdPrev").addEventListener("click", () => { pagina -= 1; renderFilas(liquidaciones); });
-  $("grdNext").addEventListener("click", () => { pagina += 1; renderFilas(liquidaciones); });
+  $("grdPrev").addEventListener("click", () => { pagina -= 1; renderFilas(filtradas()); });
+  $("grdNext").addEventListener("click", () => { pagina += 1; renderFilas(filtradas()); });
+
+  for (const id of ["grdDesde", "grdHasta", "grdPlantilla"]) {
+    $(id).addEventListener("change", () => { pagina = 1; aviso(""); renderFilas(filtradas()); });
+  }
+  $("grdLimpiar").addEventListener("click", () => {
+    $("grdDesde").value = ""; $("grdHasta").value = ""; pagina = 1; aviso(""); renderFilas(filtradas());
+  });
+
+  // Copia la plantilla «BD Liquidaciones» como texto tabulado. Se pasa una promesa a ClipboardItem
+  // para que Safari acepte la copia aunque el texto llegue después del clic (fetch).
+  $("grdCopiar").addEventListener("click", async (event) => {
+    const boton = event.currentTarget;
+    boton.disabled = true;
+    aviso("");
+    let r;
+    try {
+      const respuesta = fetch(`/api/demo/granos/bd-liquidaciones${paramsFechas()}`).then((x) => {
+        if (!x.ok) throw new Error(`Error HTTP ${x.status}`);
+        return x.json();
+      });
+      if (navigator.clipboard && window.ClipboardItem) {
+        const blob = respuesta.then((d) => { r = d; return new Blob([d.texto], { type: "text/plain" }); });
+        await navigator.clipboard.write([new ClipboardItem({ "text/plain": blob })]);
+      } else {
+        r = await respuesta;
+        await navigator.clipboard.writeText(r.texto);
+      }
+      if (!r.filas) aviso("No hay liquidaciones en ese rango.", true);
+      else aviso(`${r.filas} fila${r.filas === 1 ? "" : "s"} copiada${r.filas === 1 ? "" : "s"}: pegalas en la columna A de la primera fila libre de tu planilla.${r.avisos.length ? ` · ${r.avisos.length} aviso(s): ${r.avisos.join(" · ")}` : ""}`, r.avisos.length > 0);
+    } catch (e) {
+      aviso("No se pudo copiar al portapapeles. Usá «Descargar xlsx» con la misma plantilla.", true);
+    } finally {
+      boton.disabled = false;
+    }
+  });
 
   $("grdRows").addEventListener("click", (event) => {
     const boton = event.target.closest("[data-detalle]");
