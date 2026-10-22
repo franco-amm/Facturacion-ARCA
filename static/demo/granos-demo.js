@@ -27,9 +27,56 @@
   const POR_PAGINA = 10;
   let pagina = 1;
 
+  // ---- Fechas del filtro: campo de texto flexible + calendario. El <input type="date"> nativo no entrega
+  // valor hasta tener día, mes y año completos; acá basta con «dd/mm» (se asume el año actual), «dd/mm/aa»,
+  // «dd/mm/aaaa» o solo dígitos («0104», «010426», «01042026»).
+  function parseFecha(texto) {
+    const t = String(texto || "").trim();
+    if (!t) return "";
+    let partes = t.match(/^(\d{1,2})[\/\-. ](\d{1,2})(?:[\/\-. ](\d{2}|\d{4}))?$/);
+    if (!partes && /^\d+$/.test(t) && [4, 6, 8].includes(t.length)) partes = [t, t.slice(0, 2), t.slice(2, 4), t.slice(4)];
+    if (!partes) return null;
+    const dia = Number(partes[1]), mes = Number(partes[2]);
+    let anio = partes[3] ? Number(partes[3]) : new Date().getFullYear();
+    if (partes[3] && partes[3].length === 2) anio += 2000;
+    const f = new Date(anio, mes - 1, dia);
+    if (f.getFullYear() !== anio || f.getMonth() !== mes - 1 || f.getDate() !== dia) return null;
+    return `${anio}-${String(mes).padStart(2, "0")}-${String(dia).padStart(2, "0")}`;
+  }
+
+  function fechaIso(id) { return $(id).dataset.iso || ""; }
+
+  function fijarFecha(id, iso) {
+    const campo = $(id);
+    campo.dataset.iso = iso;
+    const [a, m, d] = iso ? iso.split("-") : [];
+    campo.value = iso ? `${d}/${m}/${a}` : "";
+    campo.classList.remove("is-invalid");
+  }
+
+  function enlazarFecha(id, alCambiar) {
+    const campo = $(id), nativo = $(`${id}Nativo`), boton = campo.parentElement.querySelector(".date-pick");
+    let pausa = null;
+    const aplicar = (normalizar) => {
+      clearTimeout(pausa);
+      const iso = parseFecha(campo.value);
+      if (iso === null) { campo.classList.add("is-invalid"); return; }  // incompleta o inválida: se conserva el filtro anterior
+      const cambio = iso !== fechaIso(id);
+      if (normalizar) fijarFecha(id, iso); else { campo.dataset.iso = iso; campo.classList.remove("is-invalid"); }
+      if (cambio) alCambiar();
+    };
+    campo.addEventListener("input", () => { clearTimeout(pausa); pausa = setTimeout(() => aplicar(false), 450); });
+    campo.addEventListener("change", () => aplicar(true));  // Enter o salir del campo: filtra ya y deja dd/mm/aaaa
+    boton.addEventListener("click", () => {
+      nativo.value = fechaIso(id);
+      try { nativo.showPicker(); } catch (e) { nativo.focus(); nativo.click(); }
+    });
+    nativo.addEventListener("change", () => { fijarFecha(id, nativo.value); alCambiar(); });
+  }
+
   // Filtro por fecha (inclusivo) sobre el listado cargado; las exportaciones usan el mismo rango.
   function filtradas() {
-    const desde = $("grdDesde").value, hasta = $("grdHasta").value;
+    const desde = fechaIso("grdDesde"), hasta = fechaIso("grdHasta");
     return liquidaciones.filter((f) => {
       const dia = String(f.fecha_liquidacion || "").slice(0, 10);
       return (!desde || dia >= desde) && (!hasta || dia <= hasta);
@@ -38,8 +85,8 @@
 
   function paramsFechas() {
     const q = new URLSearchParams();
-    if ($("grdDesde").value) q.set("desde", $("grdDesde").value);
-    if ($("grdHasta").value) q.set("hasta", $("grdHasta").value);
+    if (fechaIso("grdDesde")) q.set("desde", fechaIso("grdDesde"));
+    if (fechaIso("grdHasta")) q.set("hasta", fechaIso("grdHasta"));
     const texto = q.toString();
     return texto ? `?${texto}` : "";
   }
@@ -178,11 +225,15 @@
   $("grdPrev").addEventListener("click", () => { pagina -= 1; renderFilas(filtradas()); });
   $("grdNext").addEventListener("click", () => { pagina += 1; renderFilas(filtradas()); });
 
-  for (const id of ["grdDesde", "grdHasta", "grdPlantilla"]) {
-    $(id).addEventListener("change", () => { pagina = 1; aviso(""); renderFilas(filtradas()); });
-  }
+  // Las fechas filtran al tipearlas (con o sin año) y al elegirlas en el calendario; la plantilla solo cambia.
+  const aplicarFiltros = () => { pagina = 1; aviso(""); renderFilas(filtradas()); };
+  enlazarFecha("grdDesde", aplicarFiltros);
+  enlazarFecha("grdHasta", aplicarFiltros);
+  $("grdPlantilla").addEventListener("change", aplicarFiltros);
+  // El enlace de descarga se arma al hacer clic, así toma las fechas aunque el filtro aún no se haya repintado.
+  $("grdExportar").addEventListener("click", actualizarExportacion);
   $("grdLimpiar").addEventListener("click", () => {
-    $("grdDesde").value = ""; $("grdHasta").value = ""; pagina = 1; aviso(""); renderFilas(filtradas());
+    fijarFecha("grdDesde", ""); fijarFecha("grdHasta", ""); aplicarFiltros();
   });
 
   // Copia la plantilla «BD Liquidaciones» como texto tabulado. Se pasa una promesa a ClipboardItem
