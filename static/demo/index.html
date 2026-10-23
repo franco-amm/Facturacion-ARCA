@@ -212,6 +212,7 @@
 
       <div class="gr-vistas" role="group" aria-label="Qué querés ver">
         <button class="gr-vista is-active" type="button" data-vista="liq" aria-pressed="true">Liquidaciones</button>
+        <button class="gr-vista" type="button" data-vista="coe" aria-pressed="false">Certificados</button>
         <button class="gr-vista" type="button" data-vista="cert" aria-pressed="false">Certificados con saldo</button>
         <button class="gr-vista" type="button" data-vista="ctg" aria-pressed="false">CTG</button>
       </div>
@@ -292,6 +293,16 @@
           </div>
           <footer class="table-footer"><span id="grdCtgFooter"></span><span>Conjunto de datos ficticio · WSLPG</span></footer>
         </section>
+      </div>
+      <div id="grdCoeVista" hidden>
+        <section class="gr-export" aria-label="Certificado por COE">
+          <form class="gr-export" id="grdCoeForm">
+            <label class="date-control"><span>COE del certificado</span><input id="grdCoeNumero" inputmode="numeric" maxlength="14" placeholder="900000000101" autocomplete="off" required></label>
+            <button class="button button-primary" type="submit">Consultar</button>
+          </form>
+        </section>
+        <p class="gr-export-note">En la app real esto consulta a ARCA cualquier certificado, aunque ya no tenga saldo. Acá probá con un COE de la pestaña Certificados con saldo (por ejemplo 900000000101).</p>
+        <section class="gr-coe-resultado" id="grdCoeResultado" aria-live="polite" hidden></section>
       </div>
     </main>
     <main class="main-content" id="emitir" hidden>

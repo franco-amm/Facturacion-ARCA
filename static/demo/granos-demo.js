@@ -316,6 +316,7 @@
     $("grdLiqVista").hidden = vista !== "liq";
     $("grdCertVista").hidden = vista !== "cert";
     $("grdCtgVista").hidden = vista !== "ctg";
+    $("grdCoeVista").hidden = vista !== "coe";
     document.querySelectorAll("#granos .gr-vista").forEach((b) => {
       b.classList.toggle("is-active", b.dataset.vista === vista);
       b.setAttribute("aria-pressed", String(b.dataset.vista === vista));
@@ -326,6 +327,16 @@
   $("grdCertRows").addEventListener("click", (event) => {
     const cert = event.target.closest("[data-cert-detalle]");
     if (cert) abrirDetalleCertificado(cert.dataset.certDetalle);
+  });
+  $("grdCoeForm").addEventListener("submit", (event) => {
+    event.preventDefault();
+    const coe = $("grdCoeNumero").value.replace(/\D/g, "");
+    const caja = $("grdCoeResultado");
+    const detalle = (certDetalles || {})[coe];
+    caja.hidden = false;
+    caja.innerHTML = detalle
+      ? `<h3 class="gr-coe-titulo">Certificado de muestra · COE ${esc(coe)}</h3>${htmlDetalleCertificado(detalle)}<div class="gr-detalle-pie"><span>Datos de muestra.</span></div>`
+      : `<p class="gr-coe-error">ARCA no devolvió el certificado ${esc(coe || "")}: sin datos (en esta demo solo existen los COE de la pestaña Certificados con saldo).</p>`;
   });
   ["grdCtgGrano", "grdCtgCampania"].forEach((id) => $(id).addEventListener("change", renderCtg));
 
