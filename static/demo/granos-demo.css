@@ -20,3 +20,16 @@
 .gr-export .date-pick { display: inline-flex; align-items: center; justify-content: center; width: 31px; height: 31px; padding: 0; border: 1px solid #e0e6e1; border-radius: 2px; color: #4b6355; background: #fbfcfb; cursor: pointer; }
 .gr-export .date-pick:hover { background: #f1f5f2; }
 .gr-export .date-control .date-native { position: absolute; left: 0; bottom: 0; width: 1px; height: 1px; padding: 0; border: 0; opacity: 0; pointer-events: none; }
+
+/* Selector de vista y filtros de Certificados con saldo / CTG */
+.gr-vistas { display: inline-flex; margin: 4px 0 8px; border: 1px solid var(--line); border-radius: 4px; overflow: hidden; background: #fff; }
+.gr-vistas[hidden], #grdLiqVista[hidden], #grdCertVista[hidden], #grdCtgVista[hidden] { display: none; }
+.gr-vista { padding: 8px 14px; border: 0; border-right: 1px solid var(--line); color: #4d5e53; background: transparent; font-size: 12px; font-weight: 600; cursor: pointer; }
+.gr-vista:last-child { border-right: 0; }
+.gr-vista:hover { background: #f1f5f2; }
+.gr-vista.is-active { color: #fff; background: var(--forest); }
+.gr-check { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #4d5e53; }
+.gr-estado-cert { display: inline-block; padding: 2px 6px; border-radius: 2px; font-size: 10px; font-weight: 700; color: #2a633d; background: #e8f4e8; }
+.gr-estado-cert.sin { color: #5f6d64; background: #eef1ee; }
+@media (max-width: 820px) { .gr-vistas { display: flex; } .gr-vista { flex: 1; padding: 8px 6px; } }
+.gr-detalle-pie { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--line); font-size: 12px; color: #64756a; }

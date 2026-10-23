@@ -2493,5 +2493,737 @@
         }
       }
     }
-  ]
+  ],
+  "certificados": [
+    {
+      "coe": "900000000101",
+      "tipo_certificado": "P",
+      "campania": "2526",
+      "cod_grano": "19",
+      "cuit_depositante": "20000000031",
+      "cuit_depositario": "20000000042",
+      "nro_planta": 9001,
+      "kilos_disponibles": 48200.0,
+      "con_saldo": 1,
+      "sin_saldo_desde": null,
+      "consultado_en": "2026-10-22 13:05:00"
+    },
+    {
+      "coe": "900000000102",
+      "tipo_certificado": "P",
+      "campania": "2526",
+      "cod_grano": "23",
+      "cuit_depositante": "20000000031",
+      "cuit_depositario": "20000000042",
+      "nro_planta": 9001,
+      "kilos_disponibles": 12350.0,
+      "con_saldo": 1,
+      "sin_saldo_desde": null,
+      "consultado_en": "2026-10-22 13:05:00"
+    },
+    {
+      "coe": "900000000103",
+      "tipo_certificado": "P",
+      "campania": "2526",
+      "cod_grano": "22",
+      "cuit_depositante": "20000000031",
+      "cuit_depositario": "20000000042",
+      "nro_planta": 9002,
+      "kilos_disponibles": 7800.0,
+      "con_saldo": 1,
+      "sin_saldo_desde": null,
+      "consultado_en": "2026-10-22 13:05:00"
+    },
+    {
+      "coe": "900000000104",
+      "tipo_certificado": "P",
+      "campania": "2526",
+      "cod_grano": "19",
+      "cuit_depositante": "20000000031",
+      "cuit_depositario": "20000000042",
+      "nro_planta": 9002,
+      "kilos_disponibles": 0.0,
+      "con_saldo": 0,
+      "sin_saldo_desde": "2026-10-14 15:20:00",
+      "consultado_en": "2026-10-22 13:05:00"
+    },
+    {
+      "coe": "900000000105",
+      "tipo_certificado": "P",
+      "campania": "2425",
+      "cod_grano": "23",
+      "cuit_depositante": "20000000031",
+      "cuit_depositario": "20000000042",
+      "nro_planta": 9001,
+      "kilos_disponibles": 0.0,
+      "con_saldo": 0,
+      "sin_saldo_desde": "2026-08-02 09:40:00",
+      "consultado_en": "2026-10-22 13:05:00"
+    }
+  ],
+  "ctg": [
+    {
+      "tipo_certificado": "P",
+      "nro_ctg": "90000002001",
+      "nro_carta_porte": "900000003001",
+      "tipo_ctg": "C",
+      "campania": "2526",
+      "cod_grano": "19",
+      "nro_planta": 9001,
+      "kilos_confirmados": 30120.0,
+      "fecha_confirmacion": "2026-10-21",
+      "cuit_remitente_comercial": "20000000031",
+      "cuit_liquida": "20000000042",
+      "cuit_certifica": "20000000042",
+      "consultado_en": "2026-10-22 13:05:00"
+    },
+    {
+      "tipo_certificado": "P",
+      "nro_ctg": "90000002002",
+      "nro_carta_porte": "900000003002",
+      "tipo_ctg": "C",
+      "campania": "2526",
+      "cod_grano": "19",
+      "nro_planta": 9002,
+      "kilos_confirmados": 29840.0,
+      "fecha_confirmacion": "2026-10-20",
+      "cuit_remitente_comercial": "20000000031",
+      "cuit_liquida": "20000000042",
+      "cuit_certifica": "20000000042",
+      "consultado_en": "2026-10-22 13:05:00"
+    },
+    {
+      "tipo_certificado": "P",
+      "nro_ctg": "90000002003",
+      "nro_carta_porte": "900000003003",
+      "tipo_ctg": "C",
+      "campania": "2526",
+      "cod_grano": "23",
+      "nro_planta": 9001,
+      "kilos_confirmados": 28400.0,
+      "fecha_confirmacion": "2026-10-17",
+      "cuit_remitente_comercial": "20000000031",
+      "cuit_liquida": "20000000042",
+      "cuit_certifica": "20000000042",
+      "consultado_en": "2026-10-22 13:05:00"
+    },
+    {
+      "tipo_certificado": "P",
+      "nro_ctg": "90000002004",
+      "nro_carta_porte": "900000003004",
+      "tipo_ctg": "C",
+      "campania": "2526",
+      "cod_grano": "23",
+      "nro_planta": 9002,
+      "kilos_confirmados": 30010.0,
+      "fecha_confirmacion": "2026-10-12",
+      "cuit_remitente_comercial": "20000000031",
+      "cuit_liquida": "20000000042",
+      "cuit_certifica": "20000000042",
+      "consultado_en": "2026-10-22 13:05:00"
+    },
+    {
+      "tipo_certificado": "P",
+      "nro_ctg": "90000002005",
+      "nro_carta_porte": "900000003005",
+      "tipo_ctg": "C",
+      "campania": "2526",
+      "cod_grano": "19",
+      "nro_planta": 9001,
+      "kilos_confirmados": 27950.0,
+      "fecha_confirmacion": "2026-10-09",
+      "cuit_remitente_comercial": "20000000031",
+      "cuit_liquida": "20000000042",
+      "cuit_certifica": "20000000042",
+      "consultado_en": "2026-10-22 13:05:00"
+    },
+    {
+      "tipo_certificado": "P",
+      "nro_ctg": "90000002006",
+      "nro_carta_porte": "900000003006",
+      "tipo_ctg": "C",
+      "campania": "2526",
+      "cod_grano": "22",
+      "nro_planta": 9002,
+      "kilos_confirmados": 26300.0,
+      "fecha_confirmacion": "2026-10-05",
+      "cuit_remitente_comercial": "20000000031",
+      "cuit_liquida": "20000000042",
+      "cuit_certifica": "20000000042",
+      "consultado_en": "2026-10-22 13:05:00"
+    },
+    {
+      "tipo_certificado": "P",
+      "nro_ctg": "90000002007",
+      "nro_carta_porte": "900000003007",
+      "tipo_ctg": "C",
+      "campania": "2526",
+      "cod_grano": "19",
+      "nro_planta": 9001,
+      "kilos_confirmados": 30500.0,
+      "fecha_confirmacion": "2026-09-28",
+      "cuit_remitente_comercial": "20000000031",
+      "cuit_liquida": "20000000042",
+      "cuit_certifica": "20000000042",
+      "consultado_en": "2026-10-22 13:05:00"
+    },
+    {
+      "tipo_certificado": "P",
+      "nro_ctg": "90000002008",
+      "nro_carta_porte": "900000003008",
+      "tipo_ctg": "C",
+      "campania": "2425",
+      "cod_grano": "23",
+      "nro_planta": 9002,
+      "kilos_confirmados": 29100.0,
+      "fecha_confirmacion": "2026-09-22",
+      "cuit_remitente_comercial": "20000000031",
+      "cuit_liquida": "20000000042",
+      "cuit_certifica": "20000000042",
+      "consultado_en": "2026-10-22 13:05:00"
+    }
+  ],
+  "ultima_consulta": "2026-10-22 13:05:00",
+  "certificado_detalles": {
+    "900000000101": {
+      "autorizacion": {
+        "ptoEmision": 9001,
+        "nroOrden": 101,
+        "coe": 900000000101,
+        "estado": "AC",
+        "fechaCertificacion": "2026-10-11",
+        "pesosResumen": {
+          "pesoBrutoCertificado": 49357,
+          "pesoMermaVolatil": 144.6,
+          "pesoMermaSecado": 1020.0,
+          "pesoMermaZarandeo": 0,
+          "pesoNetoCertificado": 48200.0
+        },
+        "serviciosResumen": {
+          "servicioSecado": 630000.0,
+          "servicioZarandeo": 0,
+          "servicioOtros": 45000.0,
+          "servicioGastosGenerales": 120000.0,
+          "importeIVA": 167475.0,
+          "servicioTotal": 962475.0
+        },
+        "planta": {
+          "nroPlanta": 9001,
+          "cuitTitularPlanta": "20000000042",
+          "razonSocialTitularPlanta": "PLANTA DE MUESTRA S.A."
+        }
+      },
+      "cabecera": {
+        "tipoCertificado": "P",
+        "ptoEmision": 9001,
+        "nroOrden": 101,
+        "titularGrano": "D",
+        "cuitDepositante": "20000000031",
+        "codGrano": 19,
+        "campania": "2526",
+        "datosAdicionales": "Certificado de muestra (datos ficticios)"
+      },
+      "primaria": {
+        "ctg": [
+          {
+            "nroCTG": 900000004010,
+            "nroCartaDePorte": "900000005010",
+            "pesoNetoConfirmadoDefinitivo": 16066.67,
+            "porcentajeSecadoHumedad": 14.5,
+            "importeSecado": 210000,
+            "pesoNetoMermaSecado": 340,
+            "tarifaSecado": 2.35,
+            "importeZarandeo": 0,
+            "pesoNetoMermaZarandeo": 0,
+            "tarifaZarandeo": 0
+          },
+          {
+            "nroCTG": 900000004011,
+            "nroCartaDePorte": "900000005011",
+            "pesoNetoConfirmadoDefinitivo": 16066.67,
+            "porcentajeSecadoHumedad": 14.8,
+            "importeSecado": 225000,
+            "pesoNetoMermaSecado": 360,
+            "tarifaSecado": 2.35,
+            "importeZarandeo": 0,
+            "pesoNetoMermaZarandeo": 0,
+            "tarifaZarandeo": 0
+          },
+          {
+            "nroCTG": 900000004012,
+            "nroCartaDePorte": "900000005012",
+            "pesoNetoConfirmadoDefinitivo": 16066.67,
+            "porcentajeSecadoHumedad": 15.1,
+            "importeSecado": 240000,
+            "pesoNetoMermaSecado": 380,
+            "tarifaSecado": 2.35,
+            "importeZarandeo": 0,
+            "pesoNetoMermaZarandeo": 0,
+            "tarifaZarandeo": 0
+          }
+        ],
+        "montoAlmacenaje": 0,
+        "montoGastosGenerales": 120000.0,
+        "montoSecado": 630000.0,
+        "porcentajeSecadoDe": 16.0,
+        "porcentajeSecadoA": 14.0,
+        "serviciosFormaDePago": "CONTADO",
+        "calidad": {
+          "analisisMuestra": 9000001,
+          "nroBoletin": 8000001,
+          "codGrado": 2,
+          "valorGrado": 1.0,
+          "detalleMuestraAnalisis": [
+            {
+              "descripcionRubro": "Humedad",
+              "tipoRubro": "R",
+              "porcentaje": 14.0,
+              "valor": 0
+            },
+            {
+              "descripcionRubro": "Cuerpos extraños",
+              "tipoRubro": "R",
+              "porcentaje": 0.8,
+              "valor": 0
+            }
+          ]
+        }
+      },
+      "cuitDepositario": "20000000042",
+      "nroPlanta": 9001,
+      "kilosDisponible": 48200.0
+    },
+    "900000000102": {
+      "autorizacion": {
+        "ptoEmision": 9001,
+        "nroOrden": 102,
+        "coe": 900000000102,
+        "estado": "AC",
+        "fechaCertificacion": "2026-10-12",
+        "pesosResumen": {
+          "pesoBrutoCertificado": 23552,
+          "pesoMermaVolatil": 69.0,
+          "pesoMermaSecado": 1020.0,
+          "pesoMermaZarandeo": 0,
+          "pesoNetoCertificado": 23000.0
+        },
+        "serviciosResumen": {
+          "servicioSecado": 630000.0,
+          "servicioZarandeo": 0,
+          "servicioOtros": 45000.0,
+          "servicioGastosGenerales": 120000.0,
+          "importeIVA": 167475.0,
+          "servicioTotal": 962475.0
+        },
+        "planta": {
+          "nroPlanta": 9001,
+          "cuitTitularPlanta": "20000000042",
+          "razonSocialTitularPlanta": "PLANTA DE MUESTRA S.A."
+        }
+      },
+      "cabecera": {
+        "tipoCertificado": "P",
+        "ptoEmision": 9001,
+        "nroOrden": 102,
+        "titularGrano": "D",
+        "cuitDepositante": "20000000031",
+        "codGrano": 23,
+        "campania": "2526",
+        "datosAdicionales": "Certificado de muestra (datos ficticios)"
+      },
+      "primaria": {
+        "ctg": [
+          {
+            "nroCTG": 900000004020,
+            "nroCartaDePorte": "900000005020",
+            "pesoNetoConfirmadoDefinitivo": 7666.67,
+            "porcentajeSecadoHumedad": 14.5,
+            "importeSecado": 210000,
+            "pesoNetoMermaSecado": 340,
+            "tarifaSecado": 2.35,
+            "importeZarandeo": 0,
+            "pesoNetoMermaZarandeo": 0,
+            "tarifaZarandeo": 0
+          },
+          {
+            "nroCTG": 900000004021,
+            "nroCartaDePorte": "900000005021",
+            "pesoNetoConfirmadoDefinitivo": 7666.67,
+            "porcentajeSecadoHumedad": 14.8,
+            "importeSecado": 225000,
+            "pesoNetoMermaSecado": 360,
+            "tarifaSecado": 2.35,
+            "importeZarandeo": 0,
+            "pesoNetoMermaZarandeo": 0,
+            "tarifaZarandeo": 0
+          },
+          {
+            "nroCTG": 900000004022,
+            "nroCartaDePorte": "900000005022",
+            "pesoNetoConfirmadoDefinitivo": 7666.67,
+            "porcentajeSecadoHumedad": 15.1,
+            "importeSecado": 240000,
+            "pesoNetoMermaSecado": 380,
+            "tarifaSecado": 2.35,
+            "importeZarandeo": 0,
+            "pesoNetoMermaZarandeo": 0,
+            "tarifaZarandeo": 0
+          }
+        ],
+        "montoAlmacenaje": 0,
+        "montoGastosGenerales": 120000.0,
+        "montoSecado": 630000.0,
+        "porcentajeSecadoDe": 16.0,
+        "porcentajeSecadoA": 14.0,
+        "serviciosFormaDePago": "CONTADO",
+        "calidad": {
+          "analisisMuestra": 9000002,
+          "nroBoletin": 8000002,
+          "codGrado": 2,
+          "valorGrado": 1.0,
+          "detalleMuestraAnalisis": [
+            {
+              "descripcionRubro": "Humedad",
+              "tipoRubro": "R",
+              "porcentaje": 14.0,
+              "valor": 0
+            },
+            {
+              "descripcionRubro": "Cuerpos extraños",
+              "tipoRubro": "R",
+              "porcentaje": 0.8,
+              "valor": 0
+            }
+          ]
+        }
+      },
+      "cuitDepositario": "20000000042",
+      "nroPlanta": 9001,
+      "kilosDisponible": 12350.0
+    },
+    "900000000103": {
+      "autorizacion": {
+        "ptoEmision": 9001,
+        "nroOrden": 103,
+        "coe": 900000000103,
+        "estado": "AC",
+        "fechaCertificacion": "2026-10-13",
+        "pesosResumen": {
+          "pesoBrutoCertificado": 25088,
+          "pesoMermaVolatil": 73.5,
+          "pesoMermaSecado": 1020.0,
+          "pesoMermaZarandeo": 0,
+          "pesoNetoCertificado": 24500.0
+        },
+        "serviciosResumen": {
+          "servicioSecado": 630000.0,
+          "servicioZarandeo": 0,
+          "servicioOtros": 45000.0,
+          "servicioGastosGenerales": 120000.0,
+          "importeIVA": 167475.0,
+          "servicioTotal": 962475.0
+        },
+        "planta": {
+          "nroPlanta": 9002,
+          "cuitTitularPlanta": "20000000042",
+          "razonSocialTitularPlanta": "PLANTA DE MUESTRA S.A."
+        }
+      },
+      "cabecera": {
+        "tipoCertificado": "P",
+        "ptoEmision": 9001,
+        "nroOrden": 103,
+        "titularGrano": "D",
+        "cuitDepositante": "20000000031",
+        "codGrano": 22,
+        "campania": "2526",
+        "datosAdicionales": "Certificado de muestra (datos ficticios)"
+      },
+      "primaria": {
+        "ctg": [
+          {
+            "nroCTG": 900000004030,
+            "nroCartaDePorte": "900000005030",
+            "pesoNetoConfirmadoDefinitivo": 8166.67,
+            "porcentajeSecadoHumedad": 14.5,
+            "importeSecado": 210000,
+            "pesoNetoMermaSecado": 340,
+            "tarifaSecado": 2.35,
+            "importeZarandeo": 0,
+            "pesoNetoMermaZarandeo": 0,
+            "tarifaZarandeo": 0
+          },
+          {
+            "nroCTG": 900000004031,
+            "nroCartaDePorte": "900000005031",
+            "pesoNetoConfirmadoDefinitivo": 8166.67,
+            "porcentajeSecadoHumedad": 14.8,
+            "importeSecado": 225000,
+            "pesoNetoMermaSecado": 360,
+            "tarifaSecado": 2.35,
+            "importeZarandeo": 0,
+            "pesoNetoMermaZarandeo": 0,
+            "tarifaZarandeo": 0
+          },
+          {
+            "nroCTG": 900000004032,
+            "nroCartaDePorte": "900000005032",
+            "pesoNetoConfirmadoDefinitivo": 8166.67,
+            "porcentajeSecadoHumedad": 15.1,
+            "importeSecado": 240000,
+            "pesoNetoMermaSecado": 380,
+            "tarifaSecado": 2.35,
+            "importeZarandeo": 0,
+            "pesoNetoMermaZarandeo": 0,
+            "tarifaZarandeo": 0
+          }
+        ],
+        "montoAlmacenaje": 0,
+        "montoGastosGenerales": 120000.0,
+        "montoSecado": 630000.0,
+        "porcentajeSecadoDe": 16.0,
+        "porcentajeSecadoA": 14.0,
+        "serviciosFormaDePago": "CONTADO",
+        "calidad": {
+          "analisisMuestra": 9000003,
+          "nroBoletin": 8000003,
+          "codGrado": 2,
+          "valorGrado": 1.0,
+          "detalleMuestraAnalisis": [
+            {
+              "descripcionRubro": "Humedad",
+              "tipoRubro": "R",
+              "porcentaje": 14.0,
+              "valor": 0
+            },
+            {
+              "descripcionRubro": "Cuerpos extraños",
+              "tipoRubro": "R",
+              "porcentaje": 0.8,
+              "valor": 0
+            }
+          ]
+        }
+      },
+      "cuitDepositario": "20000000042",
+      "nroPlanta": 9002,
+      "kilosDisponible": 7800.0
+    },
+    "900000000104": {
+      "autorizacion": {
+        "ptoEmision": 9001,
+        "nroOrden": 104,
+        "coe": 900000000104,
+        "estado": "AC",
+        "fechaCertificacion": "2026-10-14",
+        "pesosResumen": {
+          "pesoBrutoCertificado": 26624,
+          "pesoMermaVolatil": 78.0,
+          "pesoMermaSecado": 1020.0,
+          "pesoMermaZarandeo": 0,
+          "pesoNetoCertificado": 26000.0
+        },
+        "serviciosResumen": {
+          "servicioSecado": 630000.0,
+          "servicioZarandeo": 0,
+          "servicioOtros": 45000.0,
+          "servicioGastosGenerales": 120000.0,
+          "importeIVA": 167475.0,
+          "servicioTotal": 962475.0
+        },
+        "planta": {
+          "nroPlanta": 9002,
+          "cuitTitularPlanta": "20000000042",
+          "razonSocialTitularPlanta": "PLANTA DE MUESTRA S.A."
+        }
+      },
+      "cabecera": {
+        "tipoCertificado": "P",
+        "ptoEmision": 9001,
+        "nroOrden": 104,
+        "titularGrano": "D",
+        "cuitDepositante": "20000000031",
+        "codGrano": 19,
+        "campania": "2526",
+        "datosAdicionales": "Certificado de muestra (datos ficticios)"
+      },
+      "primaria": {
+        "ctg": [
+          {
+            "nroCTG": 900000004040,
+            "nroCartaDePorte": "900000005040",
+            "pesoNetoConfirmadoDefinitivo": 8666.67,
+            "porcentajeSecadoHumedad": 14.5,
+            "importeSecado": 210000,
+            "pesoNetoMermaSecado": 340,
+            "tarifaSecado": 2.35,
+            "importeZarandeo": 0,
+            "pesoNetoMermaZarandeo": 0,
+            "tarifaZarandeo": 0
+          },
+          {
+            "nroCTG": 900000004041,
+            "nroCartaDePorte": "900000005041",
+            "pesoNetoConfirmadoDefinitivo": 8666.67,
+            "porcentajeSecadoHumedad": 14.8,
+            "importeSecado": 225000,
+            "pesoNetoMermaSecado": 360,
+            "tarifaSecado": 2.35,
+            "importeZarandeo": 0,
+            "pesoNetoMermaZarandeo": 0,
+            "tarifaZarandeo": 0
+          },
+          {
+            "nroCTG": 900000004042,
+            "nroCartaDePorte": "900000005042",
+            "pesoNetoConfirmadoDefinitivo": 8666.67,
+            "porcentajeSecadoHumedad": 15.1,
+            "importeSecado": 240000,
+            "pesoNetoMermaSecado": 380,
+            "tarifaSecado": 2.35,
+            "importeZarandeo": 0,
+            "pesoNetoMermaZarandeo": 0,
+            "tarifaZarandeo": 0
+          }
+        ],
+        "montoAlmacenaje": 0,
+        "montoGastosGenerales": 120000.0,
+        "montoSecado": 630000.0,
+        "porcentajeSecadoDe": 16.0,
+        "porcentajeSecadoA": 14.0,
+        "serviciosFormaDePago": "CONTADO",
+        "calidad": {
+          "analisisMuestra": 9000004,
+          "nroBoletin": 8000004,
+          "codGrado": 2,
+          "valorGrado": 1.0,
+          "detalleMuestraAnalisis": [
+            {
+              "descripcionRubro": "Humedad",
+              "tipoRubro": "R",
+              "porcentaje": 14.0,
+              "valor": 0
+            },
+            {
+              "descripcionRubro": "Cuerpos extraños",
+              "tipoRubro": "R",
+              "porcentaje": 0.8,
+              "valor": 0
+            }
+          ]
+        }
+      },
+      "cuitDepositario": "20000000042",
+      "nroPlanta": 9002,
+      "kilosDisponible": 0.0
+    },
+    "900000000105": {
+      "autorizacion": {
+        "ptoEmision": 9001,
+        "nroOrden": 105,
+        "coe": 900000000105,
+        "estado": "AC",
+        "fechaCertificacion": "2026-10-15",
+        "pesosResumen": {
+          "pesoBrutoCertificado": 28160,
+          "pesoMermaVolatil": 82.5,
+          "pesoMermaSecado": 1020.0,
+          "pesoMermaZarandeo": 0,
+          "pesoNetoCertificado": 27500.0
+        },
+        "serviciosResumen": {
+          "servicioSecado": 630000.0,
+          "servicioZarandeo": 0,
+          "servicioOtros": 45000.0,
+          "servicioGastosGenerales": 120000.0,
+          "importeIVA": 167475.0,
+          "servicioTotal": 962475.0
+        },
+        "planta": {
+          "nroPlanta": 9001,
+          "cuitTitularPlanta": "20000000042",
+          "razonSocialTitularPlanta": "PLANTA DE MUESTRA S.A."
+        }
+      },
+      "cabecera": {
+        "tipoCertificado": "P",
+        "ptoEmision": 9001,
+        "nroOrden": 105,
+        "titularGrano": "D",
+        "cuitDepositante": "20000000031",
+        "codGrano": 23,
+        "campania": "2425",
+        "datosAdicionales": "Certificado de muestra (datos ficticios)"
+      },
+      "primaria": {
+        "ctg": [
+          {
+            "nroCTG": 900000004050,
+            "nroCartaDePorte": "900000005050",
+            "pesoNetoConfirmadoDefinitivo": 9166.67,
+            "porcentajeSecadoHumedad": 14.5,
+            "importeSecado": 210000,
+            "pesoNetoMermaSecado": 340,
+            "tarifaSecado": 2.35,
+            "importeZarandeo": 0,
+            "pesoNetoMermaZarandeo": 0,
+            "tarifaZarandeo": 0
+          },
+          {
+            "nroCTG": 900000004051,
+            "nroCartaDePorte": "900000005051",
+            "pesoNetoConfirmadoDefinitivo": 9166.67,
+            "porcentajeSecadoHumedad": 14.8,
+            "importeSecado": 225000,
+            "pesoNetoMermaSecado": 360,
+            "tarifaSecado": 2.35,
+            "importeZarandeo": 0,
+            "pesoNetoMermaZarandeo": 0,
+            "tarifaZarandeo": 0
+          },
+          {
+            "nroCTG": 900000004052,
+            "nroCartaDePorte": "900000005052",
+            "pesoNetoConfirmadoDefinitivo": 9166.67,
+            "porcentajeSecadoHumedad": 15.1,
+            "importeSecado": 240000,
+            "pesoNetoMermaSecado": 380,
+            "tarifaSecado": 2.35,
+            "importeZarandeo": 0,
+            "pesoNetoMermaZarandeo": 0,
+            "tarifaZarandeo": 0
+          }
+        ],
+        "montoAlmacenaje": 0,
+        "montoGastosGenerales": 120000.0,
+        "montoSecado": 630000.0,
+        "porcentajeSecadoDe": 16.0,
+        "porcentajeSecadoA": 14.0,
+        "serviciosFormaDePago": "CONTADO",
+        "calidad": {
+          "analisisMuestra": 9000005,
+          "nroBoletin": 8000005,
+          "codGrado": 2,
+          "valorGrado": 1.0,
+          "detalleMuestraAnalisis": [
+            {
+              "descripcionRubro": "Humedad",
+              "tipoRubro": "R",
+              "porcentaje": 14.0,
+              "valor": 0
+            },
+            {
+              "descripcionRubro": "Cuerpos extraños",
+              "tipoRubro": "R",
+              "porcentaje": 0.8,
+              "valor": 0
+            }
+          ]
+        }
+      },
+      "cuitDepositario": "20000000042",
+      "nroPlanta": 9001,
+      "kilosDisponible": 0.0
+    }
+  }
 }

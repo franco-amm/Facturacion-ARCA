@@ -208,12 +208,138 @@
     $("detailDialog").showModal();
   }
 
+  // ---- Certificados con saldo y CTG (datos de muestra; en la app real se consultan a ARCA y se guardan).
+  let certificados = [];
+  let ctgs = [];
+  let certDetalles = {};
+  const nombreGrano = (cod) => (cod ? CATALOGO_GRANOS[String(cod)] || `Grano ${cod}` : "—");
+  const nombreTipo = (tipo) => (tipo === "P" ? "P · Planta" : tipo || "—");
+
+  function renderCert() {
+    const grano = $("grdCertGrano").value, camp = $("grdCertCampania").value, solo = $("grdCertSoloSaldo").checked;
+    const filas = certificados.filter((c) => (!grano || c.cod_grano === grano) && (!camp || c.campania === camp) && (!solo || c.con_saldo));
+    $("grdCertRows").innerHTML = filas.map((c) => `<tr>
+      <td>${esc(c.coe)}</td><td>${esc(nombreTipo(c.tipo_certificado))}</td><td>${esc(nombreGrano(c.cod_grano))}</td><td>${esc(c.campania)}</td>
+      <td>${esc(fmtCuit(c.cuit_depositante))}</td><td>${esc(fmtCuit(c.cuit_depositario))}</td><td>${c.nro_planta ?? "—"}</td>
+      <td class="amount-cell">${num.format(c.kilos_disponibles || 0)}</td>
+      <td>${c.con_saldo ? '<span class="gr-estado-cert">Con saldo</span>' : '<span class="gr-estado-cert sin">Sin saldo</span>'}</td>
+      <td><button class="detail-button" type="button" data-cert-detalle="${esc(c.coe)}">Ver</button></td></tr>`).join("");
+    $("grdCertEmpty").hidden = filas.length > 0;
+    const con = filas.filter((c) => c.con_saldo);
+    $("grdCertFooter").textContent = `${filas.length} certificado${filas.length === 1 ? "" : "s"} · ${con.length} con saldo (${num.format(con.reduce((t, c) => t + c.kilos_disponibles, 0))} kg disponibles)`;
+  }
+
+  function renderCtg() {
+    const grano = $("grdCtgGrano").value, camp = $("grdCtgCampania").value;
+    const filas = ctgs.filter((c) => (!grano || c.cod_grano === grano) && (!camp || c.campania === camp));
+    $("grdCtgRows").innerHTML = filas.map((c) => `<tr>
+      <td>${fmtFecha(c.fecha_confirmacion)}</td><td>${esc(c.nro_ctg)}</td><td>${esc(c.nro_carta_porte)}</td><td>${esc(c.tipo_ctg)}</td>
+      <td>${esc(nombreGrano(c.cod_grano))}</td><td>${esc(c.campania)}</td><td>${c.nro_planta ?? "—"}</td>
+      <td class="amount-cell">${num.format(c.kilos_confirmados || 0)}</td><td>${esc(fmtCuit(c.cuit_remitente_comercial))}</td></tr>`).join("");
+    $("grdCtgEmpty").hidden = filas.length > 0;
+    $("grdCtgFooter").textContent = `${filas.length} CTG · ${num.format(filas.reduce((t, c) => t + c.kilos_confirmados, 0))} kg confirmados`;
+  }
+
+  // ---- Detalle de un certificado (respuesta de cgConsultarXCoe). Muestra solo lo que ARCA trajo.
+  const lista = (x) => (Array.isArray(x) ? x : x ? [x] : []);
+  const vacio = (v) => v == null || v === "";
+  const kilos = (v) => (vacio(v) ? null : `${num.format(v)} kg`);
+  const pesos = (v) => (vacio(v) ? null : dinero.format(v));
+  const campoHtml = ([label, valor]) => `<div class="detail-field"><span>${esc(label)}</span><strong>${esc(valor)}</strong></div>`;
+  const seccionHtml = (titulo, pares) => {
+    const con = pares.filter(([, v]) => !vacio(v));
+    return con.length ? `<h3>${esc(titulo)}</h3><div class="detail-grid">${con.map(campoHtml).join("")}</div>` : "";
+  };
+
+  function htmlDetalleCertificado(d) {
+    const auth = d.autorizacion || {}, cab = d.cabecera || {}, prim = d.primaria || {}, ret = d.retiroTransferencia || {};
+    const pre = d.preexistente || {}, planta = auth.planta || {}, pr = auth.pesosResumen || {}, sv = auth.serviciosResumen || {};
+    const cal = prim.calidad || {};
+    const grano = cab.codGrano ?? null;
+    const generales = [
+      ["Estado", auth.estado || "—"],
+      ["Fecha de certificación", fmtFecha(auth.fechaCertificacion)],
+      ["Tipo", nombreTipo(cab.tipoCertificado)],
+      ["Pto. emisión / Orden", `${auth.ptoEmision ?? cab.ptoEmision ?? "—"} / ${auth.nroOrden ?? cab.nroOrden ?? "—"}`],
+      ["Grano", grano == null ? "—" : nombreGrano(grano)],
+      ["Campaña", cab.campania || "—"],
+      ["Titular del grano", cab.titularGrano || "—"],
+      ["Depositante", cab.cuitDepositante ? fmtCuit(cab.cuitDepositante) : "—"],
+      ["Depositario", d.cuitDepositario ? fmtCuit(d.cuitDepositario) : "—"],
+      ["Corredor", cab.cuitCorredor ? fmtCuit(cab.cuitCorredor) : "—"],
+      ["Planta", planta.nroPlanta == null && d.nroPlanta == null ? "—" : `${planta.nroPlanta ?? d.nroPlanta}${planta.razonSocialTitularPlanta ? " · " + planta.razonSocialTitularPlanta : ""}`],
+      ["CUIT titular de planta", planta.cuitTitularPlanta ? fmtCuit(planta.cuitTitularPlanta) : "—"],
+      ["Kilos disponibles", kilos(d.kilosDisponible) || "—"],
+    ];
+    const ctg = lista(prim.ctg).map((c) => ({
+      ctg: c.nroCTG ?? "—", carta: c.nroCartaDePorte ?? "—", peso: kilos(c.pesoNetoConfirmadoDefinitivo) || "—",
+      humedad: vacio(c.porcentajeSecadoHumedad) ? "—" : `${c.porcentajeSecadoHumedad}%`, impSec: pesos(c.importeSecado) || "—",
+      mermaSec: kilos(c.pesoNetoMermaSecado) || "—", tarSec: pesos(c.tarifaSecado) || "—",
+      impZar: pesos(c.importeZarandeo) || "—", mermaZar: kilos(c.pesoNetoMermaZarandeo) || "—", tarZar: pesos(c.tarifaZarandeo) || "—",
+    }));
+    const ferro = lista(prim.cartaPorteFerroviaria).map((c) => ({
+      carta: c.nroCartaPorte ?? "—", peso: kilos(c.pesoNetoConfirmadoDefinitivo) || "—",
+      humedad: vacio(c.porcentajeSecadoHumedad) ? "—" : `${c.porcentajeSecadoHumedad}%`, impSec: pesos(c.importeSecado) || "—",
+      mermaSec: kilos(c.pesoNetoMermaSecado) || "—", tarSec: pesos(c.tarifaSecado) || "—",
+      impZar: pesos(c.importeZarandeo) || "—", mermaZar: kilos(c.pesoNetoMermaZarandeo) || "—", tarZar: pesos(c.tarifaZarandeo) || "—",
+    }));
+    const colsCtg = [["humedad", "% secado"], ["impSec", "Imp. secado"], ["mermaSec", "Merma secado"], ["tarSec", "Tarifa secado"], ["impZar", "Imp. zarandeo"], ["mermaZar", "Merma zarandeo"], ["tarZar", "Tarifa zarandeo"]];
+    const rubros = lista(cal.detalleMuestraAnalisis).map((r) => ({
+      rubro: r.descripcionRubro ?? "—", tipo: r.tipoRubro ?? "—", pct: vacio(r.porcentaje) ? "—" : `${r.porcentaje}%`, valor: r.valor ?? "—",
+    }));
+    return `
+      <div class="detail-grid">${generales.map(campoHtml).join("")}</div>
+      <div class="dialog-associated">
+        ${seccionHtml("Pesos", [["Peso bruto", kilos(pr.pesoBrutoCertificado)], ["Merma volátil", kilos(pr.pesoMermaVolatil)], ["Merma por secado", kilos(pr.pesoMermaSecado)], ["Merma por zarandeo", kilos(pr.pesoMermaZarandeo)], ["Peso neto", kilos(pr.pesoNetoCertificado)]])}
+        ${seccionHtml("Servicios", [["Secado", pesos(sv.servicioSecado)], ["Zarandeo", pesos(sv.servicioZarandeo)], ["Otros", pesos(sv.servicioOtros)], ["Gastos generales", pesos(sv.servicioGastosGenerales)], ["IVA", pesos(sv.importeIVA)], ["Total", pesos(sv.servicioTotal)]])}
+        ${ctg.length ? `<h3>CTG</h3>${tablaDetalle(ctg, [["ctg", "CTG"], ["carta", "Carta de porte"], ["peso", "Peso neto confirmado"], ...colsCtg])}` : ""}
+        ${ferro.length ? `<h3>Cartas de porte ferroviarias</h3>${tablaDetalle(ferro, [["carta", "Carta de porte"], ["peso", "Peso neto confirmado"], ...colsCtg])}` : ""}
+        ${seccionHtml("Calidad", [["Análisis de muestra", cal.analisisMuestra], ["Nº de boletín", cal.nroBoletin], ["Grado", cal.codGrado], ["Valor de grado", cal.valorGrado], ["Contenido proteico", cal.valorContProteico], ["Factor", cal.valorFactor]])}
+        ${rubros.length ? `<h3>Rubros de la muestra</h3>${tablaDetalle(rubros, [["rubro", "Rubro"], ["tipo", "Tipo"], ["pct", "%"], ["valor", "Valor"]])}` : ""}
+        ${seccionHtml("Servicios facturados", [["Almacenaje", pesos(prim.montoAlmacenaje)], ["Acarreo", pesos(prim.montoAcarreo)], ["Gastos generales", pesos(prim.montoGastosGenerales)], ["Zarandeo", pesos(prim.montoZarandeo)], ["Secado", pesos(prim.montoSecado)], ["Secado de %", vacio(prim.porcentajeSecadoDe) ? null : `${prim.porcentajeSecadoDe}%`], ["Secado a %", vacio(prim.porcentajeSecadoA) ? null : `${prim.porcentajeSecadoA}%`], ["Por cada punto de exceso", pesos(prim.montoPorCadaPuntoExceso)], ["Otros", pesos(prim.montoOtros ?? prim.serviciosOtros)], ["Forma de pago", prim.serviciosFormaDePago], ["Conceptos no gravados", pesos(prim.serviciosConceptosNoGravados)], ["Percepciones IVA", pesos(prim.serviciosPercepcionesIVA)], ["Otras percepciones", pesos(prim.serviciosOtrasPercepciones)], ["Merma volátil", kilos(prim.pesoNetoMermaVolatil)]])}
+        ${seccionHtml("Retiro / transferencia", [["COE certificado de depósito", ret.certificadoDeposito?.coeCertificadoDeposito], ["Peso neto", kilos(ret.certificadoDeposito?.pesoNeto)], ["CUIT receptor", ret.cuitReceptor ? fmtCuit(ret.cuitReceptor) : null], ["Carta de porte a utilizar", ret.nroCartaPorteAUtilizar], ["CTG", ret.nroCTG], ["Causa judicial", ret.descripcionCausaJudicial]])}
+        ${seccionHtml("Certificado preexistente", [["Planta", pre.nroPlanta], ["Tipo", pre.tipoCertificadoDepositoPreexistente], ["N.º", pre.nroCertificadoDepositoPreexistente], ["CAC", pre.cacCertificadoDepositoPreexistente], ["Emisión", pre.fechaEmisionCertificadoDepositoPreexistente ? fmtFecha(pre.fechaEmisionCertificadoDepositoPreexistente) : null], ["Peso neto", kilos(pre.pesoNeto)]])}
+        ${cab.datosAdicionales ? `<h3>Datos adicionales</h3><p>${esc(cab.datosAdicionales)}</p>` : ""}
+      </div>`;
+  }
+
+  function abrirDetalleCertificado(coe) {
+    const detalle = (certDetalles || {})[coe];
+    $("detailTitle").textContent = `Certificado de muestra · COE ${coe}`;
+    $("detailContent").innerHTML = detalle
+      ? htmlDetalleCertificado(detalle) + '<div class="gr-detalle-pie"><span>Datos de muestra: en la app real el detalle se trae de ARCA y queda guardado.</span></div>'
+      : "<p>Este certificado de muestra no tiene detalle.</p>";
+    $("detailDialog").showModal();
+  }
+
+  function setVista(vista) {
+    $("grdLiqVista").hidden = vista !== "liq";
+    $("grdCertVista").hidden = vista !== "cert";
+    $("grdCtgVista").hidden = vista !== "ctg";
+    document.querySelectorAll("#granos .gr-vista").forEach((b) => {
+      b.classList.toggle("is-active", b.dataset.vista === vista);
+      b.setAttribute("aria-pressed", String(b.dataset.vista === vista));
+    });
+  }
+  document.querySelectorAll("#granos .gr-vista").forEach((b) => b.addEventListener("click", () => setVista(b.dataset.vista)));
+  ["grdCertGrano", "grdCertCampania", "grdCertSoloSaldo"].forEach((id) => $(id).addEventListener("change", renderCert));
+  $("grdCertRows").addEventListener("click", (event) => {
+    const cert = event.target.closest("[data-cert-detalle]");
+    if (cert) abrirDetalleCertificado(cert.dataset.certDetalle);
+  });
+  ["grdCtgGrano", "grdCtgCampania"].forEach((id) => $(id).addEventListener("change", renderCtg));
+
   async function load() {
     try {
       const r = await fetch("/api/demo/granos");
       if (!r.ok) throw new Error(`Error HTTP ${r.status}`);
       const d = await r.json();
       liquidaciones = d.liquidaciones || [];
+      certificados = d.certificados || [];
+      ctgs = d.ctg || [];
+      certDetalles = d.certificado_detalles || {};
+      renderCert();
+      renderCtg();
       $("grdMsg").textContent = `${liquidaciones.length} liquidaciones de muestra · WSLPG (sin conexión a ARCA)`;
       renderFilas(filtradas());
       loaded = true;

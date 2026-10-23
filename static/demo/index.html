@@ -210,6 +210,13 @@
         <span class="sample-stamp">SOLO MUESTRA</span>
       </section>
 
+      <div class="gr-vistas" role="group" aria-label="Qué querés ver">
+        <button class="gr-vista is-active" type="button" data-vista="liq" aria-pressed="true">Liquidaciones</button>
+        <button class="gr-vista" type="button" data-vista="cert" aria-pressed="false">Certificados con saldo</button>
+        <button class="gr-vista" type="button" data-vista="ctg" aria-pressed="false">CTG</button>
+      </div>
+
+      <div id="grdLiqVista">
       <section class="demo-status" aria-label="Liquidaciones de muestra">
         <div class="status-mark" aria-hidden="true">⚘</div>
         <div><h2>Liquidaciones de muestra</h2><p id="grdMsg">Cargando…</p></div>
@@ -253,6 +260,39 @@
         </nav>
         <footer class="table-footer"><span id="grdFooter">0 liquidaciones</span><span>Conjunto de datos ficticio · WSLPG</span></footer>
       </section>
+      </div>
+
+      <div id="grdCertVista" hidden>
+        <section class="gr-export" aria-label="Filtros">
+          <label class="date-control"><span>Grano</span><select id="grdCertGrano"><option value="">Todos</option><option value="19">Maíz</option><option value="22">Sorgo Granífero</option><option value="23">Soja</option></select></label>
+          <label class="date-control"><span>Campaña</span><select id="grdCertCampania"><option value="">Todas</option><option value="2526">2526</option><option value="2425">2425</option></select></label>
+          <label class="gr-check"><input type="checkbox" id="grdCertSoloSaldo"> Solo con saldo</label>
+        </section>
+        <p class="gr-export-note">En la app real, «Consultar a ARCA» trae estos datos con la credencial del cliente y los deja guardados. Acá se muestran datos de muestra.</p>
+        <section class="filter-section" aria-label="Certificados con saldo">
+          <div class="table-wrap">
+            <table><thead><tr><th scope="col">COE</th><th scope="col">TIPO</th><th scope="col">GRANO</th><th scope="col">CAMPAÑA</th><th scope="col">DEPOSITANTE</th><th scope="col">DEPOSITARIO</th><th scope="col">PLANTA</th><th scope="col" class="amount-cell">KG DISPONIBLES</th><th scope="col">ESTADO</th><th scope="col"><span class="sr-only">Detalle</span></th></tr></thead><tbody id="grdCertRows"></tbody></table>
+            <div class="table-state" id="grdCertEmpty" hidden>Sin resultados para ese filtro.</div>
+          </div>
+          <footer class="table-footer"><span id="grdCertFooter"></span><span>Conjunto de datos ficticio · WSLPG</span></footer>
+        </section>
+      </div>
+
+      <div id="grdCtgVista" hidden>
+        <section class="gr-export" aria-label="Filtros">
+          <label class="date-control"><span>Grano</span><select id="grdCtgGrano"><option value="">Todos</option><option value="19">Maíz</option><option value="22">Sorgo Granífero</option><option value="23">Soja</option></select></label>
+          <label class="date-control"><span>Campaña</span><select id="grdCtgCampania"><option value="">Todas</option><option value="2526">2526</option><option value="2425">2425</option></select></label>
+          
+        </section>
+        <p class="gr-export-note">En la app real, «Consultar a ARCA» trae estos datos con la credencial del cliente y los deja guardados. Acá se muestran datos de muestra.</p>
+        <section class="filter-section" aria-label="CTG">
+          <div class="table-wrap">
+            <table><thead><tr><th scope="col">CONFIRMADO</th><th scope="col">CTG</th><th scope="col">CARTA DE PORTE</th><th scope="col">TIPO CTG</th><th scope="col">GRANO</th><th scope="col">CAMPAÑA</th><th scope="col">PLANTA</th><th scope="col" class="amount-cell">KG CONFIRMADOS</th><th scope="col">REMITENTE COMERCIAL</th></tr></thead><tbody id="grdCtgRows"></tbody></table>
+            <div class="table-state" id="grdCtgEmpty" hidden>Sin resultados para ese filtro.</div>
+          </div>
+          <footer class="table-footer"><span id="grdCtgFooter"></span><span>Conjunto de datos ficticio · WSLPG</span></footer>
+        </section>
+      </div>
     </main>
     <main class="main-content" id="emitir" hidden>
       <header class="page-header">
