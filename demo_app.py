@@ -19,6 +19,7 @@ DEMO_DIR = Path(__file__).resolve().parent / "static" / "demo"
 DATA_PATH = DEMO_DIR / "demo-data.json"
 MONOTRIBUTO_PATH = DEMO_DIR / "monotributo-demo.json"
 DFE_PATH = DEMO_DIR / "dfe-demo.json"
+CCMA_PATH = DEMO_DIR / "ccma-demo.json"
 GRANOS_PATH = DEMO_DIR / "granos-demo.json"
 EMITIR_PATH = DEMO_DIR / "emitir-demo.json"
 EXPORT_FIELDS = [
@@ -118,6 +119,12 @@ def demo_monotributo() -> dict[str, Any]:
 def demo_dfe() -> dict[str, Any]:
     """Comunicaciones del domicilio fiscal de clientes ficticios, ya clasificadas."""
     return json.loads(DFE_PATH.read_text(encoding="utf-8"))
+
+
+@app.get("/api/demo/ccma")
+def demo_ccma() -> dict[str, Any]:
+    """Cuenta corriente de Monotributistas y Autónomos de clientes ficticios."""
+    return json.loads(CCMA_PATH.read_text(encoding="utf-8"))
 
 
 @app.get("/api/demo/granos")

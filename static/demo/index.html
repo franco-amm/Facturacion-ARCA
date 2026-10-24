@@ -11,12 +11,14 @@
   <link rel="stylesheet" href="/assets/dfe-demo.css">
   <link rel="stylesheet" href="/assets/wa-fakedoor.css">
   <link rel="stylesheet" href="/assets/granos-demo.css">
+  <link rel="stylesheet" href="/assets/ccma-demo.css">
   <link rel="stylesheet" href="/assets/emitir-demo.css">
   <script src="/assets/demo.js" defer></script>
   <script src="/assets/monotributo-demo.js" defer></script>
   <script src="/assets/dfe-demo.js" defer></script>
   <script src="/assets/wa-fakedoor.js" defer></script>
   <script src="/assets/granos-demo.js" defer></script>
+  <script src="/assets/ccma-demo.js" defer></script>
   <script src="/assets/emitir-demo.js" defer></script>
 </head>
 <body>
@@ -27,7 +29,7 @@
         <span class="brand-name">fiscal<span>desk</span></span>
       </a>
       <div class="nav-label">DEMO DE PRODUCTO</div>
-      <nav><a class="nav-item active" href="#history"><span class="nav-indicator" aria-hidden="true"></span>Comprobantes</a><a class="nav-item" href="#monotributo"><span class="nav-indicator" aria-hidden="true"></span>Monotributo</a><a class="nav-item" href="#dfe"><span class="nav-indicator" aria-hidden="true"></span>Domicilio fiscal</a><a class="nav-item" href="#granos"><span class="nav-indicator" aria-hidden="true"></span>Granos</a><a class="nav-item" href="#emitir"><span class="nav-indicator" aria-hidden="true"></span>Emitir</a></nav>
+      <nav><a class="nav-item active" href="#history"><span class="nav-indicator" aria-hidden="true"></span>Comprobantes</a><a class="nav-item" href="#monotributo"><span class="nav-indicator" aria-hidden="true"></span>Monotributo</a><a class="nav-item" href="#dfe"><span class="nav-indicator" aria-hidden="true"></span>Domicilio fiscal</a><a class="nav-item" href="#granos"><span class="nav-indicator" aria-hidden="true"></span>Granos</a><a class="nav-item" href="#ccma"><span class="nav-indicator" aria-hidden="true"></span>CCMA</a><a class="nav-item" href="#emitir"><span class="nav-indicator" aria-hidden="true"></span>Emitir</a></nav>
       <div class="sidebar-bottom"><span class="demo-dot" aria-hidden="true"></span><div><strong>Modo demostración</strong><small>Sin conexión fiscal</small></div></div>
     </aside>
 
@@ -193,6 +195,73 @@
         </div>
         <footer class="table-footer"><span id="dfeClientesFooter">0 clientes</span><span>Conjunto de datos ficticio</span></footer>
       </section>
+    </main>
+    <main class="main-content" id="ccma" hidden>
+      <header class="page-header">
+        <div>
+          <p class="eyebrow">ADMINISTRACIÓN FISCAL <span class="eyebrow-rule"></span> CCMA</p>
+          <h1>CCMA</h1>
+          <p class="page-subtitle">Cuenta corriente de Monotributistas y Autónomos por cliente: última deuda calculada por ARCA y saldo por período.</p>
+        </div>
+        <span class="environment-badge"><i></i> DEMO</span>
+      </header>
+
+      <section class="demo-disclaimer" role="note" aria-label="Aviso de demostración">
+        <span class="disclaimer-mark" aria-hidden="true">i</span>
+        <div><strong>Demostración interactiva</strong><p>Clientes y cuentas ficticios. No se conecta a ARCA.</p></div>
+        <span class="sample-stamp">SOLO MUESTRA</span>
+      </section>
+
+      <section class="emisores" aria-label="Clientes de CCMA">
+        <div class="emisores-head">
+          <div>
+            <h2>Clientes</h2>
+            <p>Elegí un cliente para ver su cuenta corriente.</p>
+          </div>
+        </div>
+        <div class="emisor-list" id="ccmaList" role="listbox" aria-label="Clientes de CCMA"></div>
+      </section>
+
+      <section class="sync-section" id="ccmaActions" aria-label="Consulta de CCMA">
+        <div class="sync-copy">
+          <div class="sync-icon" aria-hidden="true"><span>$</span></div>
+          <div>
+            <h2>Consulta de CCMA</h2>
+            <p id="ccmaMsg">Lee la cuenta corriente de Monotributistas y Autónomos desde ARCA. Solo consulta: no genera ni paga nada.</p>
+          </div>
+        </div>
+        <div class="sync-actions">
+          <button class="button button-primary" id="ccmaSync" type="button">
+            <span class="button-symbol" aria-hidden="true">↻</span><span>Consultar ahora</span>
+          </button>
+        </div>
+      </section>
+
+      <div id="ccmaDatos" hidden>
+        <section class="filter-section" aria-label="Última deuda">
+          <div class="table-toolbar"><div class="table-meta"><h2 class="ccma-section-title">Última deuda</h2></div></div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Cliente</th><th>Fecha cálculo</th><th>Período</th><th class="amount-cell">Total deudor</th><th class="amount-cell">Total acreedor</th><th class="amount-cell">Saldo neto</th></tr></thead>
+              <tbody id="ccmaDeudaBody"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="filter-section" aria-label="Saldo por período">
+          <div class="table-toolbar"><div class="table-meta"><h2 class="ccma-section-title">Saldo por período</h2></div></div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Cliente</th><th>Período</th><th class="amount-cell">Saldo acumulado</th><th>Estado contribuyente</th></tr></thead>
+              <tbody id="ccmaSaldosBody"></tbody>
+            </table>
+            <div class="table-state" id="ccmaVacio" hidden></div>
+          </div>
+          <footer class="table-footer"><span id="ccmaFooter">Sin datos</span><span>CCMA · ARCA · solo lectura</span></footer>
+        </section>
+      </div>
+
+      <div class="toast" id="ccmaToast" role="status" aria-live="polite" hidden></div>
     </main>
     <main class="main-content" id="granos" hidden>
       <header class="page-header">

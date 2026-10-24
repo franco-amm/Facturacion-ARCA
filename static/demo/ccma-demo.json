@@ -1,0 +1,290 @@
+{
+ "fecha_muestra": "2026-10-24",
+ "clientes": [
+  {
+   "cuit": "20000000011",
+   "nombre": "Ana Muestra",
+   "ultima_deuda": {
+    "fecha_calculo": "24/10/2026",
+    "periodo_desde": "2025-11",
+    "periodo_hasta": "2026-10",
+    "total_deudor": 151581.0,
+    "total_acreedor": 0,
+    "saldo_neto": -151581.0,
+    "consultado_en": "2026-10-24T09:14:00"
+   },
+   "saldos": [
+    {
+     "periodo": "2025-11",
+     "saldo_acumulado": 0.0,
+     "estado": "saldado"
+    },
+    {
+     "periodo": "2025-12",
+     "saldo_acumulado": 0.0,
+     "estado": "saldado"
+    },
+    {
+     "periodo": "2026-01",
+     "saldo_acumulado": 0.0,
+     "estado": "saldado"
+    },
+    {
+     "periodo": "2026-02",
+     "saldo_acumulado": 0.0,
+     "estado": "saldado"
+    },
+    {
+     "periodo": "2026-03",
+     "saldo_acumulado": 0.0,
+     "estado": "saldado"
+    },
+    {
+     "periodo": "2026-04",
+     "saldo_acumulado": 0.0,
+     "estado": "saldado"
+    },
+    {
+     "periodo": "2026-05",
+     "saldo_acumulado": 0.0,
+     "estado": "saldado"
+    },
+    {
+     "periodo": "2026-06",
+     "saldo_acumulado": 0.0,
+     "estado": "saldado"
+    },
+    {
+     "periodo": "2026-07",
+     "saldo_acumulado": 0.0,
+     "estado": "saldado"
+    },
+    {
+     "periodo": "2026-08",
+     "saldo_acumulado": -48120.5,
+     "estado": "deudor"
+    },
+    {
+     "periodo": "2026-09",
+     "saldo_acumulado": -51730.25,
+     "estado": "deudor"
+    },
+    {
+     "periodo": "2026-10",
+     "saldo_acumulado": -51730.25,
+     "estado": "deudor"
+    }
+   ]
+  },
+  {
+   "cuit": "20000000029",
+   "nombre": "Bruno Ejemplo",
+   "ultima_deuda": {
+    "fecha_calculo": "24/10/2026",
+    "periodo_desde": "2025-11",
+    "periodo_hasta": "2026-10",
+    "total_deudor": 0,
+    "total_acreedor": 12400.0,
+    "saldo_neto": 12400.0,
+    "consultado_en": "2026-10-24T09:14:00"
+   },
+   "saldos": [
+    {
+     "periodo": "2025-11",
+     "saldo_acumulado": 0.0,
+     "estado": "saldado"
+    },
+    {
+     "periodo": "2025-12",
+     "saldo_acumulado": 0.0,
+     "estado": "saldado"
+    },
+    {
+     "periodo": "2026-01",
+     "saldo_acumulado": 0.0,
+     "estado": "saldado"
+    },
+    {
+     "periodo": "2026-02",
+     "saldo_acumulado": 0.0,
+     "estado": "saldado"
+    },
+    {
+     "periodo": "2026-03",
+     "saldo_acumulado": 0.0,
+     "estado": "saldado"
+    },
+    {
+     "periodo": "2026-04",
+     "saldo_acumulado": 0.0,
+     "estado": "saldado"
+    },
+    {
+     "periodo": "2026-05",
+     "saldo_acumulado": 0.0,
+     "estado": "saldado"
+    },
+    {
+     "periodo": "2026-06",
+     "saldo_acumulado": 0.0,
+     "estado": "saldado"
+    },
+    {
+     "periodo": "2026-07",
+     "saldo_acumulado": 0.0,
+     "estado": "saldado"
+    },
+    {
+     "periodo": "2026-08",
+     "saldo_acumulado": 0.0,
+     "estado": "saldado"
+    },
+    {
+     "periodo": "2026-09",
+     "saldo_acumulado": 0.0,
+     "estado": "saldado"
+    },
+    {
+     "periodo": "2026-10",
+     "saldo_acumulado": 12400.0,
+     "estado": "acreedor"
+    }
+   ]
+  },
+  {
+   "cuit": "27000000035",
+   "nombre": "Carla Demo",
+   "ultima_deuda": {
+    "fecha_calculo": "24/10/2026",
+    "periodo_desde": "2024-11",
+    "periodo_hasta": "2026-10",
+    "total_deudor": 384053.75,
+    "total_acreedor": 5300.4,
+    "saldo_neto": -378753.35,
+    "consultado_en": "2026-10-24T09:14:00"
+   },
+   "saldos": [
+    {
+     "periodo": "2024-11",
+     "saldo_acumulado": 0.0,
+     "estado": "saldado"
+    },
+    {
+     "periodo": "2024-12",
+     "saldo_acumulado": 0.0,
+     "estado": "saldado"
+    },
+    {
+     "periodo": "2025-01",
+     "saldo_acumulado": 0.0,
+     "estado": "saldado"
+    },
+    {
+     "periodo": "2025-02",
+     "saldo_acumulado": 0.0,
+     "estado": "saldado"
+    },
+    {
+     "periodo": "2025-03",
+     "saldo_acumulado": -38900.0,
+     "estado": "deudor"
+    },
+    {
+     "periodo": "2025-04",
+     "saldo_acumulado": -38900.0,
+     "estado": "deudor"
+    },
+    {
+     "periodo": "2025-05",
+     "saldo_acumulado": 0.0,
+     "estado": "saldado"
+    },
+    {
+     "periodo": "2025-06",
+     "saldo_acumulado": 0.0,
+     "estado": "saldado"
+    },
+    {
+     "periodo": "2025-07",
+     "saldo_acumulado": 0.0,
+     "estado": "saldado"
+    },
+    {
+     "periodo": "2025-08",
+     "saldo_acumulado": 0.0,
+     "estado": "saldado"
+    },
+    {
+     "periodo": "2025-09",
+     "saldo_acumulado": 0.0,
+     "estado": "saldado"
+    },
+    {
+     "periodo": "2025-10",
+     "saldo_acumulado": 0.0,
+     "estado": "saldado"
+    },
+    {
+     "periodo": "2025-11",
+     "saldo_acumulado": 0.0,
+     "estado": "saldado"
+    },
+    {
+     "periodo": "2025-12",
+     "saldo_acumulado": 5300.4,
+     "estado": "acreedor"
+    },
+    {
+     "periodo": "2026-01",
+     "saldo_acumulado": 0.0,
+     "estado": "saldado"
+    },
+    {
+     "periodo": "2026-02",
+     "saldo_acumulado": 0.0,
+     "estado": "saldado"
+    },
+    {
+     "periodo": "2026-03",
+     "saldo_acumulado": 0.0,
+     "estado": "saldado"
+    },
+    {
+     "periodo": "2026-04",
+     "saldo_acumulado": 0.0,
+     "estado": "saldado"
+    },
+    {
+     "periodo": "2026-05",
+     "saldo_acumulado": 0.0,
+     "estado": "saldado"
+    },
+    {
+     "periodo": "2026-06",
+     "saldo_acumulado": -61250.75,
+     "estado": "deudor"
+    },
+    {
+     "periodo": "2026-07",
+     "saldo_acumulado": -61250.75,
+     "estado": "deudor"
+    },
+    {
+     "periodo": "2026-08",
+     "saldo_acumulado": -61250.75,
+     "estado": "deudor"
+    },
+    {
+     "periodo": "2026-09",
+     "saldo_acumulado": -61250.75,
+     "estado": "deudor"
+    },
+    {
+     "periodo": "2026-10",
+     "saldo_acumulado": -61250.75,
+     "estado": "deudor"
+    }
+   ]
+  }
+ ]
+}

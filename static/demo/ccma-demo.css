@@ -1,0 +1,4 @@
+/* CCMA demo: montos y selector de clientes. */
+.ccma-saldo-neg { color: #8c2f27; font-weight: 700; }
+.ccma-saldo-pos { color: #2a633d; font-weight: 700; }
+.ccma-section-title { margin: 0; font-size: 15px; }

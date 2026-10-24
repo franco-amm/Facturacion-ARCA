@@ -269,9 +269,10 @@
     const dfe = location.hash === "#dfe";
     const granos = location.hash === "#granos";
     const emitir = location.hash === "#emitir";
+    const ccma = location.hash === "#ccma";
     $("monotributo").hidden = !mono;
-    $("history").hidden = mono || dfe || granos || emitir;
-    const destino = mono ? "#monotributo" : dfe ? "#dfe" : granos ? "#granos" : emitir ? "#emitir" : "#history";
+    $("history").hidden = mono || dfe || granos || emitir || ccma;
+    const destino = mono ? "#monotributo" : dfe ? "#dfe" : granos ? "#granos" : emitir ? "#emitir" : ccma ? "#ccma" : "#history";
     document.querySelectorAll(".sidebar .nav-item").forEach((a) => {
       const active = a.getAttribute("href") === destino;
       a.classList.toggle("active", active);
