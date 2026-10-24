@@ -60,6 +60,8 @@
 .mt-detail .mt-month-table tfoot td { vertical-align: top; }
 
 .mt-detail-wide { grid-column: 1 / -1; }
+.mt-detail-col { display: flex; flex-direction: column; gap: 22px; min-width: 0; }
+.mt-detail-col .mt-sub { display: block; }
 .mt-detail tr.mt-bad td { color: #8c2f27; font-weight: 600; }
 .mt-params { margin-bottom: 10px; }
 .mt-param-fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; margin-bottom: 10px; }
@@ -92,3 +94,5 @@
 #monotributo.mt-en-proy .filter-section { display: none !important; }
 
 .mt-proy-button { margin-left: auto; border-color: #cbd8cd; color: #234e3c; background: #fff; }
+.mt-trend { margin-left: 5px; color: #6b58b0; font-weight: 700; }
+#mtThProy .mt-sub { font-weight: 500; letter-spacing: 0; text-transform: none; }

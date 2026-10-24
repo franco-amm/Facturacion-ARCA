@@ -252,8 +252,13 @@
             "nivel": "aviso",
             "mensaje": "Las compras y gastos del período ($ 4.040.000) equivalen al 41% de la facturación; la referencia para servicios es 40%. Revisar que sean inherentes a la actividad."
           }
-        ]
-      }
+        ],
+        "categoria_proyectada": "A"
+      },
+      "categoria_proyectada": "C",
+      "meses_promedio": 9,
+      "ingreso_promedio_mensual": 1094444.4444444445,
+      "limite_mensual_proyectado": 1631474.1408333334
     },
     {
       "cuit": "20000000029",
@@ -455,8 +460,13 @@
             "nivel": "aviso",
             "mensaje": "Lleva usado el 92% del tope de la categoría C en el período."
           }
-        ]
-      }
+        ],
+        "categoria_proyectada": "D"
+      },
+      "categoria_proyectada": "D",
+      "meses_promedio": 9,
+      "ingreso_promedio_mensual": 2522222.222222222,
+      "limite_mensual_proyectado": 2287516.651666667
     },
     {
       "cuit": "27000000035",
@@ -499,8 +509,13 @@
             "nivel": "critico",
             "mensaje": "Supera el tope de la categoría B (110%). Correspondería: C."
           }
-        ]
-      }
+        ],
+        "categoria_proyectada": "C"
+      },
+      "categoria_proyectada": "C",
+      "meses_promedio": 9,
+      "ingreso_promedio_mensual": 2155555.5555555555,
+      "limite_mensual_proyectado": 1631474.1408333334
     },
     {
       "cuit": "20000000043",
@@ -579,8 +594,13 @@
             "nivel": "aviso",
             "mensaje": "El padrón cambió de categoría C a D (detectado 2026-09-30)."
           }
-        ]
-      }
+        ],
+        "categoria_proyectada": "B"
+      },
+      "categoria_proyectada": "D",
+      "meses_promedio": 9,
+      "ingreso_promedio_mensual": 1344444.4444444445,
+      "limite_mensual_proyectado": 2839973.5033333334
     },
     {
       "cuit": "23000000058",
@@ -623,8 +643,13 @@
             "nivel": "info",
             "mensaje": "Falta la facturación del período para comparar contra el tope."
           }
-        ]
-      }
+        ],
+        "categoria_proyectada": null
+      },
+      "categoria_proyectada": null,
+      "meses_promedio": 9,
+      "ingreso_promedio_mensual": null,
+      "limite_mensual_proyectado": 1113545.8425
     }
   ],
   "alertas": [
@@ -728,5 +753,51 @@
       "J": 8378658,
       "K": 8378658
     }
+  },
+  "escala_parametros_proy": {
+    "superficie": {
+      "A": 30.0,
+      "B": 45.0,
+      "C": 60.0,
+      "D": 85.0,
+      "E": 110.0,
+      "F": 150.0,
+      "G": 200.0,
+      "H": 200.0,
+      "I": 200.0,
+      "J": 200.0,
+      "K": 200.0
+    },
+    "energia": {
+      "A": 3330.0,
+      "B": 5000.0,
+      "C": 6700.0,
+      "D": 10000.0,
+      "E": 13000.0,
+      "F": 16500.0,
+      "G": 20000.0,
+      "H": 20000.0,
+      "I": 20000.0,
+      "J": 20000.0,
+      "K": 20000.0
+    },
+    "alquiler": {
+      "A": 3107569.79,
+      "B": 3107569.79,
+      "C": 4247012.06,
+      "D": 4247012.06,
+      "E": 5386454.31,
+      "F": 5386454.31,
+      "G": 6422310.88,
+      "H": 9322709.38,
+      "I": 9322709.38,
+      "J": 9322709.38,
+      "K": 9322709.38
+    }
+  },
+  "proyeccion": {
+    "actualizacion": "2027-01",
+    "variacion_pct": 11.27,
+    "estimativo": true
   }
 }

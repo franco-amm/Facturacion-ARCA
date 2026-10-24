@@ -119,7 +119,7 @@
     const cat = c.categoria_padron;
     const items = [];
     const nuevas = [];
-    let peor = "ok", mayor = -1, limitante = null, usoMax = null;
+    let peor = "ok", mayor = -1, mayorProy = -1, limitante = null, usoMax = null;
     const rango = { ok: 0, cercano: 1, excedido: 2 };
     PARAMS.forEach(([clave, nombre, unidad]) => {
       const valor = valores[clave];
@@ -132,6 +132,8 @@
       if (rango[estado] > rango[peor]) peor = estado;
       if (usoMax == null || uso > usoMax) { usoMax = uso; limitante = clave; }
       mayor = Math.max(mayor, requerida ? ORDEN.indexOf(requerida) : ORDEN.length);
+      const reqProy = categoriaPor(datos.escala_parametros_proy[clave], valor);   // con los topes proyectados (alquiler actualizado)
+      mayorProy = Math.max(mayorProy, reqProy ? ORDEN.indexOf(reqProy) : ORDEN.length);
       if (estado === "excedido") nuevas.push({ tipo: "excede_parametro", nivel: "critico", mensaje: `${nombre} supera el tope de la categoría ${cat}: ${NUM.format(valor)} sobre ${NUM.format(tope)} ${unidad} (${Math.round(uso * 100)}%). Correspondería: ${requerida || "fuera de escala"}.` });
       if (estado === "cercano") nuevas.push({ tipo: "cerca_del_parametro", nivel: "aviso", mensaje: `${nombre} lleva usado el ${Math.round(uso * 100)}% del tope de la categoría ${cat}.` });
     });
@@ -141,6 +143,7 @@
     c.alertas = [...nuevas, ...base.alertas];
     c.estado = base.estado;
     c.categoria_corresponde = base.categoria_corresponde;
+    c.categoria_proyectada = base.categoria_proyectada;
     c.uso_max = null;
     c.parametro_limitante = null;
     if (items.length) {
@@ -151,6 +154,11 @@
         const maxima = ORDEN.indexOf(c.actividad === "bienes" ? "K" : "H");
         let idx = Math.max(ORDEN.indexOf(base.categoria_corresponde), mayor);
         c.categoria_corresponde = idx >= ORDEN.length || idx > maxima ? null : ORDEN[idx];
+      }
+      if (base.categoria_proyectada) {
+        const maxima = ORDEN.indexOf(c.actividad === "bienes" ? "K" : "H");
+        const idxProy = Math.max(ORDEN.indexOf(base.categoria_proyectada), mayorProy);
+        c.categoria_proyectada = idxProy >= ORDEN.length || idxProy > maxima ? null : ORDEN[idxProy];
       }
     }
     datos.alertas = datos.alertas.filter((a) => !(a.cuit === c.cuit && ["excede_parametro", "cerca_del_parametro"].includes(a.tipo)));
@@ -187,9 +195,23 @@
     return Number.isFinite(n) && n >= 0 ? n : NaN;
   }
 
+  // Proyectada = ingreso promedio mensual (facturación / meses enteros del período) contra el límite
+  // promedio mensual proyectado (tope anual proyectado de su categoría / 12).
+  function detalleProyeccion(c) {
+    if (c.ingreso_promedio_mensual == null) return '<p class="mt-detail-note">Sin facturación del período para calcular el promedio.</p>';
+    const uso = c.limite_mensual_proyectado ? ` · ${Math.round((c.ingreso_promedio_mensual / c.limite_mensual_proyectado) * 100)}% del límite` : "";
+    return `<dl class="mt-snap">
+      <div><dt>Ingreso promedio mensual</dt><dd>${money(c.ingreso_promedio_mensual)} <span class="mt-sub">${money(c.facturacion_periodo)} ÷ ${esc(c.meses_promedio)} meses del período (el mes en curso cuenta entero)</span></dd></div>
+      <div><dt>Límite promedio mensual proyectado</dt><dd>${money(c.limite_mensual_proyectado)} <span class="mt-sub">tope anual proyectado de la categoría ${esc(c.categoria_padron || "—")} ÷ 12${uso}</span></dd></div>
+    </dl>`;
+  }
+
   function filaDetalle(c) {
     return `<tr class="mt-detail-row"><td colspan="9"><div class="mt-detail">
-      <section><h3>Cierre anterior</h3>${detalleCierre(c.cierre_anterior)}</section>
+      <div class="mt-detail-col">
+        <section><h3>Cierre anterior</h3>${detalleCierre(c.cierre_anterior)}</section>
+        <section><h3>Proyección · promedio mensual</h3>${detalleProyeccion(c)}</section>
+      </div>
       <section><h3>Mes a mes</h3>${detalleMensual(c.mensual)}</section>
       <section class="mt-detail-wide"><h3>Parámetros de la escala · carga manual</h3>${seccionParametros(c)}</section>
     </div></td></tr>`;
@@ -206,10 +228,11 @@
       const pct = usoBarra == null ? null : Math.round(usoBarra * 100);
       const limita = c.parametro_limitante && c.parametros ? c.parametros.items.find((i) => i.clave === c.parametro_limitante) : null;
       const bar = pct == null ? "—" : `<div class="mt-bar ${tone}"><i style="width:${Math.min(pct, 100)}%"></i></div><span class="mt-pct">${pct}%</span>${limita ? `<span class="mt-sub">limita: ${esc(limita.nombre.toLowerCase())}</span>` : ""}`;
-      const sube = c.categoria_corresponde && ORDEN.indexOf(c.categoria_corresponde) > ORDEN.indexOf(c.categoria_padron);
-      const baja = c.categoria_corresponde && ORDEN.indexOf(c.categoria_corresponde) < ORDEN.indexOf(c.categoria_padron);
-      const corresponde = c.categoria_corresponde
-        ? `<span class="mt-cat ${sube ? "diff" : baja ? "lower" : ""}">${esc(c.categoria_corresponde)}</span>` : "—";
+      const sube = c.categoria_proyectada && ORDEN.indexOf(c.categoria_proyectada) > ORDEN.indexOf(c.categoria_padron);
+      const baja = c.categoria_proyectada && ORDEN.indexOf(c.categoria_proyectada) < ORDEN.indexOf(c.categoria_padron);
+      const corresponde = c.categoria_proyectada
+        ? `<span class="mt-cat ${sube ? "diff" : baja ? "lower" : ""}" title="${sube ? "Subiría con los topes proyectados" : baja ? "Bajaría con los topes proyectados" : "Se mantiene con los topes proyectados"}">${esc(c.categoria_proyectada)}</span>${sube ? '<span class="mt-trend" aria-hidden="true">↑</span>' : baja ? '<span class="mt-trend" aria-hidden="true">↓</span>' : ""}`
+        : c.facturacion_periodo != null && c.categoria_padron ? '<span class="mt-sub">Fuera de escala</span>' : "—";
       return `<tr>
         <td><span class="mt-name">${esc(c.nombre)}</span><span class="mt-doc">${esc(fmtCuit(c.cuit))}</span>
           <span class="mt-sub">${esc(c.actividad)} (según padrón)</span></td>
@@ -233,6 +256,7 @@
       datos = d;
       $("mtEscalaMsg").textContent = `Escala de muestra vigente desde ${fmtFecha(d.escala.vigencia)}. En la versión real se lee de ARCA y una persona la aprueba antes de usarla.`;
       renderPeriodo(d.periodo);
+      $("mtThProy").innerHTML = `PROYECTADA<span class="mt-sub">a ${esc(fmtMes(d.proyeccion.actualizacion))} · ${esc(String(d.proyeccion.variacion_pct).replace(".", ","))}% est.</span>`;
       renderMc(d.mis_comprobantes);
       renderAlertas(d.alertas);
       renderFilas(d.contribuyentes);
