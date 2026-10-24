@@ -66,3 +66,29 @@
 .mt-param { display: grid; gap: 4px; font-size: 12px; color: #64756a; }
 .mt-param input { height: 34px; padding: 0 10px; border: 1px solid var(--line); border-radius: 2px; font: inherit; color: inherit; background: #fff; }
 .mt-param-actions { display: flex; gap: 8px; margin-bottom: 6px; }
+
+/* Proyección de topes (escala vigente y próxima actualización) */
+.mt-proy { margin-top: 14px; padding: 16px 19px 14px; border: 1px solid var(--line); border-radius: 3px; background: var(--paper); }
+.mt-proy-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 18px; }
+.mt-proy-head h3 { margin: 0 0 4px; font-size: 13px; }
+.mt-proy-head p { margin: 0; color: #64756a; font-size: 12px; }
+.mt-proy-total { text-align: right; white-space: nowrap; }
+.mt-proy-total span { display: block; color: #859188; font-size: 10px; font-weight: 700; letter-spacing: .9px; text-transform: uppercase; }
+.mt-proy-total strong { color: #5b4a99; font-size: 20px; font-variant-numeric: tabular-nums; }
+.mt-proy-months { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; padding: 0; list-style: none; }
+.mt-proy-months li { display: flex; align-items: baseline; gap: 6px; padding: 5px 9px; border: 1px solid var(--line); border-radius: 3px; font-size: 11px; font-variant-numeric: tabular-nums; }
+.mt-proy-months em { color: #89958d; font-size: 9px; font-style: normal; font-weight: 700; letter-spacing: .6px; text-transform: uppercase; }
+.mt-proy-months .mt-proy-est { border-style: dashed; background: #f4f1fb; }
+.mt-proy-table th[scope="row"] { width: 80px; font-family: Georgia, serif; font-size: 14px; }
+.mt-proy-table td { font-variant-numeric: tabular-nums; }
+.mt-proy-next { display: block; margin-top: 2px; color: #6b58b0; font-size: 11px; font-weight: 600; }
+.mt-proy .mt-detail-note { margin-top: 10px; }
+@media (max-width: 760px) { .mt-proy-head { flex-direction: column; } .mt-proy-total { text-align: left; } }
+.mt-proy-wrap { max-width: 640px; margin: 0 auto; }
+.mt-proy-table th[scope="row"] { width: 64px; text-align: center; }
+.mt-proy-table thead th:first-child { text-align: center; }
+/* Con la proyección abierta se oculta el seguimiento (período, avisos, alertas y tabla de CUIT) */
+#monotributo.mt-en-proy .mt-period, #monotributo.mt-en-proy .mt-pending, #monotributo.mt-en-proy .mt-alerts,
+#monotributo.mt-en-proy .filter-section { display: none !important; }
+
+.mt-proy-button { margin-left: auto; border-color: #cbd8cd; color: #234e3c; background: #fff; }

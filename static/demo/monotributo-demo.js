@@ -264,6 +264,54 @@
     if (borrar) recomputar(datos.contribuyentes.find((x) => x.cuit === borrar.dataset.paramsBorrar), {});
   });
 
+  // ---- Proyección de topes (escala vigente y próxima actualización). Datos de muestra.
+  const MESES_LARGO = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
+  const mesLargo = (ym) => `${MESES_LARGO[Number(ym.slice(5, 7)) - 1]} ${ym.slice(0, 4)}`;
+  const pctFmt = (v) => `${new Intl.NumberFormat("es-AR", { minimumFractionDigits: 1, maximumFractionDigits: 2 }).format(v)}%`;
+
+  function renderProyeccion(p) {
+    const meses = p.meses.map((m) =>
+      `<li class="${m.fuente === "INDEC" ? "" : "mt-proy-est"}"><span>${esc(fmtMes(m.mes))}</span><strong>${pctFmt(m.variacion_pct)}</strong><em>${esc(m.fuente)}</em></li>`).join("");
+    const filas = Object.entries(p.categorias).map(([letra, c]) => `<tr>
+      <th scope="row">${esc(letra)}</th>
+      <td class="amount-cell">${money(c.actual)}<span class="mt-proy-next">Proy: ${money(c.proyectado)}</span></td>
+      <td class="amount-cell">${money(c.actual / 12)}<span class="mt-proy-next">Proy: ${money(c.proyectado / 12)}</span></td></tr>`).join("");
+    $("mtProyPanel").innerHTML = `
+      <header class="mt-proy-head">
+        <div><h3>Topes proyectados · actualización de ${esc(mesLargo(p.actualizacion))}</h3>
+          <p>Escala vigente desde ${esc(p.vigencia)} y proyección de ARCA: el tope sube con el IPC acumulado de ${esc(fmtMes(p.semestre.desde))} a ${esc(fmtMes(p.semestre.hasta))}.</p></div>
+        <div class="mt-proy-total"><span>Variación estimada</span><strong>${pctFmt(p.variacion_pct)}</strong></div>
+      </header>
+      <ul class="mt-proy-months" aria-label="IPC mensual del semestre">${meses}</ul>
+      <div class="table-wrap mt-proy-wrap"><table class="mt-proy-table">
+        <thead><tr><th scope="col">CAT.</th><th scope="col" class="amount-cell">INGRESOS BRUTOS <span class="mt-sub">(tope anual)</span></th><th scope="col" class="amount-cell">INGRESOS BRUTOS <span class="mt-sub">(tope mensual)</span></th></tr></thead>
+        <tbody>${filas}</tbody></table></div>
+      <p class="mt-detail-note">Estimación, no es un dato oficial de ARCA. En la versión real el IPC se lee de INDEC, los meses que faltan se completan con el REM del BCRA y se reemplazan solos cuando INDEC publica el dato.</p>`;
+  }
+
+  $("mtProyeccion").addEventListener("click", async (event) => {
+    const boton = event.currentTarget;
+    const panel = $("mtProyPanel");
+    const mostrar = (abierto) => {
+      panel.hidden = !abierto;
+      $("monotributo").classList.toggle("mt-en-proy", abierto);   // la proyección reemplaza al seguimiento
+      boton.setAttribute("aria-expanded", String(abierto));
+      boton.textContent = abierto ? "Volver al seguimiento" : "Proyección";
+    };
+    if (!panel.hidden) return mostrar(false);
+    boton.disabled = true;
+    try {
+      const r = await fetch("/api/demo/monotributo/proyeccion");
+      if (!r.ok) throw new Error(`Error HTTP ${r.status}`);
+      renderProyeccion(await r.json());
+      mostrar(true);
+    } catch (e) {
+      $("mtEscalaMsg").textContent = `No se pudo cargar la proyección: ${e.message}`;
+    } finally {
+      boton.disabled = false;
+    }
+  });
+
   function route() {
     const mono = location.hash === "#monotributo";
     const dfe = location.hash === "#dfe";

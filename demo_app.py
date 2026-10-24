@@ -18,6 +18,7 @@ from starlette.responses import FileResponse, Response
 DEMO_DIR = Path(__file__).resolve().parent / "static" / "demo"
 DATA_PATH = DEMO_DIR / "demo-data.json"
 MONOTRIBUTO_PATH = DEMO_DIR / "monotributo-demo.json"
+MONOTRIBUTO_PROYECCION_PATH = DEMO_DIR / "monotributo-proyeccion-demo.json"
 DFE_PATH = DEMO_DIR / "dfe-demo.json"
 CCMA_PATH = DEMO_DIR / "ccma-demo.json"
 GRANOS_PATH = DEMO_DIR / "granos-demo.json"
@@ -113,6 +114,12 @@ def demo_summary(emisor: Optional[str] = None) -> dict[str, Any]:
 def demo_monotributo() -> dict[str, Any]:
     """Tope y alertas de Monotributo calculados de antemano sobre contribuyentes ficticios."""
     return json.loads(MONOTRIBUTO_PATH.read_text(encoding="utf-8"))
+
+
+@app.get("/api/demo/monotributo/proyeccion")
+def demo_monotributo_proyeccion() -> dict[str, Any]:
+    """Topes proyectados a la próxima actualización de ARCA (escala pública, cálculo hecho de antemano)."""
+    return json.loads(MONOTRIBUTO_PROYECCION_PATH.read_text(encoding="utf-8"))
 
 
 @app.get("/api/demo/dfe")

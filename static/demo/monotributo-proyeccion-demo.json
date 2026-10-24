@@ -1,0 +1,90 @@
+{
+  "vigencia": "2026-08-01",
+  "actualizacion": "2027-01",
+  "semestre": {
+    "desde": "2026-07",
+    "hasta": "2026-12"
+  },
+  "coeficiente": 1.112673279786173,
+  "variacion_pct": 11.27,
+  "meses": [
+    {
+      "mes": "2026-07",
+      "variacion_pct": 2.11,
+      "fuente": "INDEC"
+    },
+    {
+      "mes": "2026-08",
+      "variacion_pct": 1.66,
+      "fuente": "INDEC"
+    },
+    {
+      "mes": "2026-09",
+      "variacion_pct": 1.9,
+      "fuente": "REM"
+    },
+    {
+      "mes": "2026-10",
+      "variacion_pct": 1.7,
+      "fuente": "REM"
+    },
+    {
+      "mes": "2026-11",
+      "variacion_pct": 1.6,
+      "fuente": "REM"
+    },
+    {
+      "mes": "2026-12",
+      "variacion_pct": 1.8,
+      "fuente": "REM"
+    }
+  ],
+  "estimativo": true,
+  "categorias": {
+    "A": {
+      "actual": 12009410.45,
+      "proyectado": 13362550.11
+    },
+    "B": {
+      "actual": 17595182.74,
+      "proyectado": 19577689.69
+    },
+    "C": {
+      "actual": 24670494.31,
+      "proyectado": 27450199.82
+    },
+    "D": {
+      "actual": 30628651.43,
+      "proyectado": 34079682.04
+    },
+    "E": {
+      "actual": 36028231.33,
+      "proyectado": 40087650.32
+    },
+    "F": {
+      "actual": 45151659.41,
+      "proyectado": 50239044.96
+    },
+    "G": {
+      "actual": 53995798.87,
+      "proyectado": 60079682.62
+    },
+    "H": {
+      "actual": 81924660.37,
+      "proyectado": 91155380.55
+    },
+    "I": {
+      "actual": 91699761.9,
+      "proyectado": 102031874.83
+    },
+    "J": {
+      "actual": 105012519.2,
+      "proyectado": 116844624.16
+    },
+    "K": {
+      "actual": 126610838.75,
+      "proyectado": 140876497.21
+    }
+  },
+  "origen_ipc": "INDEC (datos.gob.ar)"
+}
