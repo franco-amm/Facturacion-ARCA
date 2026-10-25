@@ -151,12 +151,12 @@
       c.uso_max = Math.max(base.uso ?? 0, usoMax);
       c.parametro_limitante = usoMax >= (base.uso ?? 0) ? limitante : null;
       if (base.categoria_corresponde) {
-        const maxima = ORDEN.indexOf(c.actividad === "bienes" ? "K" : "H");
+        const maxima = ORDEN.indexOf("K");
         let idx = Math.max(ORDEN.indexOf(base.categoria_corresponde), mayor);
         c.categoria_corresponde = idx >= ORDEN.length || idx > maxima ? null : ORDEN[idx];
       }
       if (base.categoria_proyectada) {
-        const maxima = ORDEN.indexOf(c.actividad === "bienes" ? "K" : "H");
+        const maxima = ORDEN.indexOf("K");
         const idxProy = Math.max(ORDEN.indexOf(base.categoria_proyectada), mayorProy);
         c.categoria_proyectada = idxProy >= ORDEN.length || idxProy > maxima ? null : ORDEN[idxProy];
       }
@@ -342,9 +342,10 @@
     const granos = location.hash === "#granos";
     const emitir = location.hash === "#emitir";
     const ccma = location.hash === "#ccma";
+    const resumen = location.hash === "#resumen";
     $("monotributo").hidden = !mono;
-    $("history").hidden = mono || dfe || granos || emitir || ccma;
-    const destino = mono ? "#monotributo" : dfe ? "#dfe" : granos ? "#granos" : emitir ? "#emitir" : ccma ? "#ccma" : "#history";
+    $("history").hidden = mono || dfe || granos || emitir || ccma || resumen;
+    const destino = mono ? "#monotributo" : dfe ? "#dfe" : granos ? "#granos" : emitir ? "#emitir" : ccma ? "#ccma" : resumen ? "#resumen" : "#history";
     document.querySelectorAll(".sidebar .nav-item").forEach((a) => {
       const active = a.getAttribute("href") === destino;
       a.classList.toggle("active", active);

@@ -122,6 +122,109 @@ def demo_monotributo_proyeccion() -> dict[str, Any]:
     return json.loads(MONOTRIBUTO_PROYECCION_PATH.read_text(encoding="utf-8"))
 
 
+_ORDEN = list("ABCDEFGHIJK")
+_ESTADO_ORDEN = {"revisar": 0, "atencion": 1, "sin_datos": 2, "al_dia": 3}
+
+
+def _estado_resumen(uso: Optional[float], deuda: Optional[float], sube: bool, viejo: bool) -> tuple[str, Optional[str]]:
+    """Mismos umbrales que el Resumen real (propuestos: 85 % atención, 95 % revisar)."""
+    if uso is None:
+        return "sin_datos", "Sin facturación sincronizada"
+    con_deuda = bool(deuda and deuda > 0)
+    if uso >= 0.95:
+        return "revisar", "Cerca del tope de la categoría"
+    if con_deuda and uso >= 0.85:
+        return "revisar", "Deuda en ARCA y uso alto del tope"
+    if uso >= 0.85:
+        return "atencion", "Uso alto del tope"
+    if con_deuda:
+        return "atencion", "Deuda en ARCA"
+    if sube:
+        return "atencion", "Le correspondería otra categoría"
+    if viejo:
+        return "atencion", "Datos desactualizados"
+    return "al_dia", None
+
+
+def _resumen_base() -> tuple[dict[str, Any], dict[str, Any], dict[str, Any]]:
+    mono = json.loads(MONOTRIBUTO_PATH.read_text(encoding="utf-8"))
+    ccma = {c["cuit"]: c for c in json.loads(CCMA_PATH.read_text(encoding="utf-8"))["clientes"]}
+    proy = json.loads(MONOTRIBUTO_PROYECCION_PATH.read_text(encoding="utf-8"))
+    return mono, ccma, proy
+
+
+def _fila_resumen(c: dict[str, Any], ccma: dict[str, Any], hoy: str) -> dict[str, Any]:
+    cuit = c["cuit"]
+    categoria, proyectada = c.get("categoria_padron"), c.get("categoria_proyectada")
+    sube = bool(categoria in _ORDEN and proyectada in _ORDEN and _ORDEN.index(proyectada) > _ORDEN.index(categoria))
+    uso, tope, fact = c.get("uso"), c.get("tope"), c.get("facturacion_periodo")
+    deuda_ccma = ccma.get(cuit)
+    saldo = deuda_ccma["ultima_deuda"]["saldo_neto"] if deuda_ccma else None
+    deuda = None if saldo is None else (-saldo if saldo < 0 else 0.0)
+    sync = c.get("sincronizado_el")
+    viejo = bool(sync) and (date.fromisoformat(hoy) - date.fromisoformat(sync)).days > 3
+    estado, motivo = _estado_resumen(uso, deuda, sube, viejo)
+    return {
+        "cuit": cuit, "nombre": c["nombre"], "actividad": c.get("actividad"), "categoria": categoria,
+        "categoria_proyectada": proyectada, "sube_categoria": sube, "facturacion_periodo": fact,
+        "origen_facturacion": c.get("origen_facturacion") if fact is not None else None, "tope": tope, "uso": uso,
+        "margen": (tope - fact) if tope is not None and fact is not None else None,
+        "deuda_arca": deuda, "saldo_ccma": saldo,
+        "deuda_consultada_el": deuda_ccma["ultima_deuda"]["consultado_en"] if deuda_ccma else None,
+        "periodos_deudores": sum(1 for x in deuda_ccma["saldos"] if x["estado"] == "deudor") if deuda_ccma else None,
+        "sincronizado_el": sync, "sincronizacion_error": False, "desactualizado": viejo,
+        "estado": estado, "motivo": motivo,
+    }
+
+
+@app.get("/api/demo/resumen/clientes")
+def demo_resumen() -> dict[str, Any]:
+    """Listado del Resumen armado sobre los clientes ficticios de Monotributo y CCMA."""
+    mono, ccma, _ = _resumen_base()
+    filas = [_fila_resumen(c, ccma, mono["periodo"]["hasta"]) for c in mono["contribuyentes"]]
+    filas.sort(key=lambda f: (_ESTADO_ORDEN[f["estado"]], -(f["uso"] or 0), f["nombre"]))
+    return {"periodo": mono["periodo"], "clientes": filas, "conteo": {"clientes": len(filas)}}
+
+
+@app.get("/api/demo/resumen/clientes/{cuit}")
+def demo_resumen_detalle(cuit: str) -> dict[str, Any]:
+    mono, ccma, proy = _resumen_base()
+    c = next((x for x in mono["contribuyentes"] if x["cuit"] == cuit), None)
+    if c is None:
+        raise HTTPException(status_code=404, detail="Ese CUIT no está en el seguimiento.")
+    fila = _fila_resumen(c, ccma, mono["periodo"]["hasta"])
+    meses = [{"mes": m["mes"], "facturacion": m["facturacion"], "compras": m["compras"] if c.get("compras") else None}
+             for m in ((c.get("mensual") or {}).get("meses") or []) if not m["futuro"]]
+    promedio = c.get("ingreso_promedio_mensual")
+    limite = fila["tope"] / 12 if fila["tope"] else None
+    cat = fila["categoria"]
+    maxima = "K"
+    categorias = [{
+        "categoria": letra, "tope_anual": proy["categorias"][letra]["actual"], "limite_mensual": proy["categorias"][letra]["actual"] / 12,
+        "tope_anual_proyectado": proy["categorias"][letra]["proyectado"], "limite_mensual_proyectado": proy["categorias"][letra]["proyectado"] / 12,
+        "es_actual": letra == cat, "es_proyectada": letra == fila["categoria_proyectada"],
+    } for letra in _ORDEN[: _ORDEN.index(maxima) + 1] if letra in proy["categorias"]]
+    saldos = sorted(ccma[cuit]["saldos"], key=lambda s: s["periodo"], reverse=True)[:12] if cuit in ccma else []
+    return {
+        "cliente": {k: fila[k] for k in ("cuit", "nombre", "actividad", "categoria")},
+        "estado": {k: fila[k] for k in ("estado", "motivo", "sincronizado_el", "desactualizado", "sincronizacion_error")},
+        "periodo": mono["periodo"],
+        "utilizacion": {k: fila[k] for k in ("facturacion_periodo", "origen_facturacion", "tope", "uso", "margen")},
+        "deuda": {"monto": fila["deuda_arca"], "saldo_neto": fila["saldo_ccma"], "periodos_deudores": fila["periodos_deudores"],
+                  "consultada_el": fila["deuda_consultada_el"], "saldos": saldos},
+        "ventas": {"meses": meses, "limite_mensual": limite, "promedio_mensual": promedio,
+                   "meses_promedio": c.get("meses_promedio"), "tiene_compras": bool(c.get("compras"))},
+        "recategorizacion": {
+            "categoria": cat, "categoria_proyectada": fila["categoria_proyectada"], "sube_categoria": fila["sube_categoria"],
+            "recategorizacion": mono["periodo"].get("recategorizacion"), "promedio_mensual": promedio, "limite_actual": limite,
+            "limite_proyectado": c.get("limite_mensual_proyectado"),
+            "tope_anual": fila["tope"], "tope_anual_proyectado": proy["categorias"].get(cat, {}).get("proyectado"),
+            "ipc": {"variacion_pct": proy["variacion_pct"], "estimativo": proy["estimativo"], "actualizacion": proy["actualizacion"]},
+            "categorias": categorias,
+        },
+    }
+
+
 @app.get("/api/demo/dfe")
 def demo_dfe() -> dict[str, Any]:
     """Comunicaciones del domicilio fiscal de clientes ficticios, ya clasificadas."""
