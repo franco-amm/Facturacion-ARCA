@@ -117,5 +117,4 @@
 .rs-com.urgente { background: #f6dcd8; color: var(--danger, #a64238); }
 .nav-divider { height: 1px; margin: 10px 14px; background: rgba(230, 244, 235, .13); }
 .nav-item.nav-destacado { color: #fff; box-shadow: inset 3px 0 0 var(--accent, #9bd66c); font-weight: 700; }
-.nav-item.nav-destacado .nav-indicator { border-color: var(--accent, #9bd66c); }
 :root { --danger: #a64238; }

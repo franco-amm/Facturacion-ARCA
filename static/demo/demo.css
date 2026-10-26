@@ -24,7 +24,8 @@ button:focus-visible, a:focus-visible, input:focus-visible { outline: 3px solid 
 .brand-name { font-size: 16px; font-weight: 700; }.brand-name span { color: #a7b9ad; font-weight: 400; }
 .nav-label { margin: 54px 10px 12px; color: #94a99c; font-size: 10px; font-weight: 700; letter-spacing: 1px; }
 .nav-item { display: flex; min-height: 42px; align-items: center; gap: 11px; padding: 0 12px; border-radius: 4px; color: #fff; background: rgba(255,255,255,.09); font-weight: 600; text-decoration: none; }
-.nav-indicator { width: 7px; height: 7px; border: 1px solid var(--lime); border-radius: 2px; background: var(--lime); transform: rotate(45deg); }
+.nav-ico { width: 18px; height: 18px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+.nav-item.active .nav-ico, .nav-item.nav-destacado .nav-ico { stroke: var(--lime, #d3ed8b); }
 .sidebar-bottom { display: flex; align-items: center; gap: 10px; margin-top: auto; padding: 16px 9px 2px; border-top: 1px solid rgba(230,244,235,.13); }.sidebar-bottom strong,.sidebar-bottom small { display:block; }.sidebar-bottom strong { font-size:12px; }.sidebar-bottom small { margin-top:2px; color:#9cb0a4; font-size:11px; }
 .demo-dot,.demo-live-dot { width:7px; height:7px; flex:0 0 auto; border-radius:50%; background:#e4b164; box-shadow:0 0 0 3px rgba(228,177,100,.15); }
 .main-content { width:min(100% - 226px,1514px); margin-left:226px; padding:38px clamp(24px,4vw,62px) 44px; }
