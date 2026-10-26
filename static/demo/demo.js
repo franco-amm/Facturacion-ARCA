@@ -64,7 +64,16 @@ function renderIssuer() {
   ui.pointOfSale.textContent = issuer.punto_venta;
   ui.totalCount.textContent = new Intl.NumberFormat("es-AR").format(invoices.length);
   ui.tableTitle.textContent = issuer.propio ? "Historial de emisión" : `Historial de emisión · ${issuer.name.replace(" (DEMO)", "")}`;
-  ui.demoMessage.textContent = `${invoices.length} registros ficticios de este CUIT · sin conexión a ARCA`;
+  const fuente = issuer.source || "wsfe";
+  const base = `${invoices.length} registros ficticios de este CUIT · sin conexión a ARCA`;
+  const titulo = { mixto: "WSFEv1 y Mis Comprobantes", mis_comprobantes: "Datos de Mis Comprobantes" }[fuente] || "Conjunto de muestra cargado";
+  const nota = {
+    mixto: "Se combinan los comprobantes de WSFEv1 con los de Mis Comprobantes que WSFEv1 no ve (por ejemplo, Comprobantes en línea). La etiqueta de cada fila indica el origen; si están en los dos, manda WSFEv1.",
+    mis_comprobantes: "Este CUIT se consulta solo desde Mis Comprobantes (Comprobantes en línea): no usa WSFEv1 ni necesita delegar «Facturación Electrónica».",
+  }[fuente];
+  document.getElementById("demoTitle").textContent = titulo;
+  ui.demoMessage.textContent = nota ? `${base}. ${nota}` : base;
+  ui.footerCount.nextElementSibling.textContent = { mixto: "WSFEv1 + scraper de Mis Comprobantes (datos ficticios)", mis_comprobantes: "Datos del scraper de Mis Comprobantes (ficticios)" }[fuente] || "Conjunto de datos ficticio";
 }
 
 function renderEmisores() {
@@ -128,7 +137,7 @@ function renderInvoices() {
       `<td><span class="recipient-name">${escapeHtml(invoice.Receptor)}</span></td>`,
       `<td class="amount-cell">${escapeHtml(formatMoney(invoice.ImpTotal))}</td>`,
       `<td><span class="cae-value demo-cae">${escapeHtml(invoice.CAE)}</span></td>`,
-      `<td><span class="status-badge">Autorizado · demo</span></td>`,
+      `<td><span class="status-badge">Autorizado · demo</span> <span class="origin-tag origin-${escapeHtml(invoice.Origen || "wsfe")}" title="${invoice.Origen === "mis_comprobantes" ? "Origen: Mis Comprobantes (scraper), por ejemplo Comprobantes en línea" : "Origen: Web Services (WSFEv1)"}">${invoice.Origen === "mis_comprobantes" ? "Mis Comprobantes" : "WSFEv1"}</span></td>`,
       `<td><button class="detail-button" type="button" data-detail="${escapeHtml(type)}:${escapeHtml(invoice.Numero)}">Ver</button></td>`,
     ].join("");
     return row;

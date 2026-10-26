@@ -69,3 +69,5 @@ h1,h2,p { margin-top:0; }h1 { margin-bottom:4px; font-family:Georgia,"Times New 
 .emisor-select small { color: #78867d; font-size: 11px; }
 .emisor-card.is-selected .emisor-select { border-color: var(--forest); background: #edf4ed; box-shadow: inset 3px 0 0 var(--forest); }
 .emisores + .account-strip { margin-top: 15px; }
+.origin-tag { display: inline-block; margin-left: 4px; padding: 3px 6px; border-radius: 2px; font-size: 9px; font-weight: 700; white-space: nowrap; color: #3d5a73; background: #e6eef5; }
+.origin-tag.origin-mis_comprobantes { color: #7a5a1e; background: #f6ecd6; }
