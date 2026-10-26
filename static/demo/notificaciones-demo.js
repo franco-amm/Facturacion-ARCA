@@ -11,13 +11,13 @@
 
   const SEVERIDAD = { alta: ["Alta", "bad"], media: ["Media", "warn"], baja: ["Baja", "ok"] };
   const ESTADO = { nuevo: ["Nuevo", "warn"], visto: ["Visto", "muted"], resuelto: ["Resuelto", "ok"] };
-  const INTERVALO_MS = 120000;
+  const INTERVALO_MS = 30000;       // lectura de fondo: solo lee lo ya guardado por cada servicio, no consulta a ARCA
   const AVISOS_EN_PANEL = 4;
 
   let resumen = null;                 // activos de toda la central, para la campana y el menú
   let datosVista = null;              // lo que muestra la vista completa con sus filtros
   let filtro = { servicio: "", estado: "activos", texto: "", desde: "", hasta: "" };
-  const cerrados = new Set();         // grupos que el usuario colapsó en la vista completa
+  const elegidos = new Map();         // grupos que el usuario abrió o cerró a mano en la vista completa (servicio → abierto)
   let toastTimer = null;
 
   function toast(message, isError = false) {
@@ -192,6 +192,15 @@
     $("ntfHasta").value = filtro.hasta;
   }
 
+  // «Actualizado hace 3 min» mientras sea reciente; pasado un día, la fecha.
+  function textoActualizado(iso) {
+    const minutos = Math.floor((Date.now() - new Date(iso).getTime()) / 60000);
+    if (!Number.isFinite(minutos) || minutos < 0 || minutos >= 1440) return `actualizado ${fmtFecha(iso)} ${iso.slice(11, 16)}`;
+    if (minutos < 1) return "actualizado recién";
+    if (minutos < 60) return `actualizado hace ${minutos} min`;
+    return `actualizado hace ${Math.floor(minutos / 60)} h`;
+  }
+
   function renderCompleta() {
     const etiquetas = datosVista.servicios;
     const selector = $("ntfServicio");
@@ -205,7 +214,7 @@
       !texto || `${a.nombre} ${a.cuit} ${a.titulo} ${a.detalle}`.toLowerCase().includes(texto));
     const c = datosVista.conteo;
     $("ntfResumen").textContent = `${c.nuevos} nuevo${c.nuevos === 1 ? "" : "s"} · ${c.activos} activo${c.activos === 1 ? "" : "s"}`
-      + (datosVista.ultima_actualizacion ? ` · actualizado ${fmtFecha(datosVista.ultima_actualizacion)} ${datosVista.ultima_actualizacion.slice(11, 16)}` : "");
+      + (datosVista.ultima_actualizacion ? ` · ${textoActualizado(datosVista.ultima_actualizacion)}` : "");
     $("ntfVacio").hidden = avisos.length > 0;
     $("ntfGrupos").innerHTML = Object.keys(etiquetas)
       .map((servicio) => [servicio, avisos.filter((a) => a.servicio === servicio)])
@@ -213,7 +222,7 @@
       .map(([servicio, lista]) => {
         const cuits = new Set(lista.map((a) => a.cuit)).size;
         const nuevos = lista.filter((a) => a.estado === "nuevo").length;
-        const abierto = !cerrados.has(servicio);
+        const abierto = elegidos.has(servicio) ? elegidos.get(servicio) : filtro.servicio === servicio;   // por defecto colapsados, salvo el servicio filtrado
         return `<details class="ntf-grupo" data-grupo="${esc(servicio)}" ${abierto ? "open" : ""}>
           <summary><strong>${esc(etiquetas[servicio])}</strong>
             <span>${cuits} CUIT${cuits === 1 ? "" : "s"} con novedades · ${lista.length} aviso${lista.length === 1 ? "" : "s"}${nuevos ? ` · <b>${nuevos} nuevo${nuevos === 1 ? "" : "s"}</b>` : ""}</span>
@@ -356,7 +365,7 @@
   $("notificaciones").addEventListener("toggle", (event) => {
     const grupo = event.target.closest?.("[data-grupo]");
     if (!grupo) return;
-    if (grupo.open) cerrados.delete(grupo.dataset.grupo); else cerrados.add(grupo.dataset.grupo);
+    elegidos.set(grupo.dataset.grupo, grupo.open);
   }, true);
   document.querySelectorAll("[data-ntf-servicio]").forEach((el) => {
     const ir = (event) => { event.preventDefault(); event.stopPropagation(); abrir(el.dataset.ntfServicio); };
@@ -366,10 +375,37 @@
   ["ntfServicio", "ntfEstado", "ntfDesde", "ntfHasta"].forEach((id) =>
     $(id).addEventListener("change", () => { lecturaFiltros(); cargarVista(); }));
   $("ntfTexto").addEventListener("input", () => { lecturaFiltros(); if (datosVista) renderCompleta(); });
-  $("ntfActualizar").addEventListener("click", (event) => con(event.currentTarget, () => cargarVista(true)));
 
   window.addEventListener("hashchange", () => { route(); if (location.hash !== "#notificaciones") cargarResumen(); });
-  setInterval(() => { if (document.visibilityState === "visible") cargarResumen(); }, INTERVALO_MS);
+
+  // La Central se mantiene al día sola (no hay botón «Actualizar»):
+  //  1. cuando otra pestaña termina una consulta o sincronización (cualquier pedido que modifica datos);
+  //  2. al volver a la ventana; 3. cada INTERVALO_MS mientras la ventana está visible; 4. al entrar a #notificaciones.
+  let pendienteRefresco = null;
+  async function refrescar() {
+    try { await api("/notificaciones/actualizar", { method: "POST" }); } catch (error) { /* la lectura normal sigue su curso */ }
+    await cargarResumen();
+    if (location.hash === "#notificaciones") await cargarVista();
+  }
+  const fetchOriginal = window.fetch.bind(window);
+  window.fetch = async (entrada, opciones) => {
+    const respuesta = await fetchOriginal(entrada, opciones);
+    try {
+      const metodo = String((opciones && opciones.method) || (entrada && entrada.method) || "GET").toUpperCase();
+      const url = new URL(typeof entrada === "string" ? entrada : entrada.url, location.origin);
+      if (metodo !== "GET" && url.origin === location.origin && !/\/notificaciones(\/|$)/.test(url.pathname)) {
+        clearTimeout(pendienteRefresco);
+        pendienteRefresco = setTimeout(refrescar, 1500);   // junta varios pedidos seguidos en una sola lectura
+      }
+    } catch (_) { /* un pedido raro no debe romper al resto de la app */ }
+    return respuesta;
+  };
+  async function alDia() {
+    await cargarResumen();
+    if (location.hash === "#notificaciones") await cargarVista();   // también renueva el «actualizado hace…»
+  }
+  document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") alDia(); });
+  setInterval(() => { if (document.visibilityState === "visible") alDia(); }, INTERVALO_MS);
   cargarResumen();
   route();
 })();
