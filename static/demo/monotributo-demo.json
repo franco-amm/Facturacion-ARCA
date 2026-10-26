@@ -258,7 +258,24 @@
       "categoria_proyectada": "C",
       "meses_promedio": 9,
       "ingreso_promedio_mensual": 1094444.4444444445,
-      "limite_mensual_proyectado": 1631474.1408333334
+      "limite_mensual_proyectado": 1631474.1408333334,
+      "mis_comprobantes": {
+        "disponible": true,
+        "con_datos": true,
+        "ruta": null,
+        "ultima_actualizacion": "2026-09-30T08:00:00+00:00",
+        "datos_desde": "2026-01-05",
+        "emitidos": {
+          "cantidad": 34,
+          "desde": "2026-01-05",
+          "hasta": "2026-09-28"
+        },
+        "recibidos": {
+          "cantidad": 58,
+          "desde": "2026-01-07",
+          "hasta": "2026-09-29"
+        }
+      }
     },
     {
       "cuit": "20000000029",
@@ -466,7 +483,24 @@
       "categoria_proyectada": "D",
       "meses_promedio": 9,
       "ingreso_promedio_mensual": 2522222.222222222,
-      "limite_mensual_proyectado": 2287516.651666667
+      "limite_mensual_proyectado": 2287516.651666667,
+      "mis_comprobantes": {
+        "disponible": true,
+        "con_datos": true,
+        "ruta": null,
+        "ultima_actualizacion": "2026-09-30T08:00:00+00:00",
+        "datos_desde": "2026-01-05",
+        "emitidos": {
+          "cantidad": 41,
+          "desde": "2026-01-05",
+          "hasta": "2026-09-29"
+        },
+        "recibidos": {
+          "cantidad": 27,
+          "desde": "2026-01-12",
+          "hasta": "2026-09-26"
+        }
+      }
     },
     {
       "cuit": "27000000035",
@@ -515,7 +549,12 @@
       "categoria_proyectada": "C",
       "meses_promedio": 9,
       "ingreso_promedio_mensual": 2155555.5555555555,
-      "limite_mensual_proyectado": 1631474.1408333334
+      "limite_mensual_proyectado": 1631474.1408333334,
+      "mis_comprobantes": {
+        "disponible": true,
+        "con_datos": false,
+        "ruta": null
+      }
     },
     {
       "cuit": "20000000043",
@@ -600,7 +639,12 @@
       "categoria_proyectada": "D",
       "meses_promedio": 9,
       "ingreso_promedio_mensual": 1344444.4444444445,
-      "limite_mensual_proyectado": 2839973.5033333334
+      "limite_mensual_proyectado": 2839973.5033333334,
+      "mis_comprobantes": {
+        "disponible": true,
+        "con_datos": false,
+        "ruta": null
+      }
     },
     {
       "cuit": "23000000058",
@@ -649,7 +693,12 @@
       "categoria_proyectada": null,
       "meses_promedio": 9,
       "ingreso_promedio_mensual": null,
-      "limite_mensual_proyectado": 1113545.8425
+      "limite_mensual_proyectado": 1113545.8425,
+      "mis_comprobantes": {
+        "disponible": true,
+        "con_datos": false,
+        "ruta": null
+      }
     }
   ],
   "alertas": [
@@ -689,23 +738,6 @@
       "nombre": "Ana Muestra"
     }
   ],
-  "mis_comprobantes": {
-    "disponible": true,
-    "con_datos": true,
-    "ruta": null,
-    "ultima_actualizacion": "2026-09-30T08:00:00+00:00",
-    "datos_desde": "2026-01-05",
-    "emitidos": {
-      "cantidad": 34,
-      "desde": "2026-01-05",
-      "hasta": "2026-09-28"
-    },
-    "recibidos": {
-      "cantidad": 58,
-      "desde": "2026-01-07",
-      "hasta": "2026-09-29"
-    }
-  },
   "periodo_alterno": {
     "desde": "2026-07-01",
     "corte": "2027-06-30",

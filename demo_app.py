@@ -169,7 +169,7 @@ def _fila_resumen(c: dict[str, Any], ccma: dict[str, Any], hoy: str, dfe: Option
     return {
         "comunicaciones_sin_ver": com["sin_ver"] if com else None,
         "comunicaciones_urgentes": com["urgentes"] if com else None,
-        "comunicaciones_consultadas_el": hoy if com else None,
+        "comunicaciones_consultadas_el": com["consultado"] if com else None,
         "cuit": cuit, "nombre": c["nombre"], "actividad": c.get("actividad"), "categoria": categoria,
         "categoria_proyectada": proyectada, "sube_categoria": sube, "facturacion_periodo": fact,
         "origen_facturacion": c.get("origen_facturacion") if fact is not None else None, "tope": tope, "uso": uso,
@@ -186,13 +186,14 @@ def _fila_resumen(c: dict[str, Any], ccma: dict[str, Any], hoy: str, dfe: Option
 def demo_resumen() -> dict[str, Any]:
     """Listado del Resumen armado sobre los clientes ficticios de Monotributo y CCMA."""
     mono, ccma, _ = _resumen_base()
-    comunicaciones = json.loads(DFE_PATH.read_text(encoding="utf-8"))["comunicaciones"]
+    dfe_demo = json.loads(DFE_PATH.read_text(encoding="utf-8"))
     dfe: dict[str, dict[str, Any]] = {}
-    for cm in comunicaciones:
-        d = dfe.setdefault(cm["cuit"], {"sin_ver": 0, "urgentes": 0})
-        if not cm.get("vista"):
-            d["sin_ver"] += 1
-            d["urgentes"] += cm.get("urgencia") == "alta"
+    for cl in dfe_demo["clientes"]:
+        if not cl.get("ultima_consulta"):
+            continue   # nunca consultado: queda sin dato, no en cero
+        propias = [cm for cm in dfe_demo["comunicaciones"] if cm["cuit"] == cl["cuit"] and not cm.get("vista")]
+        dfe[cl["cuit"]] = {"sin_ver": len(propias), "urgentes": sum(cm.get("urgencia") == "alta" for cm in propias),
+                           "consultado": cl["ultima_consulta"]}
     filas = [_fila_resumen(c, ccma, mono["periodo"]["hasta"], dfe) for c in mono["contribuyentes"]]
     filas.sort(key=lambda f: (_ESTADO_ORDEN[f["estado"]], -(f["uso"] or 0), f["nombre"]))
     return {"periodo": mono["periodo"], "clientes": filas, "conteo": {"clientes": len(filas)}}

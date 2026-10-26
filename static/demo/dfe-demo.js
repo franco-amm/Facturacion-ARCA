@@ -66,8 +66,13 @@
       const propias = data.comunicaciones.filter((c) => c.cuit === cl.cuit);
       const sinVer = propias.filter((c) => !c.vista).length;
       const urg = propias.filter((c) => !c.vista && c.urgencia === "alta").length;
-      const estado = cl.error ? `<span class="mt-state bad" title="${esc(cl.error.mensaje)}">${esc(ERROR[cl.error.tipo] || ERROR.otro)}</span>`
-        : '<span class="mt-state ok">Al día</span>';
+      // «Pendiente de delegación» solo si lo que falta es la delegación; otro error se muestra como error.
+      const soloDelegacion = cl.pendiente_delegacion && (!cl.error || cl.error.tipo === "delegacion_faltante");
+      const estado = soloDelegacion
+        ? `<span class="mt-state warn mt-tip" tabindex="0" data-tip="${esc(cl.error ? `${cl.error.mensaje} — ` : "")}Delegá «Consumir Comunicaciones de Ventanilla Electrónica» al CUIT del certificado en ARCA. Si ya la delegaste, ARCA puede tardar hasta 24 hs en impactarla.">Pendiente de delegación</span>`
+        : cl.error ? `<span class="mt-state bad" title="${esc(cl.error.mensaje)}">${esc(ERROR[cl.error.tipo] || ERROR.otro)}</span>`
+        : cl.ultima_consulta ? '<span class="mt-state ok">Al día</span>'
+        : '<span class="mt-state muted">Sin consultar</span>';
       const ultima = cl.ultima_consulta ? cl.ultima_consulta.replace("T", " ").slice(0, 16) : "—";
       return `<tr><td><span class="mt-name">${esc(cl.nombre)}</span><span class="mt-doc">${esc(fmtCuit(cl.cuit))}</span></td>
         <td>${esc(ultima)}</td><td class="amount-cell">${sinVer}</td><td class="amount-cell">${urg}</td><td>${estado}</td></tr>`;

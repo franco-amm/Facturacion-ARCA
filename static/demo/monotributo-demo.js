@@ -45,8 +45,23 @@
   const fmtMes = (ym) => `${MESES[Number(ym.slice(5, 7)) - 1]} ${ym.slice(0, 4)}`;
   const expandidos = new Set();
 
-  function detalleCierre(f) {
-    if (!f) return '<p class="mt-detail-note">Todavía no hay una ventana cerrada con datos automáticos de este CUIT.</p>';
+  function filaMisComprobantes(mc) {
+    if (!mc) return "";
+    let texto, sub;
+    if (!mc.con_datos) {
+      texto = "Sin datos";
+      sub = "El scraper todavía no sincronizó comprobantes de este CUIT.";
+    } else {
+      const n = (x) => (x ? x.cantidad : 0);
+      texto = `${n(mc.emitidos)} emitidos · ${n(mc.recibidos)} recibidos`;
+      sub = `Última sincronización: ${fmtFecha((mc.ultima_actualizacion || "").slice(0, 10))} · datos desde ${fmtFecha(mc.datos_desde)}`;
+    }
+    return `<div><dt>Mis Comprobantes</dt><dd>${esc(texto)} <span class="mt-sub">${esc(sub)}</span></dd></div>`;
+  }
+
+  function detalleCierre(f, mc) {
+    const mcRow = filaMisComprobantes(mc);
+    if (!f) return `<p class="mt-detail-note">Todavía no hay una ventana cerrada con datos automáticos de este CUIT.</p>${mcRow ? `<dl class="mt-snap">${mcRow}</dl>` : ""}`;
     const rel = f.relacion_compras == null ? "—" : `${Math.round(f.relacion_compras * 100)}%`;
     const uso = f.uso == null ? "—" : `${Math.round(f.uso * 100)}%`;
     const estado = (ESTADOS[f.estado] || [f.estado])[0];
@@ -56,6 +71,7 @@
       <div><dt>Compras y gastos</dt><dd>${money(f.compras)} <span class="mt-sub">${rel} de la facturación</span></dd></div>
       <div><dt>Categoría y tope</dt><dd>${f.categoria ? esc(f.categoria) : "—"} · ${money(f.tope)} <span class="mt-sub">uso ${uso} · ${esc(estado)}${f.categoria_corresponde ? " · correspondía " + esc(f.categoria_corresponde) : ""}</span></dd></div>
       <div><dt>Escala aplicada</dt><dd>vigente desde ${esc(f.escala_vigencia || "—")} <span class="mt-sub">${f.provisoria ? "Foto provisoria: se actualiza hasta que cambie la ventana" : f.tardia ? "Calculada después del cierre, con la escala vigente en ese momento" : "Foto fija al cierre"}</span></dd></div>
+      ${mcRow}
     </dl>`;
   }
 
@@ -187,7 +203,7 @@
   function filaDetalle(c) {
     return `<tr class="mt-detail-row"><td colspan="9"><div class="mt-detail">
       <div class="mt-detail-col">
-        <section><h3>Cierre anterior</h3>${detalleCierre(c.cierre_anterior)}</section>
+        <section><h3>Cierre anterior</h3>${detalleCierre(c.cierre_anterior, c.mis_comprobantes)}</section>
         <section><h3>Proyección · promedio mensual</h3>${detalleProyeccion(c)}</section>
       </div>
       <section><h3>Mes a mes</h3>${detalleMensual(c.mensual)}</section>

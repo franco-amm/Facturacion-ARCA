@@ -52,7 +52,8 @@
       "error": {
         "tipo": "delegacion_faltante",
         "mensaje": "El cliente todavía no delegó el servicio (muestra)."
-      }
+      },
+      "pendiente_delegacion": true
     }
   ],
   "comunicaciones": [
