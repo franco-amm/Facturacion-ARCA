@@ -27,24 +27,6 @@
   // Los avisos de Monotributo viven ahora en la Central de Notificaciones (campana).
   function renderAlertas() {}
 
-  function renderMc(mc) {
-    const el = $("mtMc");
-    if (!mc) { el.hidden = true; return; }
-    el.hidden = false;
-    const etiqueta = '<span class="mt-period-label">MIS COMPROBANTES</span>';
-    if (!mc.disponible) {
-      el.innerHTML = `${etiqueta}<strong>No conectado</strong><span>Definí AFIP_SCRAPER_DB en el .env con la base del scraper para sumar los emitidos en línea y analizar compras y gastos.</span>`;
-      return;
-    }
-    if (!mc.con_datos) {
-      el.innerHTML = `${etiqueta}<strong>Sin datos</strong><span>El scraper todavía no sincronizó comprobantes de este CUIT.</span>`;
-      return;
-    }
-    const n = (x) => (x ? x.cantidad : 0);
-    el.innerHTML = `${etiqueta}<strong>${n(mc.emitidos)} emitidos · ${n(mc.recibidos)} recibidos</strong>
-      <span>Última sincronización: ${fmtFecha((mc.ultima_actualizacion || "").slice(0, 10))} · datos desde ${fmtFecha(mc.datos_desde)}</span>`;
-  }
-
   function celdaCompras(c) {
     if (!c.compras) return "—";
     const r = c.compras.relacion;
@@ -253,7 +235,6 @@
       $("mtEscalaMsg").textContent = `Escala de muestra vigente desde ${fmtFecha(d.escala.vigencia)}. En la versión real se lee de ARCA y una persona la aprueba antes de usarla.`;
       renderPeriodo(d.periodo);
       $("mtThProy").innerHTML = `PROYECTADA<span class="mt-sub">a ${esc(fmtMes(d.proyeccion.actualizacion))} · ${esc(String(d.proyeccion.variacion_pct).replace(".", ","))}% est.</span>`;
-      renderMc(d.mis_comprobantes);
       renderAlertas(d.alertas);
       renderFilas(d.contribuyentes);
       loaded = true;
