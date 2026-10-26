@@ -21,6 +21,8 @@
   const FILTROS = [
     ["todos", "Clientes", () => true],
     ["deuda", "Con deuda ARCA", (f) => f.deuda_arca > 0],
+    ["comunicaciones", "Con comunicaciones", (f) => f.comunicaciones_sin_ver > 0,
+      "Clientes con comunicaciones del Domicilio Fiscal Electrónico que todavía no se vieron."],
     ["uso_alto", "Utilización desde 85%", (f) => f.uso != null && f.uso >= 0.85,
       "Clientes cuya facturación del período de recategorización ya llegó al 85% o más del tope anual de su categoría actual. Están cerca de tener que subir de categoría o de superar el tope."],
     ["suben", "Suben de categoría", (f) => f.sube_categoria],
@@ -51,7 +53,16 @@
       : "—";
     const deuda = f.deuda_consultada_el ? esc(fmtFecha(f.deuda_consultada_el)) : "—";
     return `<span class="rs-fecha"><em>Facturación al</em> ${fact}</span>
-      <span class="rs-fecha"><em>Deuda al</em> ${deuda}</span>${f.sincronizacion_error ? '<span class="mt-sub mt-warn">Último intento falló</span>' : ""}`;
+      <span class="rs-fecha"><em>Deuda al</em> ${deuda}</span>
+      <span class="rs-fecha"><em>Comunicaciones al</em> ${f.comunicaciones_consultadas_el ? esc(fmtFecha(f.comunicaciones_consultadas_el)) : "—"}</span>${f.sincronizacion_error ? '<span class="mt-sub mt-warn">Último intento falló</span>' : ""}`;
+  }
+
+  function celdaComunicaciones(f) {
+    if (f.comunicaciones_sin_ver == null) return "—";
+    if (!f.comunicaciones_sin_ver) return "0";
+    const urg = f.comunicaciones_urgentes
+      ? ` title="${f.comunicaciones_urgentes} urgente${f.comunicaciones_urgentes > 1 ? "s" : ""}"` : "";
+    return `<span class="rs-com${f.comunicaciones_urgentes ? " urgente" : ""}"${urg}>${f.comunicaciones_sin_ver}</span>`;
   }
 
   function render() {
@@ -76,6 +87,7 @@
         <td>${f.categoria ? `<span class="mt-cat">${esc(f.categoria)}</span>` : "—"}${proy}</td>
         <td class="mt-use">${barra}</td>
         <td class="amount-cell">${money(f.deuda_arca)}</td>
+        <td class="amount-cell">${celdaComunicaciones(f)}</td>
         <td>${celdaSync(f)}</td>
         <td><span class="mt-state ${tono}"${f.motivo ? ` title="${esc(f.motivo)}"` : ""}>${esc(label)}</span></td>
         <td class="mt-actions"><button class="button button-quiet" type="button" data-detalle="${esc(f.cuit)}" >Detalles</button></td>

@@ -113,4 +113,6 @@
 .rs-filtro .rs-tip { color: #fff; font-size: 11px; font-weight: 400; }
 .rs-proy span.rs-apagado { color: var(--muted); }
 
+.rs-com { display: inline-block; min-width: 22px; padding: 1px 7px; border-radius: 999px; background: #eef1f6; color: var(--ink, #1f2a3d); font-weight: 600; text-align: center; }
+.rs-com.urgente { background: #f6dcd8; color: var(--danger, #a64238); }
 :root { --danger: #a64238; }

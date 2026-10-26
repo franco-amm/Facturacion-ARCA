@@ -153,7 +153,7 @@ def _resumen_base() -> tuple[dict[str, Any], dict[str, Any], dict[str, Any]]:
     return mono, ccma, proy
 
 
-def _fila_resumen(c: dict[str, Any], ccma: dict[str, Any], hoy: str) -> dict[str, Any]:
+def _fila_resumen(c: dict[str, Any], ccma: dict[str, Any], hoy: str, dfe: Optional[dict[str, dict[str, Any]]] = None) -> dict[str, Any]:
     cuit = c["cuit"]
     categoria, proyectada = c.get("categoria_padron"), c.get("categoria_proyectada")
     sube = bool(categoria in _ORDEN and proyectada in _ORDEN and _ORDEN.index(proyectada) > _ORDEN.index(categoria))
@@ -164,7 +164,11 @@ def _fila_resumen(c: dict[str, Any], ccma: dict[str, Any], hoy: str) -> dict[str
     sync = c.get("sincronizado_el")
     viejo = bool(sync) and (date.fromisoformat(hoy) - date.fromisoformat(sync)).days > 3
     estado, motivo = _estado_resumen(uso, deuda, sube, viejo)
+    com = (dfe or {}).get(cuit)
     return {
+        "comunicaciones_sin_ver": com["sin_ver"] if com else None,
+        "comunicaciones_urgentes": com["urgentes"] if com else None,
+        "comunicaciones_consultadas_el": hoy if com else None,
         "cuit": cuit, "nombre": c["nombre"], "actividad": c.get("actividad"), "categoria": categoria,
         "categoria_proyectada": proyectada, "sube_categoria": sube, "facturacion_periodo": fact,
         "origen_facturacion": c.get("origen_facturacion") if fact is not None else None, "tope": tope, "uso": uso,
@@ -181,7 +185,14 @@ def _fila_resumen(c: dict[str, Any], ccma: dict[str, Any], hoy: str) -> dict[str
 def demo_resumen() -> dict[str, Any]:
     """Listado del Resumen armado sobre los clientes ficticios de Monotributo y CCMA."""
     mono, ccma, _ = _resumen_base()
-    filas = [_fila_resumen(c, ccma, mono["periodo"]["hasta"]) for c in mono["contribuyentes"]]
+    comunicaciones = json.loads(DFE_PATH.read_text(encoding="utf-8"))["comunicaciones"]
+    dfe: dict[str, dict[str, Any]] = {}
+    for cm in comunicaciones:
+        d = dfe.setdefault(cm["cuit"], {"sin_ver": 0, "urgentes": 0})
+        if not cm.get("vista"):
+            d["sin_ver"] += 1
+            d["urgentes"] += cm.get("urgencia") == "alta"
+    filas = [_fila_resumen(c, ccma, mono["periodo"]["hasta"], dfe) for c in mono["contribuyentes"]]
     filas.sort(key=lambda f: (_ESTADO_ORDEN[f["estado"]], -(f["uso"] or 0), f["nombre"]))
     return {"periodo": mono["periodo"], "clientes": filas, "conteo": {"clientes": len(filas)}}
 
