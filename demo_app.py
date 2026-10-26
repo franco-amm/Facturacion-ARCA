@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import csv
+import hashlib
 import json
 from datetime import date
 from io import BytesIO, StringIO
@@ -246,6 +247,78 @@ def demo_dfe() -> dict[str, Any]:
 def demo_ccma() -> dict[str, Any]:
     """Cuenta corriente de Monotributistas y Autónomos de clientes ficticios."""
     return json.loads(CCMA_PATH.read_text(encoding="utf-8"))
+
+
+# ------------------------------------------------------------------ Central de Notificaciones (demo)
+# Solo entrega los avisos iniciales. Visto/Resuelto se guardan en el navegador de cada visitante (sessionStorage):
+# la demo es pública, así que no puede haber estado compartido en el servidor.
+NOTIF_SERVICIOS = {"dfe": "Domicilio Electrónico", "ccma": "CCMA", "monotributo": "Monotributo"}
+NOTIF_TITULOS_MONOTRIBUTO = {
+    "excede_tope": "Supera el tope de la categoría",
+    "cerca_del_tope": "Cerca del tope de la categoría",
+    "cambio_categoria": "Cambió la categoría en el padrón",
+    "sincronizacion_fallida": "Falló la sincronización de Mis Comprobantes",
+    "sincronizacion_antigua": "Datos de Mis Comprobantes desactualizados",
+    "sin_escala": "Falta la escala aprobada",
+    "sin_categoria": "No se identificó la categoría",
+    "excede_parametro": "Supera un parámetro de la categoría",
+    "compras_sobre_ventas": "Compras y gastos altos sobre la facturación",
+}
+
+
+def _aviso(servicio: str, cuit: str, hecho: str, titulo: str, detalle: str, fecha: Optional[str], severidad: Optional[str],
+           nombre: str, detectado: str) -> dict[str, Any]:
+    clave = f"{servicio}:{cuit}:{hecho}"
+    return {
+        "id": hashlib.sha1(clave.encode("utf-8")).hexdigest()[:12], "clave": clave, "servicio": servicio, "cuit": cuit,
+        "nombre": nombre, "titulo": titulo, "detalle": detalle, "fecha_hecho": fecha, "severidad": severidad,
+        "origen": servicio, "estado": "nuevo", "detectado_el": detectado, "resuelto_el": None, "resuelto_por": None,
+        "en_origen": True,
+    }
+
+
+def _plata(monto: float) -> str:
+    return f"$ {monto:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
+
+
+@app.get("/api/demo/notificaciones")
+def demo_notificaciones() -> dict[str, Any]:
+    """Avisos iniciales de la Central, armados con los datos ficticios de Domicilio fiscal, CCMA y Monotributo."""
+    dfe = json.loads(DFE_PATH.read_text(encoding="utf-8"))
+    ccma = json.loads(CCMA_PATH.read_text(encoding="utf-8"))
+    mono = json.loads(MONOTRIBUTO_PATH.read_text(encoding="utf-8"))
+    detectado = f"{dfe['fecha_muestra']}T08:00:00"
+    nombres = {c["cuit"]: c["nombre"] for c in dfe["clientes"]}
+    avisos: list[dict[str, Any]] = []
+    for c in dfe["comunicaciones"]:
+        if c["vista"] or "no le" not in str(c.get("estado_arca", "")).lower():
+            continue
+        partes = [c.get("organismo"), f"fecha límite {c['fecha_limite']}" if c.get("fecha_limite") else None]
+        sev = c.get("urgencia") if c.get("urgencia") in ("alta", "media", "baja") else "alta"
+        avisos.append(_aviso("dfe", c["cuit"], c["id"], c["asunto"], " · ".join(p for p in partes if p), c.get("publicada"), sev,
+                             nombres.get(c["cuit"], ""), detectado))
+    for cl in dfe["clientes"]:
+        if cl.get("error"):
+            avisos.append(_aviso("dfe", cl["cuit"], "error", "No se pudo consultar el Domicilio fiscal", cl["error"]["mensaje"],
+                                 dfe["fecha_muestra"], "alta", cl["nombre"], detectado))
+    for cl in ccma["clientes"]:
+        saldo = cl["ultima_deuda"]["saldo_neto"]
+        if saldo is None or saldo >= 0:
+            continue
+        n = sum(1 for x in cl["saldos"] if x["estado"] == "deudor")
+        detalle = f"Debe {_plata(-saldo)}" + (f" en {n} período{'s' if n != 1 else ''}" if n else "")
+        avisos.append(_aviso("ccma", cl["cuit"], "deuda", "Deuda en ARCA", detalle, cl["ultima_deuda"]["consultado_en"][:10], None,
+                             cl["nombre"], detectado))
+    repetidos: dict[str, int] = {}
+    for a in mono["alertas"]:
+        if a.get("nivel") == "info":
+            continue
+        base = f"{a['cuit']}:{a['tipo']}"
+        repetidos[base] = repetidos.get(base, 0) + 1
+        hecho = a["tipo"] if repetidos[base] == 1 else f"{a['tipo']}#{repetidos[base]}"
+        avisos.append(_aviso("monotributo", a["cuit"], hecho, NOTIF_TITULOS_MONOTRIBUTO.get(a["tipo"], "Aviso de Monotributo"),
+                             a["mensaje"], None, None, a["nombre"], detectado))
+    return {"avisos": avisos, "servicios": NOTIF_SERVICIOS, "ultima_actualizacion": detectado}
 
 
 @app.get("/api/demo/granos")

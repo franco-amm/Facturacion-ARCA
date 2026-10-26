@@ -46,13 +46,6 @@
 
   function render() {
     const items = ordenadas();
-    const urgentes = items.filter((c) => !c.vista && c.urgencia === "alta");
-    $("dfeAlerts").hidden = urgentes.length === 0;
-    $("dfeAlertList").innerHTML = urgentes.map((c) => `<li class="mt-alert mt-critico dfe-alert">
-      <div><strong>${esc(nombreDe(c.cuit))}</strong><span class="mt-cuit">${esc(fmtCuit(c.cuit))}</span>
-      <p>${esc(c.asunto)} · fecha límite ${fmtFecha(c.fecha_limite)} ${etiquetaArca(c)}</p></div>
-      <button class="mt-close" data-visto="${esc(c.id)}" type="button" title="Cerrar este aviso" aria-label="Cerrar aviso">✕</button></li>`).join("");
-
     $("dfeFooter").textContent = `${items.length} comunicaciones de muestra · ${items.filter((c) => leidaEnArca(c) === false).length} sin leer en ARCA`;
     $("dfeRows").innerHTML = items.map((c) => {
       const [etiqueta, tono] = URGENCIA[c.urgencia] || [c.urgencia, "muted"];

@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="/assets/ccma-demo.css">
   <link rel="stylesheet" href="/assets/emitir-demo.css">
   <link rel="stylesheet" href="/assets/resumen-demo.css">
+  <link rel="stylesheet" href="/assets/notificaciones-demo.css">
   <script src="/assets/demo.js" defer></script>
   <script src="/assets/monotributo-demo.js" defer></script>
   <script src="/assets/dfe-demo.js" defer></script>
@@ -22,18 +23,32 @@
   <script src="/assets/ccma-demo.js" defer></script>
   <script src="/assets/emitir-demo.js" defer></script>
   <script src="/assets/resumen-demo.js" defer></script>
+  <script src="/assets/notificaciones-demo.js" defer></script>
 </head>
 <body>
   <div class="demo-shell">
     <aside class="sidebar" aria-label="Navegación">
-      <a class="brand" href="/" aria-label="Fiscaldesk demo, inicio">
+      <div class="sidebar-top">
+        <a class="brand" href="/" aria-label="Fiscaldesk demo, inicio">
         <span class="brand-mark" aria-hidden="true">F</span>
         <span class="brand-name">fiscal<span>desk</span></span>
       </a>
+        <button class="ntf-bell" id="ntfBell" type="button" aria-label="Notificaciones" aria-haspopup="dialog" aria-expanded="false" aria-controls="ntfPanel">
+          <svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true"><path d="M12 3a6 6 0 0 0-6 6v3.6L4.4 16a1 1 0 0 0 .9 1.5h13.4a1 1 0 0 0 .9-1.5L18 12.6V9a6 6 0 0 0-6-6zm-2 16a2 2 0 0 0 4 0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="ntf-count" id="ntfCount" hidden>0</span>
+        </button>
+      </div>
       <div class="nav-label">DEMO DE PRODUCTO</div>
-      <nav><a class="nav-item nav-destacado" href="#resumen"><span class="nav-indicator" aria-hidden="true"></span>Resumen</a><div class="nav-divider" role="separator"></div><a class="nav-item active" href="#history"><span class="nav-indicator" aria-hidden="true"></span>Comprobantes</a><a class="nav-item" href="#monotributo"><span class="nav-indicator" aria-hidden="true"></span>Monotributo</a><a class="nav-item" href="#dfe"><span class="nav-indicator" aria-hidden="true"></span>Domicilio fiscal</a><a class="nav-item" href="#granos"><span class="nav-indicator" aria-hidden="true"></span>Granos</a><a class="nav-item" href="#ccma"><span class="nav-indicator" aria-hidden="true"></span>CCMA</a><a class="nav-item" href="#emitir"><span class="nav-indicator" aria-hidden="true"></span>Emitir</a></nav>
+      <nav><a class="nav-item nav-destacado" href="#resumen"><span class="nav-indicator" aria-hidden="true"></span>Resumen</a><div class="nav-divider" role="separator"></div><a class="nav-item active" href="#history"><span class="nav-indicator" aria-hidden="true"></span>Comprobantes</a><a class="nav-item" href="#monotributo"><span class="nav-indicator" aria-hidden="true"></span>Monotributo<span class="ntf-nav" data-ntf-servicio="monotributo" role="link" tabindex="0" hidden>0</span></a><a class="nav-item" href="#dfe"><span class="nav-indicator" aria-hidden="true"></span>Domicilio fiscal<span class="ntf-nav" data-ntf-servicio="dfe" role="link" tabindex="0" hidden>0</span></a><a class="nav-item" href="#granos"><span class="nav-indicator" aria-hidden="true"></span>Granos</a><a class="nav-item" href="#ccma"><span class="nav-indicator" aria-hidden="true"></span>CCMA<span class="ntf-nav" data-ntf-servicio="ccma" role="link" tabindex="0" hidden>0</span></a><a class="nav-item" href="#emitir"><span class="nav-indicator" aria-hidden="true"></span>Emitir</a></nav>
       <div class="sidebar-bottom"><span class="demo-dot" aria-hidden="true"></span><div><strong>Modo demostración</strong><small>Sin conexión fiscal</small></div></div>
     </aside>
+    <div class="ntf-panel" id="ntfPanel" role="dialog" aria-label="Notificaciones" hidden>
+      <header class="ntf-panel-cab">
+        <h2>Notificaciones</h2>
+        <button class="button button-secondary" id="ntfVerTodo" type="button">Ver todo</button>
+      </header>
+      <div class="ntf-panel-body" id="ntfPanelBody"></div>
+    </div>
 
     <main class="main-content" id="history">
       <header class="page-header">
@@ -130,11 +145,6 @@
       <section class="mt-period" id="mtPeriodo" aria-label="Período de control"></section>
       <section class="mt-period" id="mtMc" aria-label="Mis Comprobantes" hidden></section>
 
-      <section class="mt-alerts" id="mtAlerts" aria-label="Alertas" hidden>
-        <h2>Alertas</h2>
-        <ul id="mtAlertList"></ul>
-      </section>
-
       <section class="filter-section" aria-label="CUIT seguidos">
         <div class="table-wrap">
           <table>
@@ -168,11 +178,6 @@
       <section class="demo-status" aria-label="Consulta de comunicaciones">
         <div class="status-mark" aria-hidden="true">✉</div>
         <div><h2>Consulta de comunicaciones</h2><p id="dfeMsg">Cargando…</p></div>
-      </section>
-
-      <section class="mt-alerts" id="dfeAlerts" aria-label="Comunicaciones urgentes" hidden>
-        <h2>Urgentes sin ver</h2>
-        <ul id="dfeAlertList"></ul>
       </section>
 
       <section class="filter-section" aria-label="Comunicaciones">
@@ -409,6 +414,50 @@
         <p class="gr-export-note">En la app real esto consulta a ARCA cualquier certificado, aunque ya no tenga saldo. Acá probá con un COE de la pestaña Certificados con saldo (por ejemplo 900000000101).</p>
         <section class="gr-coe-resultado" id="grdCoeResultado" aria-live="polite" hidden></section>
       </div>
+    </main>
+    <main class="main-content" id="notificaciones" hidden>
+      <header class="page-header">
+        <div>
+          <p class="eyebrow">ADMINISTRACIÓN FISCAL <span class="eyebrow-rule"></span> AVISOS</p>
+          <h1>Notificaciones</h1>
+          <p class="page-subtitle">Los avisos de Domicilio Electrónico, CCMA y Monotributo en un solo lugar, agrupados por servicio.</p>
+        </div>
+      </header>
+
+      <section class="sync-section" aria-label="Actualización de avisos">
+        <div class="sync-copy">
+          <div class="sync-icon" aria-hidden="true"><span>↻</span></div>
+          <div>
+            <h2>Avisos</h2>
+            <p class="ntf-resumen" id="ntfResumen">Cargando…</p>
+          </div>
+        </div>
+        <div class="sync-actions">
+          <button class="button button-primary" id="ntfActualizar" type="button" title="Vuelve a leer lo que ya guardó cada servicio; no consulta a ARCA">
+            <span class="button-symbol" aria-hidden="true">↻</span>
+            <span>Actualizar</span>
+          </button>
+        </div>
+      </section>
+
+      <section class="filter-section" aria-label="Filtros de avisos">
+        <div class="filter-bar">
+          <label class="date-control"><span>Servicio</span><select class="ntf-select" id="ntfServicio"><option value="">Todos los servicios</option></select></label>
+          <label class="date-control"><span>Estado</span>
+            <select class="ntf-select" id="ntfEstado">
+              <option value="activos">Activos</option><option value="nuevo">Nuevos</option><option value="visto">Vistos</option><option value="resuelto">Resueltos</option>
+            </select></label>
+          <label class="date-control"><span>Cliente</span><input class="ntf-texto" id="ntfTexto" type="search" placeholder="Nombre, CUIT o texto"></label>
+          <label class="date-control"><span>Desde</span><input id="ntfDesde" type="date"></label>
+          <label class="date-control"><span>Hasta</span><input id="ntfHasta" type="date"></label>
+        </div>
+        <div id="ntfGrupos"></div>
+        <div class="table-state" id="ntfVacio" hidden>
+          <strong>Sin avisos</strong>
+          <p>No hay avisos con estos filtros.</p>
+        </div>
+      </section>
+      <div class="toast" id="ntfToast" role="status" aria-live="polite" hidden></div>
     </main>
     <main class="main-content" id="emitir" hidden>
       <header class="page-header">

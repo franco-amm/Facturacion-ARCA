@@ -24,12 +24,8 @@
       <span>Corte el ${fmtFecha(p.corte)} · próxima recategorización: ${esc(p.recategorizacion)}</span>`;
   }
 
-  function renderAlertas(alertas) {
-    $("mtAlerts").hidden = alertas.length === 0;
-    $("mtAlertList").innerHTML = alertas.map((a) => `<li class="mt-alert mt-${esc(a.nivel)}">
-      <div><strong>${esc(a.nombre)}</strong><span class="mt-cuit">${esc(fmtCuit(a.cuit))}</span><p>${esc(a.mensaje)}</p></div></li>`).join("");
-  }
-
+  // Los avisos de Monotributo viven ahora en la Central de Notificaciones (campana).
+  function renderAlertas() {}
 
   function renderMc(mc) {
     const el = $("mtMc");
@@ -343,9 +339,10 @@
     const emitir = location.hash === "#emitir";
     const ccma = location.hash === "#ccma";
     const resumen = location.hash === "#resumen";
+    const ntf = location.hash === "#notificaciones";
     $("monotributo").hidden = !mono;
-    $("history").hidden = mono || dfe || granos || emitir || ccma || resumen;
-    const destino = mono ? "#monotributo" : dfe ? "#dfe" : granos ? "#granos" : emitir ? "#emitir" : ccma ? "#ccma" : resumen ? "#resumen" : "#history";
+    $("history").hidden = mono || dfe || granos || emitir || ccma || resumen || ntf;
+    const destino = mono ? "#monotributo" : dfe ? "#dfe" : granos ? "#granos" : emitir ? "#emitir" : ccma ? "#ccma" : resumen ? "#resumen" : ntf ? "#notificaciones" : "#history";
     document.querySelectorAll(".sidebar .nav-item").forEach((a) => {
       const active = a.getAttribute("href") === destino;
       a.classList.toggle("active", active);

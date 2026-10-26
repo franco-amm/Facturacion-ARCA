@@ -45,6 +45,15 @@
     o.hidden = false;
   }
 
+  function abrirAviso(tipo, nombre, detalle) {
+    const o = modal();
+    o.querySelector(".wa-to").textContent = `Para: contacto de ${nombre} (número de ejemplo)`;
+    o.querySelector(".wa-bubble").textContent = mensaje(tipo, nombre, detalle);
+    o.querySelector(".wa-thanks").hidden = true;
+    o.hidden = false;
+  }
+  window.WaFakedoor = { abrirAviso };
+
   function inyectar(ul, tipo) {
     ul.querySelectorAll("li.mt-alert:not(.wa-has)").forEach((li) => {
       li.classList.add("wa-has");
