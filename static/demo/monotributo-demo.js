@@ -337,9 +337,10 @@
     const ccma = location.hash === "#ccma";
     const resumen = location.hash === "#resumen";
     const ntf = location.hash === "#notificaciones";
+    const cfg = location.hash === "#configuraciones";
     $("monotributo").hidden = !mono;
-    $("history").hidden = mono || dfe || granos || emitir || ccma || resumen || ntf;
-    const destino = mono ? "#monotributo" : dfe ? "#dfe" : granos ? "#granos" : emitir ? "#emitir" : ccma ? "#ccma" : resumen ? "#resumen" : ntf ? "#notificaciones" : "#history";
+    $("history").hidden = mono || dfe || granos || emitir || ccma || resumen || ntf || cfg;
+    const destino = mono ? "#monotributo" : dfe ? "#dfe" : granos ? "#granos" : emitir ? "#emitir" : ccma ? "#ccma" : resumen ? "#resumen" : ntf ? "#notificaciones" : cfg ? "#configuraciones" : "#history";
     document.querySelectorAll(".sidebar .nav-item").forEach((a) => {
       const active = a.getAttribute("href") === destino;
       a.classList.toggle("active", active);

@@ -1,0 +1,25 @@
+/* Configuraciones (demo): estilos de la sección «Clientes · Mis Comprobantes», copiados de la app. */
+.emisor-form { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 12px; padding: 11px; border: 1px solid var(--line, #e3e9e4); border-radius: 4px; background: var(--paper, #f7f9f6); }
+.emisor-form[hidden] { display: none; }
+.emisor-form .apply-button { min-width: 0; margin-left: 0; }
+.emisor-note { flex-basis: 100%; margin: 2px 4px 0; color: #78867d; font-size: 11px; }
+.gr-head-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.cfg-cliente-list { display: grid; gap: 8px; }
+.cfg-cliente-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding: 10px 12px; border: 1px solid var(--line, #e3e9e4); border-radius: 4px; background: var(--paper, #f7f9f6); }
+.cfg-cliente-row strong { font-size: 13px; }
+.cfg-servicios { flex-basis: 100%; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; padding-top: 8px; border-top: 1px dashed var(--line, #e3e9e4); font-size: 12px; }
+.cfg-servicios-label { font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #5f6d64; }
+.cfg-servicio { display: inline-flex; align-items: center; gap: 5px; cursor: pointer; }
+.cfg-servicio input:disabled { cursor: not-allowed; }
+.cfg-cliente-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.cfg-remove { flex: none; width: 26px; height: 26px; border: 0; border-radius: 3px; color: #849188; background: transparent; font-size: 16px; line-height: 1; cursor: pointer; }
+.cfg-remove:hover { color: #a64238; background: rgba(166, 66, 56, .08); }
+.cfg-estado { display: inline-block; padding: 2px 6px; border-radius: 2px; font-size: 10px; font-weight: 700; }
+.cfg-estado.ok { color: #2a633d; background: #e8f4e8; }
+.cfg-estado.bad { color: #8c2f27; background: #f9ebe8; }
+.cfg-estado.warn { color: #7a5b00; background: #fbf0c8; }
+.cfg-estado.muted { color: #5f6d64; background: #eef1ee; }
+.gr-estado { color: #6b7a70; font-size: 11px; }
+.emisor-cuit { color: #8a968e; font-size: 11px; }
+.cfg-toast { position: fixed; right: 24px; bottom: 22px; z-index: 5; max-width: min(440px, calc(100vw - 32px)); padding: 12px 15px; border: 1px solid #d7e1d9; border-left: 3px solid #5b9870; border-radius: 3px; color: #264735; background: #fff; box-shadow: 0 8px 24px rgba(20, 60, 40, .14); font-size: 12px; }
+.cfg-toast[hidden] { display: none; }

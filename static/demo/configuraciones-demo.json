@@ -1,0 +1,29 @@
+{
+  "clientes": [
+    {
+      "cuit": "20000000011", "nombre": "Ana Muestra", "estado": "ok", "ultima_sincronizacion": "2026-09-30T08:00:00",
+      "emitidos": 34, "recibidos": 58,
+      "servicios": { "comprobantes": true, "monotributo": true, "domicilio_fiscal": true, "ccma": true }
+    },
+    {
+      "cuit": "20000000029", "nombre": "Bruno Ejemplo", "estado": "ok", "ultima_sincronizacion": "2026-09-30T08:00:00",
+      "emitidos": 41, "recibidos": 27,
+      "servicios": { "comprobantes": true, "monotributo": true, "domicilio_fiscal": true, "ccma": true }
+    },
+    {
+      "cuit": "27000000035", "nombre": "Carla Demo", "estado": "sin_sincronizar", "ultima_sincronizacion": null,
+      "emitidos": 0, "recibidos": 0,
+      "servicios": { "comprobantes": true, "monotributo": true, "domicilio_fiscal": true, "ccma": true }
+    },
+    {
+      "cuit": "20000000043", "nombre": "Diego Ficticio", "estado": "bloqueado", "ultima_sincronizacion": "2026-09-28T08:00:00",
+      "emitidos": 0, "recibidos": 0,
+      "servicios": { "comprobantes": true, "monotributo": true, "domicilio_fiscal": true, "ccma": false }
+    },
+    {
+      "cuit": "23000000058", "nombre": "Elena Prueba", "estado": "error", "error_tipo": "portal", "ultima_sincronizacion": "2026-09-29T08:00:00",
+      "emitidos": 0, "recibidos": 0,
+      "servicios": { "comprobantes": true, "monotributo": true, "domicilio_fiscal": true, "ccma": true }
+    }
+  ]
+}

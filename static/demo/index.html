@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="/assets/ccma-demo.css">
   <link rel="stylesheet" href="/assets/emitir-demo.css">
   <link rel="stylesheet" href="/assets/resumen-demo.css">
+  <link rel="stylesheet" href="/assets/configuraciones-demo.css">
   <link rel="stylesheet" href="/assets/notificaciones-demo.css">
   <script src="/assets/demo.js" defer></script>
   <script src="/assets/monotributo-demo.js" defer></script>
@@ -23,6 +24,7 @@
   <script src="/assets/ccma-demo.js" defer></script>
   <script src="/assets/emitir-demo.js" defer></script>
   <script src="/assets/resumen-demo.js" defer></script>
+  <script src="/assets/configuraciones-demo.js" defer></script>
   <script src="/assets/notificaciones-demo.js" defer></script>
 </head>
 <body>
@@ -39,7 +41,7 @@
         </button>
       </div>
       <div class="nav-label">DEMO DE PRODUCTO</div>
-      <nav><a class="nav-item nav-destacado" href="#resumen"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>Resumen</a><div class="nav-divider" role="separator"></div><a class="nav-item active" href="#history"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7h-3a2 2 0 0 1-2-2V2"/><path d="M9 18a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h7l4 4v10a2 2 0 0 1-2 2Z"/><path d="M3 7.6v12.8A1.6 1.6 0 0 0 4.6 22h9.8"/></svg>Comprobantes</a><a class="nav-item" href="#monotributo"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/></svg>Monotributo<span class="ntf-nav" data-ntf-servicio="monotributo" role="link" tabindex="0" hidden>0</span></a><a class="nav-item" href="#dfe"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>Domicilio fiscal<span class="ntf-nav" data-ntf-servicio="dfe" role="link" tabindex="0" hidden>0</span></a><a class="nav-item" href="#granos"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 22 16 8"/><path d="M3.47 12.53 5 11l1.53 1.53a3.5 3.5 0 0 1 0 4.94L5 19l-1.53-1.53a3.5 3.5 0 0 1 0-4.94Z"/><path d="M7.47 8.53 9 7l1.53 1.53a3.5 3.5 0 0 1 0 4.94L9 15l-1.53-1.53a3.5 3.5 0 0 1 0-4.94Z"/><path d="M11.47 4.53 13 3l1.53 1.53a3.5 3.5 0 0 1 0 4.94L13 11l-1.53-1.53a3.5 3.5 0 0 1 0-4.94Z"/><path d="M20 2h2v2a4 4 0 0 1-4 4h-2V6a4 4 0 0 1 4-4Z"/><path d="M11.47 17.47 13 19l-1.53 1.53a3.5 3.5 0 0 1-4.94 0L5 19l1.53-1.53a3.5 3.5 0 0 1 4.94 0Z"/><path d="M15.47 13.47 17 15l-1.53 1.53a3.5 3.5 0 0 1-4.94 0L9 15l1.53-1.53a3.5 3.5 0 0 1 4.94 0Z"/><path d="M19.47 9.47 21 11l-1.53 1.53a3.5 3.5 0 0 1-4.94 0L13 11l1.53-1.53a3.5 3.5 0 0 1 4.94 0Z"/></svg>Granos</a><a class="nav-item" href="#ccma"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 18v-7"/><path d="M11.12 2.198a2 2 0 0 1 1.76.006l7.866 3.847c.476.233.31.949-.22.949H3.474c-.53 0-.695-.716-.22-.949z"/><path d="M14 18v-7"/><path d="M18 18v-7"/><path d="M3 22h18"/><path d="M6 18v-7"/></svg>CCMA<span class="ntf-nav" data-ntf-servicio="ccma" role="link" tabindex="0" hidden>0</span></a><a class="nav-item" href="#emitir"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 22h14a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v4"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M3 15h6"/><path d="M6 12v6"/></svg>Emitir</a></nav>
+      <nav><a class="nav-item nav-destacado" href="#resumen"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>Resumen</a><div class="nav-divider" role="separator"></div><a class="nav-item active" href="#history"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7h-3a2 2 0 0 1-2-2V2"/><path d="M9 18a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h7l4 4v10a2 2 0 0 1-2 2Z"/><path d="M3 7.6v12.8A1.6 1.6 0 0 0 4.6 22h9.8"/></svg>Comprobantes</a><a class="nav-item" href="#monotributo"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/></svg>Monotributo<span class="ntf-nav" data-ntf-servicio="monotributo" role="link" tabindex="0" hidden>0</span></a><a class="nav-item" href="#dfe"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>Domicilio fiscal<span class="ntf-nav" data-ntf-servicio="dfe" role="link" tabindex="0" hidden>0</span></a><a class="nav-item" href="#granos"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 22 16 8"/><path d="M3.47 12.53 5 11l1.53 1.53a3.5 3.5 0 0 1 0 4.94L5 19l-1.53-1.53a3.5 3.5 0 0 1 0-4.94Z"/><path d="M7.47 8.53 9 7l1.53 1.53a3.5 3.5 0 0 1 0 4.94L9 15l-1.53-1.53a3.5 3.5 0 0 1 0-4.94Z"/><path d="M11.47 4.53 13 3l1.53 1.53a3.5 3.5 0 0 1 0 4.94L13 11l-1.53-1.53a3.5 3.5 0 0 1 0-4.94Z"/><path d="M20 2h2v2a4 4 0 0 1-4 4h-2V6a4 4 0 0 1 4-4Z"/><path d="M11.47 17.47 13 19l-1.53 1.53a3.5 3.5 0 0 1-4.94 0L5 19l1.53-1.53a3.5 3.5 0 0 1 4.94 0Z"/><path d="M15.47 13.47 17 15l-1.53 1.53a3.5 3.5 0 0 1-4.94 0L9 15l1.53-1.53a3.5 3.5 0 0 1 4.94 0Z"/><path d="M19.47 9.47 21 11l-1.53 1.53a3.5 3.5 0 0 1-4.94 0L13 11l1.53-1.53a3.5 3.5 0 0 1 4.94 0Z"/></svg>Granos</a><a class="nav-item" href="#ccma"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 18v-7"/><path d="M11.12 2.198a2 2 0 0 1 1.76.006l7.866 3.847c.476.233.31.949-.22.949H3.474c-.53 0-.695-.716-.22-.949z"/><path d="M14 18v-7"/><path d="M18 18v-7"/><path d="M3 22h18"/><path d="M6 18v-7"/></svg>CCMA<span class="ntf-nav" data-ntf-servicio="ccma" role="link" tabindex="0" hidden>0</span></a><a class="nav-item" href="#emitir"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 22h14a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v4"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M3 15h6"/><path d="M6 12v6"/></svg>Emitir</a><div class="nav-divider" role="separator"></div><a class="nav-item" href="#configuraciones"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>Configuraciones</a></nav>
       <div class="sidebar-bottom"><span class="demo-dot" aria-hidden="true"></span><div><strong>Modo demostración</strong><small>Sin conexión fiscal</small></div></div>
     </aside>
     <div class="ntf-panel" id="ntfPanel" role="dialog" aria-label="Notificaciones" hidden>
@@ -498,6 +500,41 @@
           <div class="table-state" id="emdHistorialVacio">Todavía no emitiste nada en esta demo.</div>
         </div>
       </section>
+    </main>
+    <main class="main-content" id="configuraciones" hidden>
+      <header class="page-header">
+        <div>
+          <p class="eyebrow">ADMINISTRACIÓN FISCAL <span class="eyebrow-rule"></span> CREDENCIALES Y CLIENTES</p>
+          <h1>Configuraciones</h1>
+          <p class="page-subtitle">Alta de clientes y servicios que se consultan para cada uno. Es el único lugar donde se agregan o quitan clientes.</p>
+        </div>
+        <span class="environment-badge"><i></i> DEMO</span>
+      </header>
+
+      <section class="demo-disclaimer" role="note" aria-label="Aviso de demostración">
+        <span class="disclaimer-mark" aria-hidden="true">i</span>
+        <div><strong>Demostración interactiva</strong><p>Clientes ficticios. Todo es simulado: no se guarda nada, no se piden claves y no se conecta a ARCA. Al recargar la página vuelve al estado inicial.</p></div>
+        <span class="sample-stamp">SOLO MUESTRA</span>
+      </section>
+
+      <section class="emisores" id="cfgMc" aria-label="Clientes de Mis Comprobantes">
+        <div class="emisores-head">
+          <div>
+            <h2>Clientes · Mis Comprobantes</h2>
+            <p>Clientes cuyos comprobantes se leen del portal «Mis Comprobantes» (incluye Comprobantes en línea). Alimentan <strong>Comprobantes</strong> y la facturación de <strong>Monotributo</strong>. En la versión real se sincronizan solos cada noche, con la clave fiscal guardada cifrada.</p>
+          </div>
+          <div class="gr-head-actions">
+            <button class="button button-secondary" id="cfgMcAddToggle" type="button" aria-expanded="false" aria-controls="cfgMcForm">+ Agregar cliente</button>
+          </div>
+        </div>
+        <form class="emisor-form" id="cfgMcForm" hidden autocomplete="off">
+          <label class="date-control"><span>CUIT</span><input id="cfgMcCuit" inputmode="numeric" maxlength="13" placeholder="27XXXXXXXXX" required></label>
+          <button class="button button-secondary apply-button" type="submit">Guardar</button>
+          <p class="emisor-note">En la versión real acá también va la clave fiscal, que se guarda cifrada y no se vuelve a mostrar. La demo no pide ni guarda claves.</p>
+        </form>
+        <div class="cfg-cliente-list" id="cfgMcList" aria-label="Clientes de Mis Comprobantes"></div>
+      </section>
+      <div class="cfg-toast" id="cfgToast" role="status" aria-live="polite" hidden></div>
     </main>
   </div>
 
