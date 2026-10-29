@@ -38,3 +38,4 @@
 .gr-coe-resultado .gr-detalle-pie { margin: 12px 24px 8px; }
 .gr-coe-titulo { margin: 16px 24px 0; font-family: Georgia, serif; font-size: 18px; font-weight: 500; }
 .gr-coe-error { margin: 14px 24px; color: #a64238; font-size: 13px; }
+.gr-vista[hidden] { display: none; }

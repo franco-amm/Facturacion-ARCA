@@ -11,46 +11,25 @@
   <link rel="stylesheet" href="/assets/dfe-demo.css">
   <link rel="stylesheet" href="/assets/wa-fakedoor.css">
   <link rel="stylesheet" href="/assets/granos-demo.css">
-  <link rel="stylesheet" href="/assets/ccma-demo.css">
   <link rel="stylesheet" href="/assets/emitir-demo.css">
-  <link rel="stylesheet" href="/assets/resumen-demo.css">
-  <link rel="stylesheet" href="/assets/configuraciones-demo.css">
-  <link rel="stylesheet" href="/assets/notificaciones-demo.css">
   <script src="/assets/demo.js" defer></script>
   <script src="/assets/monotributo-demo.js" defer></script>
   <script src="/assets/dfe-demo.js" defer></script>
   <script src="/assets/wa-fakedoor.js" defer></script>
   <script src="/assets/granos-demo.js" defer></script>
-  <script src="/assets/ccma-demo.js" defer></script>
   <script src="/assets/emitir-demo.js" defer></script>
-  <script src="/assets/resumen-demo.js" defer></script>
-  <script src="/assets/configuraciones-demo.js" defer></script>
-  <script src="/assets/notificaciones-demo.js" defer></script>
 </head>
 <body>
   <div class="demo-shell">
     <aside class="sidebar" aria-label="Navegación">
-      <div class="sidebar-top">
-        <a class="brand" href="/" aria-label="Fiscaldesk demo, inicio">
+      <a class="brand" href="/" aria-label="Fiscaldesk demo, inicio">
         <span class="brand-mark" aria-hidden="true">F</span>
         <span class="brand-name">fiscal<span>desk</span></span>
       </a>
-        <button class="ntf-bell" id="ntfBell" type="button" aria-label="Notificaciones" aria-haspopup="dialog" aria-expanded="false" aria-controls="ntfPanel">
-          <svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true"><path d="M12 3a6 6 0 0 0-6 6v3.6L4.4 16a1 1 0 0 0 .9 1.5h13.4a1 1 0 0 0 .9-1.5L18 12.6V9a6 6 0 0 0-6-6zm-2 16a2 2 0 0 0 4 0" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <span class="ntf-count" id="ntfCount" hidden>0</span>
-        </button>
-      </div>
       <div class="nav-label">DEMO DE PRODUCTO</div>
-      <nav><a class="nav-item nav-destacado" href="#resumen"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>Resumen</a><div class="nav-divider" role="separator"></div><a class="nav-item active" href="#history"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7h-3a2 2 0 0 1-2-2V2"/><path d="M9 18a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h7l4 4v10a2 2 0 0 1-2 2Z"/><path d="M3 7.6v12.8A1.6 1.6 0 0 0 4.6 22h9.8"/></svg>Comprobantes</a><a class="nav-item" href="#monotributo"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/></svg>Monotributo<span class="ntf-nav" data-ntf-servicio="monotributo" role="link" tabindex="0" hidden>0</span></a><a class="nav-item" href="#dfe"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>Domicilio fiscal<span class="ntf-nav" data-ntf-servicio="dfe" role="link" tabindex="0" hidden>0</span></a><a class="nav-item" href="#granos"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 22 16 8"/><path d="M3.47 12.53 5 11l1.53 1.53a3.5 3.5 0 0 1 0 4.94L5 19l-1.53-1.53a3.5 3.5 0 0 1 0-4.94Z"/><path d="M7.47 8.53 9 7l1.53 1.53a3.5 3.5 0 0 1 0 4.94L9 15l-1.53-1.53a3.5 3.5 0 0 1 0-4.94Z"/><path d="M11.47 4.53 13 3l1.53 1.53a3.5 3.5 0 0 1 0 4.94L13 11l-1.53-1.53a3.5 3.5 0 0 1 0-4.94Z"/><path d="M20 2h2v2a4 4 0 0 1-4 4h-2V6a4 4 0 0 1 4-4Z"/><path d="M11.47 17.47 13 19l-1.53 1.53a3.5 3.5 0 0 1-4.94 0L5 19l1.53-1.53a3.5 3.5 0 0 1 4.94 0Z"/><path d="M15.47 13.47 17 15l-1.53 1.53a3.5 3.5 0 0 1-4.94 0L9 15l1.53-1.53a3.5 3.5 0 0 1 4.94 0Z"/><path d="M19.47 9.47 21 11l-1.53 1.53a3.5 3.5 0 0 1-4.94 0L13 11l1.53-1.53a3.5 3.5 0 0 1 4.94 0Z"/></svg>Granos</a><a class="nav-item" href="#ccma"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 18v-7"/><path d="M11.12 2.198a2 2 0 0 1 1.76.006l7.866 3.847c.476.233.31.949-.22.949H3.474c-.53 0-.695-.716-.22-.949z"/><path d="M14 18v-7"/><path d="M18 18v-7"/><path d="M3 22h18"/><path d="M6 18v-7"/></svg>CCMA<span class="ntf-nav" data-ntf-servicio="ccma" role="link" tabindex="0" hidden>0</span></a><a class="nav-item" href="#emitir"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 22h14a2 2 0 0 0 2-2V7l-5-5H6a2 2 0 0 0-2 2v4"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M3 15h6"/><path d="M6 12v6"/></svg>Emitir</a><div class="nav-divider" role="separator"></div><a class="nav-item" href="#configuraciones"><svg class="nav-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>Configuraciones</a></nav>
+      <nav><a class="nav-item active" href="#history"><span class="nav-indicator" aria-hidden="true"></span>Comprobantes</a><a class="nav-item" href="#monotributo"><span class="nav-indicator" aria-hidden="true"></span>Monotributo</a><a class="nav-item" href="#dfe"><span class="nav-indicator" aria-hidden="true"></span>Domicilio fiscal</a><a class="nav-item" href="#granos"><span class="nav-indicator" aria-hidden="true"></span>Granos</a><a class="nav-item" href="#emitir"><span class="nav-indicator" aria-hidden="true"></span>Emitir</a></nav>
       <div class="sidebar-bottom"><span class="demo-dot" aria-hidden="true"></span><div><strong>Modo demostración</strong><small>Sin conexión fiscal</small></div></div>
     </aside>
-    <div class="ntf-panel" id="ntfPanel" role="dialog" aria-label="Notificaciones" hidden>
-      <header class="ntf-panel-cab">
-        <h2>Notificaciones</h2>
-        <button class="button button-secondary" id="ntfVerTodo" type="button">Ver todo</button>
-      </header>
-      <div class="ntf-panel-body" id="ntfPanelBody"></div>
-    </div>
 
     <main class="main-content" id="history">
       <header class="page-header">
@@ -84,7 +63,7 @@
 
       <section class="demo-status" aria-label="Datos de muestra">
         <div class="status-mark" aria-hidden="true">✓</div>
-        <div><h2 id="demoTitle">Conjunto de muestra cargado</h2><p id="demoMessage">Los ejemplos incluyen facturas y notas asociadas.</p></div>
+        <div><h2>Conjunto de muestra cargado</h2><p id="demoMessage">Los ejemplos incluyen facturas y notas asociadas.</p></div>
         <button class="button button-secondary" id="reloadDemo" type="button"><span aria-hidden="true">↻</span> Recargar demo</button>
       </section>
 
@@ -139,12 +118,15 @@
       <section class="demo-status" aria-label="Escala de categorías">
         <div class="status-mark" aria-hidden="true">§</div>
         <div><h2>Escala de categorías</h2><p id="mtEscalaMsg">Cargando…</p></div>
-        <button class="button button-secondary mt-proy-button" id="mtProyeccion" type="button" aria-expanded="false" aria-controls="mtProyPanel">Proyección</button>
       </section>
 
-      <section class="mt-proy" id="mtProyPanel" hidden aria-label="Topes proyectados de la escala"></section>
-
       <section class="mt-period" id="mtPeriodo" aria-label="Período de control"></section>
+      <section class="mt-period" id="mtMc" aria-label="Mis Comprobantes" hidden></section>
+
+      <section class="mt-alerts" id="mtAlerts" aria-label="Alertas" hidden>
+        <h2>Alertas</h2>
+        <ul id="mtAlertList"></ul>
+      </section>
 
       <section class="filter-section" aria-label="CUIT seguidos">
         <div class="table-wrap">
@@ -152,7 +134,7 @@
             <thead><tr>
               <th scope="col">CONTRIBUYENTE</th><th scope="col">CATEGORÍA</th>
               <th scope="col" class="amount-cell">TOPE</th><th scope="col" class="amount-cell">FACTURACIÓN DEL PERÍODO</th><th scope="col" class="amount-cell">COMPRAS Y GASTOS</th>
-              <th scope="col">USO DEL TOPE</th><th scope="col" id="mtThProy" title="Categoría que le tocaría: ingreso promedio mensual del período contra el límite promedio mensual proyectado (tope anual proyectado ÷ 12). El detalle está en Detalle → Proyección">PROYECTADA</th><th scope="col">ESTADO</th><th scope="col"><span class="sr-only">Detalle</span></th>
+              <th scope="col">USO DEL TOPE</th><th scope="col">CORRESPONDE</th><th scope="col">ESTADO</th><th scope="col"><span class="sr-only">Detalle</span></th>
             </tr></thead>
             <tbody id="mtRows"></tbody>
           </table>
@@ -181,6 +163,11 @@
         <div><h2>Consulta de comunicaciones</h2><p id="dfeMsg">Cargando…</p></div>
       </section>
 
+      <section class="mt-alerts" id="dfeAlerts" aria-label="Comunicaciones urgentes" hidden>
+        <h2>Urgentes sin ver</h2>
+        <ul id="dfeAlertList"></ul>
+      </section>
+
       <section class="filter-section" aria-label="Comunicaciones">
         <div class="table-wrap">
           <table>
@@ -207,104 +194,6 @@
         <footer class="table-footer"><span id="dfeClientesFooter">0 clientes</span><span>Conjunto de datos ficticio</span></footer>
       </section>
     </main>
-    <main class="main-content" id="resumen" hidden>
-      <header class="page-header">
-        <div>
-          <p class="eyebrow">ADMINISTRACIÓN FISCAL <span class="eyebrow-rule"></span> RESUMEN</p>
-          <h1>Resumen</h1>
-          <p class="page-subtitle">Estado de cada cliente con lo que ya está sincronizado en las otras pestañas. No consulta ARCA.</p>
-        </div>
-      </header>
-      <section class="filter-section" id="rsDetalle" aria-label="Detalle del cliente" hidden></section>
-      <section class="filter-section" id="rsLista" aria-label="Clientes">
-        <div class="rs-filtros" id="rsFiltros"></div>
-        <div class="rs-busqueda"><input id="rsBuscar" type="search" placeholder="Buscar por nombre o CUIT" autocomplete="off"></div>
-        <div class="table-wrap">
-          <table>
-            <thead><tr>
-              <th scope="col">CLIENTE</th>
-              <th scope="col">CATEGORÍA</th>
-              <th scope="col">USO DEL TOPE <span class="rs-info rs-info-th" tabindex="0" aria-label="Facturación del período de recategorización como porcentaje del tope anual de la categoría actual.">i<span class="rs-tip">Facturación del período de recategorización como porcentaje del tope anual de la categoría actual.</span></span></th>
-              <th scope="col" class="amount-cell">DEUDA ARCA</th>
-              <th scope="col" class="amount-cell">COMUNICACIONES</th>
-              <th scope="col">DATOS AL</th>
-              <th scope="col">ESTADO</th>
-              <th scope="col"><span class="sr-only">Acciones</span></th>
-            </tr></thead>
-            <tbody id="rsRows"></tbody>
-          </table>
-          <div class="table-state" id="rsEmpty" hidden></div>
-        </div>
-        <footer class="table-footer"><span id="rsFooter">0 clientes</span><span>Monotributo · CCMA · Mis Comprobantes · solo lectura</span></footer>
-      </section>
-    </main>
-    <main class="main-content" id="ccma" hidden>
-      <header class="page-header">
-        <div>
-          <p class="eyebrow">ADMINISTRACIÓN FISCAL <span class="eyebrow-rule"></span> CCMA</p>
-          <h1>CCMA</h1>
-          <p class="page-subtitle">Cuenta corriente de Monotributistas y Autónomos por cliente: última deuda calculada por ARCA y saldo por período.</p>
-        </div>
-        <span class="environment-badge"><i></i> DEMO</span>
-      </header>
-
-      <section class="demo-disclaimer" role="note" aria-label="Aviso de demostración">
-        <span class="disclaimer-mark" aria-hidden="true">i</span>
-        <div><strong>Demostración interactiva</strong><p>Clientes y cuentas ficticios. No se conecta a ARCA.</p></div>
-        <span class="sample-stamp">SOLO MUESTRA</span>
-      </section>
-
-      <section class="emisores" aria-label="Clientes de CCMA">
-        <div class="emisores-head">
-          <div>
-            <h2>Clientes</h2>
-            <p>Elegí un cliente para ver su cuenta corriente.</p>
-          </div>
-        </div>
-        <div class="emisor-list" id="ccmaList" role="listbox" aria-label="Clientes de CCMA"></div>
-      </section>
-
-      <section class="sync-section" id="ccmaActions" aria-label="Consulta de CCMA">
-        <div class="sync-copy">
-          <div class="sync-icon" aria-hidden="true"><span>$</span></div>
-          <div>
-            <h2>Consulta de CCMA</h2>
-            <p id="ccmaMsg">Lee la cuenta corriente de Monotributistas y Autónomos desde ARCA. Solo consulta: no genera ni paga nada.</p>
-          </div>
-        </div>
-        <div class="sync-actions">
-          <button class="button button-primary" id="ccmaSync" type="button">
-            <span class="button-symbol" aria-hidden="true">↻</span><span>Consultar ahora</span>
-          </button>
-        </div>
-      </section>
-
-      <div id="ccmaDatos" hidden>
-        <section class="filter-section" aria-label="Última deuda">
-          <div class="table-toolbar"><div class="table-meta"><h2 class="ccma-section-title">Última deuda</h2></div></div>
-          <div class="table-wrap">
-            <table>
-              <thead><tr><th>Cliente</th><th>Fecha cálculo</th><th>Período</th><th class="amount-cell">Total deudor</th><th class="amount-cell">Total acreedor</th><th class="amount-cell">Saldo neto</th></tr></thead>
-              <tbody id="ccmaDeudaBody"></tbody>
-            </table>
-          </div>
-        </section>
-
-        <section class="filter-section" aria-label="Saldo por período">
-          <div class="table-toolbar"><div class="table-meta"><h2 class="ccma-section-title">Saldo por período</h2></div></div>
-          <div class="table-wrap">
-            <table>
-              <thead><tr><th>Cliente</th><th>Período</th><th class="amount-cell">Saldo acumulado</th><th>Estado contribuyente</th></tr></thead>
-              <tbody id="ccmaSaldosBody"></tbody>
-            </table>
-            <div class="table-state" id="ccmaVacio" hidden></div>
-          </div>
-          <footer class="table-footer"><span id="ccmaFooter">Sin datos</span><span>CCMA · ARCA · solo lectura</span></footer>
-        </section>
-      </div>
-
-      <div class="toast" id="ccmaToast" role="status" aria-live="polite" hidden></div>
-    </main>
     <main class="main-content" id="granos" hidden>
       <header class="page-header">
         <div>
@@ -324,7 +213,7 @@
       <div class="gr-vistas" role="group" aria-label="Qué querés ver">
         <button class="gr-vista is-active" type="button" data-vista="liq" aria-pressed="true">Liquidaciones</button>
         <button class="gr-vista" type="button" data-vista="coe" aria-pressed="false">Certificados</button>
-        <button class="gr-vista" type="button" data-vista="cert" aria-pressed="false">Certificados con saldo</button>
+        <button class="gr-vista" type="button" data-vista="cert" aria-pressed="false" hidden>Certificados con saldo</button><!-- oculta: la búsqueda con saldo de ARCA no devuelve los certificados del depositante (ver PRD) -->
         <button class="gr-vista" type="button" data-vista="ctg" aria-pressed="false">CTG</button>
       </div>
 
@@ -412,47 +301,9 @@
             <button class="button button-primary" type="submit">Consultar</button>
           </form>
         </section>
-        <p class="gr-export-note">En la app real esto consulta a ARCA cualquier certificado, aunque ya no tenga saldo. Acá probá con un COE de la pestaña Certificados con saldo (por ejemplo 900000000101).</p>
+        <p class="gr-export-note">En la app real esto consulta a ARCA cualquier certificado, aunque ya no tenga saldo. Acá probá con un COE de ejemplo, por ejemplo 900000000101.</p>
         <section class="gr-coe-resultado" id="grdCoeResultado" aria-live="polite" hidden></section>
       </div>
-    </main>
-    <main class="main-content" id="notificaciones" hidden>
-      <header class="page-header">
-        <div>
-          <p class="eyebrow">ADMINISTRACIÓN FISCAL <span class="eyebrow-rule"></span> AVISOS</p>
-          <h1>Notificaciones</h1>
-          <p class="page-subtitle">Los avisos de Domicilio Electrónico, CCMA y Monotributo en un solo lugar, agrupados por servicio.</p>
-        </div>
-      </header>
-
-      <section class="sync-section" aria-label="Actualización de avisos">
-        <div class="sync-copy">
-          <div class="sync-icon" aria-hidden="true"><span>↻</span></div>
-          <div>
-            <h2>Avisos</h2>
-            <p class="ntf-resumen" id="ntfResumen">Cargando…</p>
-          </div>
-        </div>
-      </section>
-
-      <section class="filter-section" aria-label="Filtros de avisos">
-        <div class="filter-bar">
-          <label class="date-control"><span>Servicio</span><select class="ntf-select" id="ntfServicio"><option value="">Todos los servicios</option></select></label>
-          <label class="date-control"><span>Estado</span>
-            <select class="ntf-select" id="ntfEstado">
-              <option value="activos">Activos</option><option value="nuevo">Nuevos</option><option value="visto">Vistos</option><option value="resuelto">Resueltos</option>
-            </select></label>
-          <label class="date-control"><span>Cliente</span><input class="ntf-texto" id="ntfTexto" type="search" placeholder="Nombre, CUIT o texto"></label>
-          <label class="date-control"><span>Desde</span><input id="ntfDesde" type="date"></label>
-          <label class="date-control"><span>Hasta</span><input id="ntfHasta" type="date"></label>
-        </div>
-        <div id="ntfGrupos"></div>
-        <div class="table-state" id="ntfVacio" hidden>
-          <strong>Sin avisos</strong>
-          <p>No hay avisos con estos filtros.</p>
-        </div>
-      </section>
-      <div class="toast" id="ntfToast" role="status" aria-live="polite" hidden></div>
     </main>
     <main class="main-content" id="emitir" hidden>
       <header class="page-header">
@@ -500,41 +351,6 @@
           <div class="table-state" id="emdHistorialVacio">Todavía no emitiste nada en esta demo.</div>
         </div>
       </section>
-    </main>
-    <main class="main-content" id="configuraciones" hidden>
-      <header class="page-header">
-        <div>
-          <p class="eyebrow">ADMINISTRACIÓN FISCAL <span class="eyebrow-rule"></span> CREDENCIALES Y CLIENTES</p>
-          <h1>Configuraciones</h1>
-          <p class="page-subtitle">Alta de clientes y servicios que se consultan para cada uno. Es el único lugar donde se agregan o quitan clientes.</p>
-        </div>
-        <span class="environment-badge"><i></i> DEMO</span>
-      </header>
-
-      <section class="demo-disclaimer" role="note" aria-label="Aviso de demostración">
-        <span class="disclaimer-mark" aria-hidden="true">i</span>
-        <div><strong>Demostración interactiva</strong><p>Clientes ficticios. Todo es simulado: no se guarda nada, no se piden claves y no se conecta a ARCA. Al recargar la página vuelve al estado inicial.</p></div>
-        <span class="sample-stamp">SOLO MUESTRA</span>
-      </section>
-
-      <section class="emisores" id="cfgMc" aria-label="Clientes de Mis Comprobantes">
-        <div class="emisores-head">
-          <div>
-            <h2>Clientes · Mis Comprobantes</h2>
-            <p>Clientes cuyos comprobantes se leen del portal «Mis Comprobantes» (incluye Comprobantes en línea). Alimentan <strong>Comprobantes</strong> y la facturación de <strong>Monotributo</strong>. En la versión real se sincronizan solos cada noche, con la clave fiscal guardada cifrada.</p>
-          </div>
-          <div class="gr-head-actions">
-            <button class="button button-secondary" id="cfgMcAddToggle" type="button" aria-expanded="false" aria-controls="cfgMcForm">+ Agregar cliente</button>
-          </div>
-        </div>
-        <form class="emisor-form" id="cfgMcForm" hidden autocomplete="off">
-          <label class="date-control"><span>CUIT</span><input id="cfgMcCuit" inputmode="numeric" maxlength="13" placeholder="27XXXXXXXXX" required></label>
-          <button class="button button-secondary apply-button" type="submit">Guardar</button>
-          <p class="emisor-note">En la versión real acá también va la clave fiscal, que se guarda cifrada y no se vuelve a mostrar. La demo no pide ni guarda claves.</p>
-        </form>
-        <div class="cfg-cliente-list" id="cfgMcList" aria-label="Clientes de Mis Comprobantes"></div>
-      </section>
-      <div class="cfg-toast" id="cfgToast" role="status" aria-live="polite" hidden></div>
     </main>
   </div>
 
