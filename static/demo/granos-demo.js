@@ -213,7 +213,8 @@
   let ctgs = [];
   let certDetalles = {};
   const nombreGrano = (cod) => (cod ? CATALOGO_GRANOS[String(cod)] || `Grano ${cod}` : "—");
-  const nombreTipo = (tipo) => (tipo === "P" ? "P · Planta" : tipo || "—");
+  const TIPOS_CERT = { P: "Primaria", R: "Retiro", T: "Transferencia", E: "Preexistente" };
+  const nombreTipo = (tipo) => TIPOS_CERT[tipo] || tipo || "—";
 
   function renderCert() {
     const grano = $("grdCertGrano").value, camp = $("grdCertCampania").value, solo = $("grdCertSoloSaldo").checked;

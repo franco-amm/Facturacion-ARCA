@@ -260,6 +260,7 @@ NOTIF_TITULOS_MONOTRIBUTO = {
     "cambio_categoria": "Cambió la categoría en el padrón",
     "sincronizacion_fallida": "Falló la sincronización de Mis Comprobantes",
     "sincronizacion_antigua": "Datos de Mis Comprobantes desactualizados",
+    "sin_facturacion_en_linea": "Sin facturación para este CUIT",
     "sin_escala": "Falta la escala aprobada",
     "sin_categoria": "No se identificó la categoría",
     "excede_parametro": "Supera un parámetro de la categoría",
