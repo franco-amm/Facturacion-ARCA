@@ -21,7 +21,7 @@
     const body = filas
       .map((fila) => `<tr>${columnas.map(([clave]) => `<td>${esc(fila[clave] ?? "—")}</td>`).join("")}</tr>`)
       .join("");
-    return `<table class="gr-detail-table"><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table>`;
+    return `<div class="gr-tabla-scroll"><table class="gr-detail-table"><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table></div>`;
   }
 
   const POR_PAGINA = 10;
@@ -313,7 +313,133 @@
     $("detailDialog").showModal();
   }
 
+
+  // ---- Stock y listado de Certificados (datos de muestra; en la app real salen de lo que informa ARCA).
+  let stockItems = [];
+  let stockCambios = null;
+  let stockDesde = "";
+  const kg = (n) => num.format(Math.round(n || 0));
+  const SITUACION = { con_saldo: ["ok", "Con saldo"], agotado: ["nota", "Agotado"], anulado: ["revisar", "Anulado"] };
+  const etiquetaCampania = (c) => (/^\d{4}$/.test(c || "") ? `${c.slice(0, 2)}/${c.slice(2)}` : c || "—");
+
+  function chipControl(c) {
+    if (c.items.every((it) => it.cierra == null)) return '<span class="gr-st-chip nota" title="Los certificados preexistentes no traen un peso original comparable">Sin control · preexistente</span>';
+    if (c.items.every((it) => it.cierra !== false)) return '<span class="gr-st-chip ok" title="Depositado − liquidado = disponible">Cierra con liquidaciones</span>';
+    const dif = c.items.reduce((s, it) => s + Math.abs(it.diferencia_kg || 0), 0);
+    return c.items.some((it) => it.historial_incompleto)
+      ? `<span class="gr-st-chip nota" title="Hay certificados previos a las liquidaciones cargadas (desde ${esc(fmtFecha(stockDesde))})">Previas a ${esc(stockDesde.slice(0, 4) || "las liquidaciones")}</span>`
+      : `<span class="gr-st-chip revisar">Revisar ${kg(dif)} kg</span>`;
+  }
+
+  function renderStock() {
+    const vigentes = stockItems.filter((c) => c.situacion === "con_saldo");
+    const total = vigentes.reduce((s, c) => s + c.disponible_kg, 0);
+    $("grdStTotal").textContent = kg(total);
+    $("grdStSub").textContent = `${vigentes.length} certificado${vigentes.length === 1 ? "" : "s"} con saldo · actualizado ${fmtFecha(stockItems[0]?.consultado_en)}`;
+    const cambios = stockCambios?.items || [];
+    $("grdStCambios").hidden = !cambios.length;
+    $("grdStCambios").innerHTML = cambios.length
+      ? `<strong>Cambios desde ${esc(fmtFecha(stockCambios.fecha))}</strong><ul>${cambios.map((c) => `<li>${esc(c.coe)} · ${esc(nombreGrano(c.cod_grano))}: ${kg(c.antes_kg)} → ${kg(c.ahora_kg)} kg</li>`).join("")}</ul>`
+      : "";
+    const granos = {};
+    vigentes.forEach((c) => {
+      const g = (granos[c.cod_grano] ||= { total: 0, n: 0, camps: {} });
+      g.total += c.disponible_kg; g.n += 1;
+      (g.camps[c.campania] ||= []).push(c);
+    });
+    const maximo = Math.max(1, ...Object.values(granos).flatMap((g) => Object.values(g.camps).map((l) => l.reduce((s, c) => s + c.disponible_kg, 0))));
+    $("grdStGranos").innerHTML = Object.keys(granos).sort().map((cod) => {
+      const g = granos[cod];
+      const camps = Object.keys(g.camps).sort().reverse().map((camp) => {
+        const items = g.camps[camp].sort((a, b) => (a.fecha < b.fecha ? -1 : 1));
+        const c = { items };
+        const tot = items.reduce((s, it) => s + it.disponible_kg, 0);
+        return `<details class="gr-st-camp">
+          <summary><span>${esc(etiquetaCampania(camp))}</span><span class="gr-st-barra"><i style="width:${Math.max(2, Math.round((tot / maximo) * 100))}%"></i></span><span class="gr-st-kg">${kg(tot)} kg</span>${chipControl(c)}</summary>
+          <table><thead><tr><th>COE</th><th>TIPO</th><th>EMISIÓN</th><th class="n">DEPOSITADO</th><th class="n">LIQUIDADO</th><th class="n">DISPONIBLE</th></tr></thead>
+          <tbody>${items.map((it) => `<tr><td>${esc(it.coe)}</td><td>${esc(nombreTipo(it.tipo))}</td><td>${esc(fmtFecha(it.fecha))}</td><td class="n">${kg(it.depositado_kg)}</td><td class="n">${it.cierra == null ? "—" : kg(it.liquidado_kg)}</td><td class="n"><strong>${kg(it.disponible_kg)}</strong></td></tr>`).join("")}</tbody></table>
+        </details>`;
+      }).join("");
+      return `<section class="gr-st-grano" aria-label="${esc(nombreGrano(cod))}"><div class="gr-st-grano-head"><div><h3>${esc(nombreGrano(cod))}</h3><small>${g.n} CERTIFICADO${g.n === 1 ? "" : "S"}</small></div><strong>${kg(g.total)} kg</strong></div>${camps}</section>`;
+    }).join("");
+    const agotados = stockItems.filter((c) => c.situacion === "agotado").length, anulados = stockItems.filter((c) => c.situacion === "anulado").length;
+    $("grdStPie").textContent = `${agotados} agotados · ${anulados} anulado${anulados === 1 ? "" : "s"} · ${stockItems.length} certificados conocidos · el saldo lo informa ARCA; las liquidaciones sirven de control. Datos ficticios.`;
+  }
+
+  $("grdStActualizar").addEventListener("click", () => {
+    const boton = $("grdStActualizar");
+    boton.disabled = true;
+    $("grdStProgreso").hidden = false;
+    setTimeout(() => {
+      boton.disabled = false;
+      $("grdStProgreso").hidden = true;
+      $("grdStNota").hidden = false;
+      $("grdStNota").textContent = "En la app real esto consulta a ARCA con la credencial del cliente y trae los certificados nuevos y los saldos al día. Esta demo no se conecta a ARCA: los datos no cambian.";
+    }, 1200);
+  });
+
+  const CE_POR_PAGINA = 15;
+  let cePagina = 1;
+  function ceFiltrados() {
+    const coe = $("grdCeCoe").value.replace(/\D/g, ""), desde = fechaIso("grdCeDesde"), hasta = fechaIso("grdCeHasta");
+    const grano = $("grdCeGrano").value, sit = $("grdCeSit").value;
+    return stockItems.filter((c) => {
+      const dia = (c.fecha || "").slice(0, 10);
+      return (!coe || c.coe.includes(coe)) && (!desde || dia >= desde) && (!hasta || dia <= hasta) && (!grano || c.cod_grano === grano) && (!sit || c.situacion === sit);
+    }).sort((a, b) => (a.fecha < b.fecha ? 1 : a.fecha > b.fecha ? -1 : 0));
+  }
+
+  function renderCertificados() {
+    const items = ceFiltrados();
+    const paginas = Math.max(1, Math.ceil(items.length / CE_POR_PAGINA));
+    cePagina = Math.min(Math.max(1, cePagina), paginas);
+    const desde = (cePagina - 1) * CE_POR_PAGINA;
+    $("grdCeEmpty").hidden = items.length > 0;
+    $("grdCePager").hidden = paginas <= 1;
+    $("grdCePagina").textContent = `Página ${cePagina} de ${paginas}`;
+    $("grdCePrev").disabled = cePagina <= 1;
+    $("grdCeNext").disabled = cePagina >= paginas;
+    const con = items.filter((c) => c.situacion === "con_saldo");
+    $("grdCeFooter").textContent = `${items.length} certificado${items.length === 1 ? "" : "s"} · ${con.length} con saldo (${kg(con.reduce((s, c) => s + c.disponible_kg, 0))} kg)`;
+    $("grdCeRows").innerHTML = items.slice(desde, desde + CE_POR_PAGINA).map((c) => {
+      const [clase, texto] = SITUACION[c.situacion] || ["nota", c.situacion];
+      return `<tr><td>${esc(fmtFecha(c.fecha))}</td><td>${esc(c.coe)}</td><td>${esc(nombreTipo(c.tipo))}</td>
+        <td>${esc(nombreGrano(c.cod_grano))}<span class="mt-sub">campaña ${esc(etiquetaCampania(c.campania))}</span></td>
+        <td class="amount-cell">${kg(c.depositado_kg)}</td><td class="amount-cell">${kg(c.disponible_kg)}</td>
+        <td><span class="gr-st-chip ${clase}">${texto}</span></td>
+        <td><button class="detail-button" type="button" data-cert-detalle="${esc(c.coe)}">Ver</button></td></tr>`;
+    }).join("");
+  }
+
+  const ceAplicar = () => { cePagina = 1; renderCertificados(); };
+  enlazarFecha("grdCeDesde", ceAplicar);
+  enlazarFecha("grdCeHasta", ceAplicar);
+  $("grdCeCoe").addEventListener("input", ceAplicar);
+  $("grdCeGrano").addEventListener("change", ceAplicar);
+  $("grdCeSit").addEventListener("change", ceAplicar);
+  $("grdCeLimpiar").addEventListener("click", () => {
+    $("grdCeCoe").value = ""; $("grdCeGrano").value = ""; $("grdCeSit").value = "";
+    fijarFecha("grdCeDesde", ""); fijarFecha("grdCeHasta", ""); ceAplicar();
+  });
+  $("grdCePrev").addEventListener("click", () => { cePagina -= 1; renderCertificados(); });
+  $("grdCeNext").addEventListener("click", () => { cePagina += 1; renderCertificados(); });
+  $("grdCeXlsx").addEventListener("click", () => {
+    const q = new URLSearchParams();
+    const coe = $("grdCeCoe").value.replace(/\D/g, "");
+    if (coe) q.set("coe", coe);
+    if (fechaIso("grdCeDesde")) q.set("desde", fechaIso("grdCeDesde"));
+    if (fechaIso("grdCeHasta")) q.set("hasta", fechaIso("grdCeHasta"));
+    if ($("grdCeGrano").value) q.set("cod_grano", $("grdCeGrano").value);
+    if ($("grdCeSit").value) q.set("situacion", $("grdCeSit").value);
+    $("grdCeXlsx").href = `/api/demo/granos/certificados.xlsx${q.toString() ? "?" + q : ""}`;
+  });
+  $("grdCeRows").addEventListener("click", (event) => {
+    const cert = event.target.closest("[data-cert-detalle]");
+    if (cert) abrirDetalleCertificado(cert.dataset.certDetalle);
+  });
+
   function setVista(vista) {
+    $("grdStockVista").hidden = vista !== "stock";
     $("grdLiqVista").hidden = vista !== "liq";
     $("grdCertVista").hidden = vista !== "cert";
     $("grdCtgVista").hidden = vista !== "ctg";
@@ -329,16 +455,6 @@
     const cert = event.target.closest("[data-cert-detalle]");
     if (cert) abrirDetalleCertificado(cert.dataset.certDetalle);
   });
-  $("grdCoeForm").addEventListener("submit", (event) => {
-    event.preventDefault();
-    const coe = $("grdCoeNumero").value.replace(/\D/g, "");
-    const caja = $("grdCoeResultado");
-    const detalle = (certDetalles || {})[coe];
-    caja.hidden = false;
-    caja.innerHTML = detalle
-      ? `<h3 class="gr-coe-titulo">Certificado de muestra · COE ${esc(coe)}</h3>${htmlDetalleCertificado(detalle)}<div class="gr-detalle-pie"><span>Datos de muestra.</span></div>`
-      : `<p class="gr-coe-error">ARCA no devolvió el certificado ${esc(coe || "")}: sin datos (en esta demo solo existen los COE de la pestaña Certificados con saldo).</p>`;
-  });
   ["grdCtgGrano", "grdCtgCampania"].forEach((id) => $(id).addEventListener("change", renderCtg));
 
   async function load() {
@@ -350,6 +466,11 @@
       certificados = d.certificados || [];
       ctgs = d.ctg || [];
       certDetalles = d.certificado_detalles || {};
+      stockItems = d.stock_certificados || [];
+      stockCambios = d.stock_cambios || null;
+      stockDesde = d.stock_liquidaciones_desde || "";
+      renderStock();
+      renderCertificados();
       renderCert();
       renderCtg();
       $("grdMsg").textContent = `${liquidaciones.length} liquidaciones de muestra · WSLPG (sin conexión a ARCA)`;

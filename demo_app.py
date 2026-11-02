@@ -374,6 +374,55 @@ def demo_granos_bd_xlsx(desde: Optional[date] = None, hasta: Optional[date] = No
                     headers={"Content-Disposition": 'attachment; filename="bd_liquidaciones_demo.xlsx"'})
 
 
+NOMBRES_GRANO = {"19": "Maíz", "22": "Sorgo Granífero", "23": "Soja"}
+SITUACIONES_CERT = {"con_saldo": "Con saldo", "agotado": "Agotado", "anulado": "Anulado"}
+
+
+def _etiqueta_campania(c: str) -> str:
+    return f"{c[:2]}/{c[2:]}" if len(c or "") == 4 and c.isdigit() else (c or "")
+
+
+def _certificados_demo(desde: Optional[date], hasta: Optional[date], coe: Optional[str], cod_grano: Optional[str],
+                       situacion: Optional[str]) -> list[dict[str, Any]]:
+    items = json.loads(GRANOS_PATH.read_text(encoding="utf-8")).get("stock_certificados", [])
+    d, h = (desde.isoformat() if desde else None), (hasta.isoformat() if hasta else None)
+    salida = [c for c in items
+              if (not d or c["fecha"] >= d) and (not h or c["fecha"] <= h) and (not coe or coe in c["coe"])
+              and (not cod_grano or c["cod_grano"] == cod_grano) and (not situacion or c["situacion"] == situacion)]
+    return sorted(salida, key=lambda c: (c["fecha"], c["coe"]), reverse=True)
+
+
+@app.get("/api/demo/granos/certificados.xlsx")
+def demo_granos_certificados_xlsx(desde: Optional[date] = None, hasta: Optional[date] = None, coe: Optional[str] = None,
+                                  cod_grano: Optional[str] = None, situacion: Optional[str] = None) -> Response:
+    """Listado de certificados de muestra (con saldo, agotados y anulados), con los mismos filtros que la pantalla."""
+    libro = Workbook(); ws = libro.active; ws.title = "Certificados"
+    ws.append(["COE", "Tipo", "Grano", "Campaña", "Emisión", "Depositado (kg)", "Disponible (kg)", "Situación"])
+    for c in _certificados_demo(desde, hasta, coe, cod_grano, situacion):
+        ws.append([c["coe"], c["tipo"], NOMBRES_GRANO.get(c["cod_grano"], c["cod_grano"]), _etiqueta_campania(c["campania"]),
+                   c["fecha"], c["depositado_kg"], c["disponible_kg"], SITUACIONES_CERT.get(c["situacion"], c["situacion"])])
+    salida = BytesIO(); libro.save(salida)
+    return Response(salida.getvalue(), media_type=XLSX,
+                    headers={"Content-Disposition": 'attachment; filename="certificados_demo.xlsx"'})
+
+
+@app.get("/api/demo/granos/stock.xlsx")
+def demo_granos_stock_xlsx() -> Response:
+    """Stock de muestra: una fila por certificado con saldo y el total."""
+    libro = Workbook(); ws = libro.active; ws.title = "Stock"
+    ws.append(["Grano", "Campaña", "COE", "Emisión", "Depositado (kg)", "Liquidado (kg)", "Disponible (kg)", "Control"])
+    total = 0.0
+    for c in sorted(_certificados_demo(None, None, None, None, "con_saldo"), key=lambda c: (c["cod_grano"], c["campania"], c["fecha"])):
+        control = "Sin dato" if c["cierra"] is None else ("Cierra" if c["cierra"] else f"Diferencia {c['diferencia_kg']:.0f} kg")
+        ws.append([NOMBRES_GRANO.get(c["cod_grano"], c["cod_grano"]), _etiqueta_campania(c["campania"]), c["coe"], c["fecha"],
+                   c["depositado_kg"], c["liquidado_kg"], c["disponible_kg"], control])
+        total += c["disponible_kg"]
+    ws.append([]); ws.append(["Total", None, None, None, None, None, total])
+    salida = BytesIO(); libro.save(salida)
+    return Response(salida.getvalue(), media_type=XLSX,
+                    headers={"Content-Disposition": 'attachment; filename="stock_demo.xlsx"'})
+
+
 @app.get("/api/demo/granos/liquidaciones.xlsx")
 def demo_granos_listado_xlsx(desde: Optional[date] = None, hasta: Optional[date] = None) -> Response:
     """Plantilla «Listado simple»."""

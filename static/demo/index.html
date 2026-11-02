@@ -322,13 +322,33 @@
       </section>
 
       <div class="gr-vistas" role="group" aria-label="Qué querés ver">
-        <button class="gr-vista is-active" type="button" data-vista="liq" aria-pressed="true">Liquidaciones</button>
+        <button class="gr-vista is-active" type="button" data-vista="stock" aria-pressed="true">Stock</button>
+        <button class="gr-vista" type="button" data-vista="liq" aria-pressed="false">Liquidaciones</button>
         <button class="gr-vista" type="button" data-vista="coe" aria-pressed="false">Certificados</button>
         <button class="gr-vista" type="button" data-vista="cert" aria-pressed="false" hidden>Certificados con saldo</button><!-- oculta: la búsqueda con saldo de ARCA no devuelve los certificados del depositante (ver PRD) -->
         <button class="gr-vista" type="button" data-vista="ctg" aria-pressed="false">CTG</button>
       </div>
 
-      <div id="grdLiqVista">
+      <div id="grdStockVista">
+        <section class="gr-st-hero" aria-label="Stock disponible">
+          <div>
+            <div class="gr-st-label">STOCK DISPONIBLE</div>
+            <div class="gr-st-total"><span id="grdStTotal">0</span><small>kg</small></div>
+            <p class="gr-st-sub" id="grdStSub"></p>
+          </div>
+          <div class="gr-st-acciones">
+            <button class="button gr-st-primary" id="grdStActualizar" type="button">Actualizar ahora</button>
+            <a class="button button-secondary" id="grdStXlsx" href="/api/demo/granos/stock.xlsx" download>Descargar Excel</a>
+          </div>
+        </section>
+        <div class="gr-st-progreso" id="grdStProgreso" hidden>Consultando a ARCA… (simulado en esta demo)</div>
+        <p class="gr-export-note" id="grdStNota" hidden></p>
+        <section class="gr-st-cambios" id="grdStCambios" hidden></section>
+        <div id="grdStGranos"></div>
+        <p class="gr-export-note" id="grdStPie"></p>
+      </div>
+
+      <div id="grdLiqVista" hidden>
       <section class="demo-status" aria-label="Liquidaciones de muestra">
         <div class="status-mark" aria-hidden="true">⚘</div>
         <div><h2>Liquidaciones de muestra</h2><p id="grdMsg">Cargando…</p></div>
@@ -406,14 +426,31 @@
         </section>
       </div>
       <div id="grdCoeVista" hidden>
-        <section class="gr-export" aria-label="Certificado por COE">
-          <form class="gr-export" id="grdCoeForm">
-            <label class="date-control"><span>COE del certificado</span><input id="grdCoeNumero" inputmode="numeric" maxlength="14" placeholder="900000000101" autocomplete="off" required></label>
-            <button class="button button-primary" type="submit">Consultar</button>
-          </form>
+        <section class="gr-export" aria-label="Filtros de certificados">
+          <label class="date-control"><span>COE</span><input id="grdCeCoe" inputmode="numeric" maxlength="14" placeholder="900000000101" autocomplete="off"></label>
+          <div class="date-control"><span>Emisión desde</span><div class="date-field"><input type="text" id="grdCeDesde" inputmode="numeric" autocomplete="off" placeholder="dd/mm/aaaa" maxlength="10" aria-label="Emisión desde (dd/mm o dd/mm/aaaa)"><button class="date-pick" type="button" aria-label="Elegir fecha en el calendario"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.3" d="M2.5 3.5h11v10h-11zM2.5 6.5h11M5.5 2v3M10.5 2v3"/></svg></button><input class="date-native" type="date" id="grdCeDesdeNativo" tabindex="-1" aria-hidden="true"></div></div>
+          <div class="date-control"><span>Emisión hasta</span><div class="date-field"><input type="text" id="grdCeHasta" inputmode="numeric" autocomplete="off" placeholder="dd/mm/aaaa" maxlength="10" aria-label="Emisión hasta (dd/mm o dd/mm/aaaa)"><button class="date-pick" type="button" aria-label="Elegir fecha en el calendario"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.3" d="M2.5 3.5h11v10h-11zM2.5 6.5h11M5.5 2v3M10.5 2v3"/></svg></button><input class="date-native" type="date" id="grdCeHastaNativo" tabindex="-1" aria-hidden="true"></div></div>
+          <label class="date-control"><span>Grano</span><select id="grdCeGrano"><option value="">Todos</option><option value="19">Maíz</option><option value="23">Soja</option></select></label>
+          <label class="date-control"><span>Situación</span><select id="grdCeSit"><option value="">Todas</option><option value="con_saldo">Con saldo</option><option value="agotado">Agotado</option><option value="anulado">Anulado</option></select></label>
+          <button class="button button-quiet" id="grdCeLimpiar" type="button">Limpiar</button>
+          <a class="button button-secondary" id="grdCeXlsx" href="/api/demo/granos/certificados.xlsx" download>Descargar xlsx</a>
         </section>
-        <p class="gr-export-note">En la app real esto consulta a ARCA cualquier certificado, aunque ya no tenga saldo. Acá probá con un COE de ejemplo, por ejemplo 900000000101.</p>
-        <section class="gr-coe-resultado" id="grdCoeResultado" aria-live="polite" hidden></section>
+        <p class="gr-export-note">En la app real este listado trae todos los certificados del productor desde ARCA y los deja guardados. Acá se muestran datos de muestra.</p>
+        <section class="filter-section" aria-label="Certificados">
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th scope="col">EMISIÓN</th><th scope="col">COE</th><th scope="col">TIPO</th><th scope="col">GRANO</th><th scope="col" class="amount-cell">DEPOSITADO (KG)</th><th scope="col" class="amount-cell">DISPONIBLE (KG)</th><th scope="col">SITUACIÓN</th><th scope="col"></th></tr></thead>
+              <tbody id="grdCeRows"></tbody>
+            </table>
+            <div class="table-state" id="grdCeEmpty" hidden><strong>Sin certificados</strong><p>Ningún certificado de muestra coincide con los filtros.</p></div>
+          </div>
+          <nav class="gr-pager" id="grdCePager" aria-label="Paginación de certificados" hidden>
+            <button class="button button-quiet" id="grdCePrev" type="button">‹ Anterior</button>
+            <span id="grdCePagina">Página 1 de 1</span>
+            <button class="button button-quiet" id="grdCeNext" type="button">Siguiente ›</button>
+          </nav>
+          <footer class="table-footer"><span id="grdCeFooter"></span><span>Conjunto de datos ficticio · WSLPG</span></footer>
+        </section>
       </div>
     </main>
     <main class="main-content" id="notificaciones" hidden>
