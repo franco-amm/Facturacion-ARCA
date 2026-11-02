@@ -61,8 +61,8 @@ def _filtered_invoices(
     elegido = _emisor(emisor)["id"]
     if from_date > to_date:
         raise HTTPException(status_code=400, detail="from_date must be on or before to_date.")
-    if not types or any(code not in {11, 12, 13} for code in types):
-        raise HTTPException(status_code=400, detail="types must be selected from 11, 12, and 13.")
+    if not types or any(code not in {1, 2, 3, 6, 7, 8, 11, 12, 13} for code in types):
+        raise HTTPException(status_code=400, detail="types must be selected from 1, 2, 3, 6, 7, 8, 11, 12, and 13.")
     start = from_date.isoformat()
     end = to_date.isoformat()
     return [
@@ -107,7 +107,7 @@ def demo_summary(emisor: Optional[str] = None) -> dict[str, Any]:
         "issuer": elegido,
         "count": len(invoices),
         "latest_issue_date": max((invoice["Fecha"] for invoice in invoices), default=None),
-        "types": [11, 12, 13],
+        "types": [1, 2, 3, 6, 7, 8, 11, 12, 13],
     }
 
 
@@ -449,7 +449,7 @@ def demo_emitir() -> dict[str, Any]:
 def demo_invoices(
     from_date: date,
     to_date: date,
-    types: list[int] = Query(default=[11, 12, 13]),
+    types: list[int] = Query(default=[1, 2, 3, 6, 7, 8, 11, 12, 13]),
     emisor: Optional[str] = None,
 ) -> dict[str, Any]:
     invoices = _filtered_invoices(from_date, to_date, types, emisor)
@@ -479,7 +479,7 @@ def _export_response(invoices: list[dict[str, Any]], from_date: date, to_date: d
 def export_demo_csv(
     from_date: date,
     to_date: date,
-    types: list[int] = Query(default=[11, 12, 13]),
+    types: list[int] = Query(default=[1, 2, 3, 6, 7, 8, 11, 12, 13]),
     emisor: Optional[str] = None,
 ) -> Response:
     invoices = _filtered_invoices(from_date, to_date, types, emisor)
@@ -499,7 +499,7 @@ def export_demo_csv(
 def export_demo_xlsx(
     from_date: date,
     to_date: date,
-    types: list[int] = Query(default=[11, 12, 13]),
+    types: list[int] = Query(default=[1, 2, 3, 6, 7, 8, 11, 12, 13]),
     emisor: Optional[str] = None,
 ) -> Response:
     invoices = _filtered_invoices(from_date, to_date, types, emisor)

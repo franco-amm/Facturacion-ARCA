@@ -1,4 +1,8 @@
-const TYPE_LABELS = { 11: "Factura C", 12: "Nota de Débito C", 13: "Nota de Crédito C" };
+const TYPE_LABELS = {
+  1: "Factura A", 2: "Nota de Débito A", 3: "Nota de Crédito A",
+  6: "Factura B", 7: "Nota de Débito B", 8: "Nota de Crédito B",
+  11: "Factura C", 12: "Nota de Débito C", 13: "Nota de Crédito C",
+};
 const ui = Object.fromEntries([
   "issuerName", "issuerCuit", "pointOfSale", "totalCount", "demoMessage",
   "filterForm", "fromDate", "toDate", "searchInput", "resultSummary",
