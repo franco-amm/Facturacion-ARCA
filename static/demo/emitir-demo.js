@@ -44,6 +44,15 @@
     $("emdHistorialVacio").hidden = historial.length > 0;
   }
 
+  function renderPlantillas() {
+    $("emdPlantillas").innerHTML = data.plantillas.map((p) => `<tr>
+      <td><strong>${esc(p.nombre)}</strong></td>
+      <td>${esc(p.receptor)}<span class="invoice-subnumber">${TIPO[p.doc_tipo]}: ${esc(p.documento)}</span></td>
+      <td>${esc(p.concepto)}</td><td>${fmtFecha(p.vence)}</td><td class="amount-cell">${pesos(p.importe)}</td></tr>`).join("");
+    $("emdPlantillasVacio").hidden = data.plantillas.length > 0;
+    $("emdPlantillasCount").textContent = `${data.plantillas.length} plantilla${data.plantillas.length === 1 ? "" : "s"}`;
+  }
+
   $("emdRows").addEventListener("change", (e) => {
     const t = e.target;
     if (t.dataset.sel !== undefined) filas[+t.dataset.sel].sel = t.checked;
@@ -75,6 +84,7 @@
     filas = data.plantillas.map((p) => ({ ...p, sel: true, validacion: null, emitida: false }));
     $("emdMsg").textContent = `Emisor ficticio ${data.emisor.nombre} · punto de venta ${data.emisor.punto_venta} · lote de ${fmtFecha(data.mes + "-01").slice(3)}.`;
     render();
+    renderPlantillas();
   }
 
   async function load() {
@@ -82,7 +92,12 @@
     try { data = await (await fetch("/api/demo/emitir")).json(); iniciar(); }
     catch (e) { loaded = false; $("emdMsg").textContent = "No se pudo cargar la demo de emisión."; }
   }
-  function route() { const on = location.hash === "#emitir"; $("emitir").hidden = !on; if (on && !loaded) load(); }
+  function route() {
+    const hash = location.hash;
+    $("emitir").hidden = hash !== "#emitir";
+    $("plantillas").hidden = hash !== "#plantillas";
+    if ((hash === "#emitir" || hash === "#plantillas") && !loaded) load();
+  }
   window.addEventListener("hashchange", route);
   route();
 })();
