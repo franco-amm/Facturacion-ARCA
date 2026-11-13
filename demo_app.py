@@ -127,6 +127,15 @@ _ORDEN = list("ABCDEFGHIJK")
 _ESTADO_ORDEN = {"revisar": 0, "atencion": 1, "sin_datos": 2, "al_dia": 3}
 
 
+UMBRAL_ATENCION, UMBRAL_REVISAR = 0.85, 0.95  # mismos que el Resumen real
+
+
+def _nivel_uso(uso: Optional[float]) -> str:
+    if uso is None:
+        return ""
+    return "bad" if uso >= UMBRAL_REVISAR else "warn" if uso >= UMBRAL_ATENCION else ""
+
+
 def _estado_resumen(uso: Optional[float], deuda: Optional[float], sube: bool, viejo: bool) -> tuple[str, Optional[str]]:
     """Mismos umbrales que el Resumen real (propuestos: 85 % atención, 95 % revisar)."""
     if uso is None:
@@ -172,7 +181,7 @@ def _fila_resumen(c: dict[str, Any], ccma: dict[str, Any], hoy: str, dfe: Option
         "comunicaciones_consultadas_el": com["consultado"] if com else None,
         "cuit": cuit, "nombre": c["nombre"], "actividad": c.get("actividad"), "categoria": categoria,
         "categoria_proyectada": proyectada, "sube_categoria": sube, "facturacion_periodo": fact,
-        "origen_facturacion": c.get("origen_facturacion") if fact is not None else None, "tope": tope, "uso": uso,
+        "origen_facturacion": c.get("origen_facturacion") if fact is not None else None, "tope": tope, "uso": uso, "uso_nivel": _nivel_uso(uso), "uso_alto": uso is not None and uso >= UMBRAL_ATENCION,
         "margen": (tope - fact) if tope is not None and fact is not None else None,
         "deuda_arca": deuda, "saldo_ccma": saldo,
         "deuda_consultada_el": deuda_ccma["ultima_deuda"]["consultado_en"] if deuda_ccma else None,
@@ -196,7 +205,8 @@ def demo_resumen() -> dict[str, Any]:
                            "consultado": cl["ultima_consulta"]}
     filas = [_fila_resumen(c, ccma, mono["periodo"]["hasta"], dfe) for c in mono["contribuyentes"]]
     filas.sort(key=lambda f: (_ESTADO_ORDEN[f["estado"]], -(f["uso"] or 0), f["nombre"]))
-    return {"periodo": mono["periodo"], "clientes": filas, "conteo": {"clientes": len(filas)}}
+    return {"periodo": mono["periodo"], "clientes": filas, "conteo": {"clientes": len(filas)},
+            "umbrales": {"atencion": round(UMBRAL_ATENCION * 100), "revisar": round(UMBRAL_REVISAR * 100)}}
 
 
 @app.get("/api/demo/resumen/clientes/{cuit}")
@@ -222,7 +232,7 @@ def demo_resumen_detalle(cuit: str) -> dict[str, Any]:
         "cliente": {k: fila[k] for k in ("cuit", "nombre", "actividad", "categoria")},
         "estado": {k: fila[k] for k in ("estado", "motivo", "sincronizado_el", "desactualizado", "sincronizacion_error")},
         "periodo": mono["periodo"],
-        "utilizacion": {k: fila[k] for k in ("facturacion_periodo", "origen_facturacion", "tope", "uso", "margen")},
+        "utilizacion": {k: fila[k] for k in ("facturacion_periodo", "origen_facturacion", "tope", "uso", "uso_nivel", "margen")},
         "deuda": {"monto": fila["deuda_arca"], "saldo_neto": fila["saldo_ccma"], "periodos_deudores": fila["periodos_deudores"],
                   "consultada_el": fila["deuda_consultada_el"], "saldos": saldos},
         "ventas": {"meses": meses, "limite_mensual": limite, "promedio_mensual": promedio,

@@ -9,8 +9,8 @@
   const fmtFecha = (iso) => (iso ? String(iso).slice(0, 10).split("-").reverse().join("/") : "—");
   const pesos = new Intl.NumberFormat("es-AR", { style: "currency", currency: "ARS", minimumFractionDigits: 0, maximumFractionDigits: 0 });
   const money = (n) => (n == null ? "—" : pesos.format(n));
-  const pct = (uso) => (uso == null ? null : Math.round(uso * 1000) / 10);
-  const fmtPct = (uso) => (uso == null ? "—" : `${pct(uso).toLocaleString("es-AR", { minimumFractionDigits: 1, maximumFractionDigits: 1 })}%`);
+  const pct = (uso) => (uso == null ? null : Math.round(uso * 100));
+  const fmtPct = (uso) => (uso == null ? "—" : `${pct(uso)}%`);
 
   const ESTADOS = {
     revisar: ["Revisar", "bad"],
@@ -23,13 +23,14 @@
     ["deuda", "Con deuda ARCA", (f) => f.deuda_arca > 0],
     ["comunicaciones", "Con comunicaciones", (f) => f.comunicaciones_sin_ver > 0,
       "Clientes con comunicaciones del Domicilio Fiscal Electrónico que todavía no se vieron."],
-    ["uso_alto", "Utilización desde 85%", (f) => f.uso != null && f.uso >= 0.85,
-      "Clientes cuya facturación del período de recategorización ya llegó al 85% o más del tope anual de su categoría actual. Están cerca de tener que subir de categoría o de superar el tope."],
+    ["uso_alto", () => `Utilización desde ${umbrales.atencion ?? "—"}%`, (f) => f.uso_alto,
+      () => `Clientes cuya facturación del período de recategorización ya llegó al ${umbrales.atencion ?? "—"}% o más del tope anual de su categoría actual. Están cerca de tener que subir de categoría o de superar el tope.`],
     ["suben", "Suben de categoría", (f) => f.sube_categoria],
     ["sin_datos", "Sin datos", (f) => f.estado === "sin_datos"],
   ];
 
   let filas = [];
+  let umbrales = {};   // los define el backend (umbral de «Atención» y de «Revisar», en %)
   let filtro = "todos";
   let busqueda = "";
   let detalle = null;   // CUIT abierto en la vista de detalle
@@ -37,7 +38,9 @@
   async function cargar() {
     const respuesta = await fetch("/api/demo/resumen/clientes");
     if (!respuesta.ok) throw new Error(`Error HTTP ${respuesta.status}`);
-    filas = (await respuesta.json()).clientes;
+    const datos = await respuesta.json();
+    filas = datos.clientes;
+    umbrales = datos.umbrales || {};
     render();
   }
 
@@ -67,7 +70,7 @@
 
   function render() {
     $("rsFiltros").innerHTML = FILTROS.map(([id, label, pasa, ayuda]) =>
-      `<button type="button" class="rs-filtro" data-filtro="${id}" aria-pressed="${id === filtro}"><strong>${filas.filter(pasa).length}</strong><span>${label}</span>${ayuda ? `<span class="rs-info" aria-hidden="true">i<span class="rs-tip">${esc(ayuda)}</span></span>` : ""}</button>`).join("");
+      `<button type="button" class="rs-filtro" data-filtro="${id}" aria-pressed="${id === filtro}"><strong>${filas.filter(pasa).length}</strong><span>${typeof label === "function" ? label() : label}</span>${ayuda ? `<span class="rs-info" aria-hidden="true">i<span class="rs-tip">${esc(typeof ayuda === "function" ? ayuda() : ayuda)}</span></span>` : ""}</button>`).join("");
     const items = visibles();
     $("rsEmpty").hidden = items.length > 0;
     if (!items.length) {
@@ -80,7 +83,7 @@
       const [label, tono] = ESTADOS[f.estado] || [f.estado, "muted"];
       const p = pct(f.uso);
       const barra = p == null ? "—"
-        : `<div class="mt-bar ${f.uso >= 0.95 ? "bad" : f.uso >= 0.85 ? "warn" : ""}"><i style="width:${Math.min(p, 100)}%"></i></div><span class="mt-pct">${fmtPct(f.uso)}</span>`;
+        : `<div class="mt-bar ${f.uso_nivel || ""}"><i style="width:${Math.min(p, 100)}%"></i></div><span class="mt-pct">${fmtPct(f.uso)}</span>`;
       const proy = f.sube_categoria ? `<span class="mt-trend" aria-hidden="true">→</span><span class="mt-cat diff" title="Subiría con el límite proyectado">${esc(f.categoria_proyectada)}</span>` : "";
       return `<tr>
         <td><span class="recipient-name">${esc(f.nombre || fmtCuit(f.cuit))}</span>${f.nombre ? `<span class="recipient-doc">${esc(fmtCuit(f.cuit))}</span>` : ""}</td>
@@ -276,7 +279,7 @@
     const [estadoTxt, tono] = ESTADOS[e.estado] || [e.estado, "muted"];
     const p = pct(u.uso);
     const barra = p == null ? '<p class="mt-sub">Sin facturación sincronizada.</p>'
-      : `<div class="mt-bar rs-bar-grande ${u.uso >= 0.95 ? "bad" : u.uso >= 0.85 ? "warn" : ""}"><i style="width:${Math.min(p, 100)}%"></i></div>`;
+      : `<div class="mt-bar rs-bar-grande ${u.uso_nivel || ""}"><i style="width:${Math.min(p, 100)}%"></i></div>`;
     const mantiene = r.categoria_proyectada == null ? "Sin datos suficientes" : r.sube_categoria ? `Subiría a ${r.categoria_proyectada}` : r.categoria_proyectada === r.categoria ? "Se mantiene" : `Bajaría a ${r.categoria_proyectada}`;
     const totVentas = d.ventas.meses.reduce((a, m) => a + (m.facturacion || 0), 0);
     const totCompras = d.ventas.meses.reduce((a, m) => a + (m.compras || 0), 0);

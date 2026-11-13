@@ -101,7 +101,7 @@
     ["energia", "Energía eléctrica consumida", "kW anuales"],
     ["alquiler", "Alquileres devengados", "$ anuales"],
   ];
-  const UMBRAL = 0.9;
+  const UMBRAL = 0.85;
   let datos = null;
 
   function categoriaPor(topes, valor) {
