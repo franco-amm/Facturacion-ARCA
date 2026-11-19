@@ -176,6 +176,11 @@ function exportFile(extension) {
 
 function bindEvents() {
   ui.filterForm.addEventListener("submit", (event) => { event.preventDefault(); renderInvoices(); });
+  // Sin botón «Aplicar filtros»: la tabla se actualiza sola al cambiar una fecha o un tipo (como en la app).
+  ui.filterForm.addEventListener("change", () => {
+    const ok = (v) => /^\d{4}-\d{2}-\d{2}$/.test(v) && Number(v.slice(0, 4)) >= 2000;
+    if (ok(ui.fromDate.value) && ok(ui.toDate.value) && ui.fromDate.value <= ui.toDate.value) renderInvoices();
+  });
   ui.searchInput.addEventListener("input", renderInvoices);
   ui.reloadDemo.addEventListener("click", loadDataset);
   ui.emisorSelect.addEventListener("change", () => selectEmisor(ui.emisorSelect.value));
