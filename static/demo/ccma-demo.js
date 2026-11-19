@@ -13,13 +13,12 @@
   let loaded = false;
 
   function renderClientes() {
-    $("ccmaList").innerHTML = data.clientes.map((c) => {
+    // Desplegable, como en la app.
+    const ordenados = [...data.clientes].sort((a, b) => a.nombre.localeCompare(b.nombre, "es"));
+    $("ccmaList").innerHTML = ordenados.map((c) => {
       const n = c.saldos.filter((s) => s.estado === "deudor").length;
-      const estado = n ? `<span class="mt-state bad">${n} período${n === 1 ? "" : "s"} deudor${n === 1 ? "" : "es"}</span>` : '<span class="mt-state ok">Al día</span>';
-      return `<div class="emisor-card${c.cuit === seleccion ? " is-selected" : ""}">
-        <button class="emisor-select" data-cliente="${esc(c.cuit)}" type="button" role="option" aria-selected="${c.cuit === seleccion}">
-          <strong>${esc(c.nombre)}</strong><span class="emisor-cuit">${esc(fmtCuit(c.cuit))}</span>${estado}
-        </button></div>`;
+      const estado = n ? `${n} período${n === 1 ? "" : "s"} deudor${n === 1 ? "" : "es"}` : "al día";
+      return `<option value="${esc(c.cuit)}"${c.cuit === seleccion ? " selected" : ""}>${esc(c.nombre)} · ${esc(fmtCuit(c.cuit))} · ${esc(estado)}</option>`;
     }).join("");
   }
 
@@ -52,14 +51,13 @@
       loaded = true;
       render();
     } catch (e) {
-      $("ccmaList").innerHTML = `<p class="emisor-note">No se pudo cargar la demo: ${esc(e.message)}</p>`;
+      $("ccmaList").innerHTML = `<option>No se pudo cargar la demo: ${esc(e.message)}</option>`;
     }
   }
 
-  $("ccmaList").addEventListener("click", (event) => {
-    const b = event.target.closest("[data-cliente]");
-    if (!b || !data) return;
-    seleccion = b.dataset.cliente;
+  $("ccmaList").addEventListener("change", (event) => {
+    if (!data || !event.target.value) return;
+    seleccion = event.target.value;
     render();
   });
   $("ccmaSync").addEventListener("click", () => {
