@@ -60,6 +60,10 @@ h1,h2,p { margin-top:0; }h1 { margin-bottom:4px; font-family:Georgia,"Times New 
 .emisores-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 11px; }
 .emisores-head h2 { margin: 0 0 2px; font-size: 13px; font-weight: 700; }
 .emisores-head p { margin: 0; color: #64756a; font-size: 12px; }
+.emisor-picker { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.emisor-picker-label { color: #304239; font-size: 13px; font-weight: 700; }
+.emisor-picker-select { flex: 0 1 520px; min-width: 260px; height: 36px; padding: 0 10px; border: 1px solid #cfd9d1; border-radius: 3px; color: #1f2e26; background: #fbfcfb; font: inherit; font-size: 13px; }
+.emisor-picker-select:focus { outline: 2px solid #9ab6a1; outline-offset: 1px; }
 .emisor-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 10px; }
 .emisor-card { position: relative; }
 .emisor-select { display: flex; width: 100%; height: 100%; flex-direction: column; align-items: flex-start; gap: 2px; padding: 12px 14px 11px; border: 1px solid var(--line); border-radius: 4px; color: var(--ink); background: var(--paper); text-align: left; transition: border-color .15s, background .15s; }

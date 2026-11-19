@@ -8,7 +8,7 @@ const ui = Object.fromEntries([
   "filterForm", "fromDate", "toDate", "searchInput", "resultSummary",
   "visibleCount", "invoiceRows", "tableWrap", "tableState", "footerCount",
   "csvButton", "xlsxButton", "reloadDemo", "detailDialog", "detailTitle",
-  "detailContent", "closeDialog", "emisorList", "tableTitle",
+  "detailContent", "closeDialog", "emisorSelect", "tableTitle",
 ].map((id) => [id, document.getElementById(id)]));
 
 let dataset = null;
@@ -81,13 +81,15 @@ function renderIssuer() {
 }
 
 function renderEmisores() {
-  ui.emisorList.replaceChildren(...dataset.emisores.map((item) => {
-    const selected = item.id === selectedId;
+  // Desplegable (como en la app): con 20-30 clientes las tarjetas ocupaban toda la pantalla.
+  const ordenados = [...dataset.emisores].sort((a, b) => a.name.localeCompare(b.name, "es"));
+  ui.emisorSelect.replaceChildren(...ordenados.map((item) => {
     const count = dataset.invoices.filter((invoice) => invoice.Emisor === item.id).length;
-    const card = document.createElement("div");
-    card.className = `emisor-card${selected ? " is-selected" : ""}`;
-    card.innerHTML = `<button class="emisor-select" type="button" role="option" aria-selected="${selected}" data-emisor="${escapeHtml(item.id)}"><strong>${escapeHtml(item.name)}</strong><span class="emisor-cuit">${escapeHtml(item.cuit)}</span><small>${count} ${count === 1 ? "comprobante" : "comprobantes"} · PV ${escapeHtml(item.punto_venta)}</small></button>`;
-    return card;
+    const option = document.createElement("option");
+    option.value = item.id;
+    option.textContent = `${item.name} · ${item.cuit} · ${count} ${count === 1 ? "comprobante" : "comprobantes"}`;
+    option.selected = item.id === selectedId;
+    return option;
   }));
 }
 
@@ -176,10 +178,7 @@ function bindEvents() {
   ui.filterForm.addEventListener("submit", (event) => { event.preventDefault(); renderInvoices(); });
   ui.searchInput.addEventListener("input", renderInvoices);
   ui.reloadDemo.addEventListener("click", loadDataset);
-  ui.emisorList.addEventListener("click", (event) => {
-    const button = event.target.closest("[data-emisor]");
-    if (button) selectEmisor(button.dataset.emisor);
-  });
+  ui.emisorSelect.addEventListener("change", () => selectEmisor(ui.emisorSelect.value));
   ui.csvButton.addEventListener("click", () => exportFile("csv"));
   ui.xlsxButton.addEventListener("click", () => exportFile("xlsx"));
   ui.closeDialog.addEventListener("click", () => ui.detailDialog.close());
