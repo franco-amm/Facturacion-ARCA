@@ -290,7 +290,7 @@
     const textoLimite = diferencia == null ? "" : sobreLimite ? `Tu promedio supera el límite en ${NUM(porcDif, 1)}%` : "Tu promedio está dentro del límite";
     const ipc = r.ipc ? `IPC ${r.ipc.variacion_pct.toLocaleString("es-AR")}%${r.ipc.estimativo ? " est." : ""}` : "";
     const saldos = deuda.saldos.length
-      ? `<table class="rs-mini"><thead><tr><th>Período</th><th class="amount-cell">Saldo acumulado</th><th>Estado</th></tr></thead><tbody>${deuda.saldos.map((s) => `<tr><td>${esc(String(s.periodo).slice(5, 7))}/${esc(String(s.periodo).slice(0, 4))}</td><td class="amount-cell">${money(s.saldo_acumulado)}</td><td>${esc(s.estado)}</td></tr>`).join("")}</tbody></table>` : "";
+      ? `<table class="rs-mini"><thead><tr><th>Período</th><th class="amount-cell">ARCA</th><th class="amount-cell">Ingresos Brutos</th><th class="amount-cell">Municipalidad</th><th class="amount-cell">Saldo acumulado</th><th>Estado</th></tr></thead><tbody>${deuda.saldos.map((s) => `<tr><td>${esc(String(s.periodo).slice(5, 7))}/${esc(String(s.periodo).slice(0, 4))}</td>${["saldo_arca", "saldo_iibb", "saldo_municipal"].map((k) => `<td class="amount-cell">${money(s[k])}</td>`).join("")}<td class="amount-cell"><strong>${money(s.saldo_acumulado)}</strong></td><td>${esc(s.estado)}</td></tr>`).join("")}</tbody></table><p class="rs-nota">Ingresos Brutos y Municipalidad según ARCA (Monotributo Unificado).</p>` : "";
     return `
       <button class="button button-quiet" type="button" data-volver>← Volver al listado</button>
       <header class="rs-cab">

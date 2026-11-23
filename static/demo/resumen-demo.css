@@ -118,3 +118,5 @@
 .nav-divider { height: 1px; margin: 10px 14px; background: rgba(230, 244, 235, .13); }
 .nav-item.nav-destacado { color: #fff; box-shadow: inset 3px 0 0 var(--accent, #9bd66c); font-weight: 700; }
 :root { --danger: #a64238; }
+
+.rs-nota { margin: 6px 0 0; font-size: 11px; color: #65786b; }

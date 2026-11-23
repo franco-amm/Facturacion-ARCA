@@ -17,62 +17,98 @@
     {
      "periodo": "2025-11",
      "saldo_acumulado": 0.0,
-     "estado": "saldado"
+     "estado": "saldado",
+     "saldo_arca": 0.0,
+     "saldo_iibb": 0.0,
+     "saldo_municipal": 0.0
     },
     {
      "periodo": "2025-12",
      "saldo_acumulado": 0.0,
-     "estado": "saldado"
+     "estado": "saldado",
+     "saldo_arca": 0.0,
+     "saldo_iibb": 0.0,
+     "saldo_municipal": 0.0
     },
     {
      "periodo": "2026-01",
      "saldo_acumulado": 0.0,
-     "estado": "saldado"
+     "estado": "saldado",
+     "saldo_arca": 0.0,
+     "saldo_iibb": 0.0,
+     "saldo_municipal": 0.0
     },
     {
      "periodo": "2026-02",
      "saldo_acumulado": 0.0,
-     "estado": "saldado"
+     "estado": "saldado",
+     "saldo_arca": 0.0,
+     "saldo_iibb": 0.0,
+     "saldo_municipal": 0.0
     },
     {
      "periodo": "2026-03",
      "saldo_acumulado": 0.0,
-     "estado": "saldado"
+     "estado": "saldado",
+     "saldo_arca": 0.0,
+     "saldo_iibb": 0.0,
+     "saldo_municipal": 0.0
     },
     {
      "periodo": "2026-04",
      "saldo_acumulado": 0.0,
-     "estado": "saldado"
+     "estado": "saldado",
+     "saldo_arca": 0.0,
+     "saldo_iibb": 0.0,
+     "saldo_municipal": 0.0
     },
     {
      "periodo": "2026-05",
      "saldo_acumulado": 0.0,
-     "estado": "saldado"
+     "estado": "saldado",
+     "saldo_arca": 0.0,
+     "saldo_iibb": 0.0,
+     "saldo_municipal": 0.0
     },
     {
      "periodo": "2026-06",
      "saldo_acumulado": 0.0,
-     "estado": "saldado"
+     "estado": "saldado",
+     "saldo_arca": 0.0,
+     "saldo_iibb": 0.0,
+     "saldo_municipal": 0.0
     },
     {
      "periodo": "2026-07",
      "saldo_acumulado": 0.0,
-     "estado": "saldado"
+     "estado": "saldado",
+     "saldo_arca": 0.0,
+     "saldo_iibb": 0.0,
+     "saldo_municipal": 0.0
     },
     {
      "periodo": "2026-08",
      "saldo_acumulado": -48120.5,
-     "estado": "deudor"
+     "estado": "deudor",
+     "saldo_arca": -14436.15,
+     "saldo_iibb": -26466.28,
+     "saldo_municipal": -7218.07
     },
     {
      "periodo": "2026-09",
      "saldo_acumulado": -51730.25,
-     "estado": "deudor"
+     "estado": "deudor",
+     "saldo_arca": -15519.07,
+     "saldo_iibb": -28451.64,
+     "saldo_municipal": -7759.54
     },
     {
      "periodo": "2026-10",
      "saldo_acumulado": -51730.25,
-     "estado": "deudor"
+     "estado": "deudor",
+     "saldo_arca": -15519.07,
+     "saldo_iibb": -28451.64,
+     "saldo_municipal": -7759.54
     }
    ]
   },
@@ -92,62 +128,98 @@
     {
      "periodo": "2025-11",
      "saldo_acumulado": 0.0,
-     "estado": "saldado"
+     "estado": "saldado",
+     "saldo_arca": 0.0,
+     "saldo_iibb": 0.0,
+     "saldo_municipal": 0.0
     },
     {
      "periodo": "2025-12",
      "saldo_acumulado": 0.0,
-     "estado": "saldado"
+     "estado": "saldado",
+     "saldo_arca": 0.0,
+     "saldo_iibb": 0.0,
+     "saldo_municipal": 0.0
     },
     {
      "periodo": "2026-01",
      "saldo_acumulado": 0.0,
-     "estado": "saldado"
+     "estado": "saldado",
+     "saldo_arca": 0.0,
+     "saldo_iibb": 0.0,
+     "saldo_municipal": 0.0
     },
     {
      "periodo": "2026-02",
      "saldo_acumulado": 0.0,
-     "estado": "saldado"
+     "estado": "saldado",
+     "saldo_arca": 0.0,
+     "saldo_iibb": 0.0,
+     "saldo_municipal": 0.0
     },
     {
      "periodo": "2026-03",
      "saldo_acumulado": 0.0,
-     "estado": "saldado"
+     "estado": "saldado",
+     "saldo_arca": 0.0,
+     "saldo_iibb": 0.0,
+     "saldo_municipal": 0.0
     },
     {
      "periodo": "2026-04",
      "saldo_acumulado": 0.0,
-     "estado": "saldado"
+     "estado": "saldado",
+     "saldo_arca": 0.0,
+     "saldo_iibb": 0.0,
+     "saldo_municipal": 0.0
     },
     {
      "periodo": "2026-05",
      "saldo_acumulado": 0.0,
-     "estado": "saldado"
+     "estado": "saldado",
+     "saldo_arca": 0.0,
+     "saldo_iibb": 0.0,
+     "saldo_municipal": 0.0
     },
     {
      "periodo": "2026-06",
      "saldo_acumulado": 0.0,
-     "estado": "saldado"
+     "estado": "saldado",
+     "saldo_arca": 0.0,
+     "saldo_iibb": 0.0,
+     "saldo_municipal": 0.0
     },
     {
      "periodo": "2026-07",
      "saldo_acumulado": 0.0,
-     "estado": "saldado"
+     "estado": "saldado",
+     "saldo_arca": 0.0,
+     "saldo_iibb": 0.0,
+     "saldo_municipal": 0.0
     },
     {
      "periodo": "2026-08",
      "saldo_acumulado": 0.0,
-     "estado": "saldado"
+     "estado": "saldado",
+     "saldo_arca": 0.0,
+     "saldo_iibb": 0.0,
+     "saldo_municipal": 0.0
     },
     {
      "periodo": "2026-09",
      "saldo_acumulado": 0.0,
-     "estado": "saldado"
+     "estado": "saldado",
+     "saldo_arca": 0.0,
+     "saldo_iibb": 0.0,
+     "saldo_municipal": 0.0
     },
     {
      "periodo": "2026-10",
      "saldo_acumulado": 12400.0,
-     "estado": "acreedor"
+     "estado": "acreedor",
+     "saldo_arca": 12400.0,
+     "saldo_iibb": 0.0,
+     "saldo_municipal": 0.0
     }
    ]
   },
@@ -167,122 +239,194 @@
     {
      "periodo": "2024-11",
      "saldo_acumulado": 0.0,
-     "estado": "saldado"
+     "estado": "saldado",
+     "saldo_arca": 0.0,
+     "saldo_iibb": 0.0,
+     "saldo_municipal": 0.0
     },
     {
      "periodo": "2024-12",
      "saldo_acumulado": 0.0,
-     "estado": "saldado"
+     "estado": "saldado",
+     "saldo_arca": 0.0,
+     "saldo_iibb": 0.0,
+     "saldo_municipal": 0.0
     },
     {
      "periodo": "2025-01",
      "saldo_acumulado": 0.0,
-     "estado": "saldado"
+     "estado": "saldado",
+     "saldo_arca": 0.0,
+     "saldo_iibb": 0.0,
+     "saldo_municipal": 0.0
     },
     {
      "periodo": "2025-02",
      "saldo_acumulado": 0.0,
-     "estado": "saldado"
+     "estado": "saldado",
+     "saldo_arca": 0.0,
+     "saldo_iibb": 0.0,
+     "saldo_municipal": 0.0
     },
     {
      "periodo": "2025-03",
      "saldo_acumulado": -38900.0,
-     "estado": "deudor"
+     "estado": "deudor",
+     "saldo_arca": -11670.0,
+     "saldo_iibb": -21395.0,
+     "saldo_municipal": -5835.0
     },
     {
      "periodo": "2025-04",
      "saldo_acumulado": -38900.0,
-     "estado": "deudor"
+     "estado": "deudor",
+     "saldo_arca": -11670.0,
+     "saldo_iibb": -21395.0,
+     "saldo_municipal": -5835.0
     },
     {
      "periodo": "2025-05",
      "saldo_acumulado": 0.0,
-     "estado": "saldado"
+     "estado": "saldado",
+     "saldo_arca": 0.0,
+     "saldo_iibb": 0.0,
+     "saldo_municipal": 0.0
     },
     {
      "periodo": "2025-06",
      "saldo_acumulado": 0.0,
-     "estado": "saldado"
+     "estado": "saldado",
+     "saldo_arca": 0.0,
+     "saldo_iibb": 0.0,
+     "saldo_municipal": 0.0
     },
     {
      "periodo": "2025-07",
      "saldo_acumulado": 0.0,
-     "estado": "saldado"
+     "estado": "saldado",
+     "saldo_arca": 0.0,
+     "saldo_iibb": 0.0,
+     "saldo_municipal": 0.0
     },
     {
      "periodo": "2025-08",
      "saldo_acumulado": 0.0,
-     "estado": "saldado"
+     "estado": "saldado",
+     "saldo_arca": 0.0,
+     "saldo_iibb": 0.0,
+     "saldo_municipal": 0.0
     },
     {
      "periodo": "2025-09",
      "saldo_acumulado": 0.0,
-     "estado": "saldado"
+     "estado": "saldado",
+     "saldo_arca": 0.0,
+     "saldo_iibb": 0.0,
+     "saldo_municipal": 0.0
     },
     {
      "periodo": "2025-10",
      "saldo_acumulado": 0.0,
-     "estado": "saldado"
+     "estado": "saldado",
+     "saldo_arca": 0.0,
+     "saldo_iibb": 0.0,
+     "saldo_municipal": 0.0
     },
     {
      "periodo": "2025-11",
      "saldo_acumulado": 0.0,
-     "estado": "saldado"
+     "estado": "saldado",
+     "saldo_arca": 0.0,
+     "saldo_iibb": 0.0,
+     "saldo_municipal": 0.0
     },
     {
      "periodo": "2025-12",
      "saldo_acumulado": 5300.4,
-     "estado": "acreedor"
+     "estado": "acreedor",
+     "saldo_arca": 5300.4,
+     "saldo_iibb": 0.0,
+     "saldo_municipal": 0.0
     },
     {
      "periodo": "2026-01",
      "saldo_acumulado": 0.0,
-     "estado": "saldado"
+     "estado": "saldado",
+     "saldo_arca": 0.0,
+     "saldo_iibb": 0.0,
+     "saldo_municipal": 0.0
     },
     {
      "periodo": "2026-02",
      "saldo_acumulado": 0.0,
-     "estado": "saldado"
+     "estado": "saldado",
+     "saldo_arca": 0.0,
+     "saldo_iibb": 0.0,
+     "saldo_municipal": 0.0
     },
     {
      "periodo": "2026-03",
      "saldo_acumulado": 0.0,
-     "estado": "saldado"
+     "estado": "saldado",
+     "saldo_arca": 0.0,
+     "saldo_iibb": 0.0,
+     "saldo_municipal": 0.0
     },
     {
      "periodo": "2026-04",
      "saldo_acumulado": 0.0,
-     "estado": "saldado"
+     "estado": "saldado",
+     "saldo_arca": 0.0,
+     "saldo_iibb": 0.0,
+     "saldo_municipal": 0.0
     },
     {
      "periodo": "2026-05",
      "saldo_acumulado": 0.0,
-     "estado": "saldado"
+     "estado": "saldado",
+     "saldo_arca": 0.0,
+     "saldo_iibb": 0.0,
+     "saldo_municipal": 0.0
     },
     {
      "periodo": "2026-06",
      "saldo_acumulado": -61250.75,
-     "estado": "deudor"
+     "estado": "deudor",
+     "saldo_arca": -18375.23,
+     "saldo_iibb": -33687.91,
+     "saldo_municipal": -9187.61
     },
     {
      "periodo": "2026-07",
      "saldo_acumulado": -61250.75,
-     "estado": "deudor"
+     "estado": "deudor",
+     "saldo_arca": -18375.23,
+     "saldo_iibb": -33687.91,
+     "saldo_municipal": -9187.61
     },
     {
      "periodo": "2026-08",
      "saldo_acumulado": -61250.75,
-     "estado": "deudor"
+     "estado": "deudor",
+     "saldo_arca": -18375.23,
+     "saldo_iibb": -33687.91,
+     "saldo_municipal": -9187.61
     },
     {
      "periodo": "2026-09",
      "saldo_acumulado": -61250.75,
-     "estado": "deudor"
+     "estado": "deudor",
+     "saldo_arca": -18375.23,
+     "saldo_iibb": -33687.91,
+     "saldo_municipal": -9187.61
     },
     {
      "periodo": "2026-10",
      "saldo_acumulado": -61250.75,
-     "estado": "deudor"
+     "estado": "deudor",
+     "saldo_arca": -18375.23,
+     "saldo_iibb": -33687.91,
+     "saldo_municipal": -9187.61
     }
    ]
   }

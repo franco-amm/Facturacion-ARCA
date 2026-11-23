@@ -2,3 +2,9 @@
 .ccma-saldo-neg { color: #8c2f27; font-weight: 700; }
 .ccma-saldo-pos { color: #2a633d; font-weight: 700; }
 .ccma-section-title { margin: 0; font-size: 15px; }
+
+/* Desglose del saldo por componente (ARCA, Ingresos Brutos, Municipalidad): las partes, más livianas que el total. */
+table td.ccma-parte { font-weight: 500; }
+table td.ccma-parte:not(.ccma-saldo-neg):not(.ccma-saldo-pos) { color: #8a978e; }
+.ccma-sin-desglose { color: #8a978e; }
+.ccma-total { border-left: 1px solid var(--line, #d3e0d5); }

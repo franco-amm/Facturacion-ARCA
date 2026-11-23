@@ -34,10 +34,11 @@
       <td class="amount-cell ${clase(u.saldo_neto)}">${money(u.saldo_neto)}</td></tr>`;
     $("ccmaSaldosBody").innerHTML = [...d.saldos].reverse().map((s) => {
       const [t, tono] = ESTADOS[s.estado] || [s.estado, "muted"];
-      return `<tr><td>${cliente}</td><td>${fmtPeriodo(s.periodo)}</td>
-        <td class="amount-cell ${clase(s.saldo_acumulado)}">${money(s.saldo_acumulado)}</td><td><span class="mt-state ${tono}">${esc(t)}</span></td></tr>`;
+      const partes = ["saldo_arca", "saldo_iibb", "saldo_municipal"].map((k) => `<td class="amount-cell ccma-parte ${clase(s[k])}">${money(s[k])}</td>`).join("");
+      return `<tr><td>${cliente}</td><td>${fmtPeriodo(s.periodo)}</td>${partes}
+        <td class="amount-cell ccma-total ${clase(s.saldo_acumulado)}">${money(s.saldo_acumulado)}</td><td><span class="mt-state ${tono}">${esc(t)}</span></td></tr>`;
     }).join("");
-    $("ccmaFooter").textContent = `${d.saldos.length} períodos · datos de muestra`;
+    $("ccmaFooter").textContent = `${d.saldos.length} períodos · datos de muestra · Ingresos Brutos y Municipalidad según ARCA (Monotributo Unificado)`;
   }
 
   function render() { renderClientes(); renderDatos(); }
