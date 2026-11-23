@@ -120,3 +120,21 @@
 :root { --danger: #a64238; }
 
 .rs-nota { margin: 6px 0 0; font-size: 11px; color: #65786b; }
+
+/* Panel de inicio (sin filtro elegido): en lugar del listado vacío */
+.rs-busqueda input { max-width: none; }
+.rs-inicio { margin: 0; border: 1px dashed #c9d6cc; border-radius: 4px; background: repeating-linear-gradient(135deg, #fbfcfa 0 12px, #f6f9f5 12px 24px); padding: 44px 24px 36px; text-align: center; color: #33443a; }
+.rs-inicio[hidden], #rsTabla[hidden], #rsPie[hidden] { display: none; }
+.rs-inicio-ico { width: 56px; height: 56px; margin: 0 auto 14px; border-radius: 50%; background: #e8efe9; color: #2f5d48; display: flex; align-items: center; justify-content: center; }
+.rs-inicio h3 { margin: 0 0 6px; font-size: 16px; color: #1f3a2d; }
+.rs-inicio p { margin: 0 0 22px; font-size: 12px; color: #65786b; }
+.rs-inicio-atajos { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; align-items: center; }
+.rs-inicio-lbl { font-size: 10px; letter-spacing: .7px; text-transform: uppercase; color: #859188; margin-right: 4px; }
+.rs-inicio-atajos button { font: inherit; font-size: 12px; background: #fff; border: 1px solid #d3e0d5; border-radius: 999px; padding: 6px 12px; color: #203b2e; cursor: pointer; }
+.rs-inicio-atajos button:hover:not([disabled]) { border-color: #2f5d48; }
+.rs-inicio-atajos button[disabled] { cursor: default; opacity: .6; }
+.rs-inicio-atajos button b { margin-left: 6px; display: inline-block; min-width: 18px; padding: 1px 6px; border-radius: 999px; background: #fbe9e7; color: #8c2f27; font-size: 11px; }
+.rs-inicio-atajos button b.cero { background: #eef2ee; color: #65786b; }
+/* «Deuda por período»: total sombreado */
+.rs-mini .rs-total { background: #f3f6f2; }
+.rs-mini thead .rs-total { background: #eaf0e8; }

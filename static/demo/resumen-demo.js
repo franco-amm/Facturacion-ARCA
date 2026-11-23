@@ -31,7 +31,7 @@
 
   let filas = [];
   let umbrales = {};   // los define el backend (umbral de «Atención» y de «Revisar», en %)
-  let filtro = "todos";
+  let filtro = null;   // ninguno al entrar: el listado aparece al elegir un filtro o al buscar
   let busqueda = "";
   let detalle = null;   // CUIT abierto en la vista de detalle
 
@@ -45,7 +45,7 @@
   }
 
   function visibles() {
-    const pasa = FILTROS.find(([id]) => id === filtro)[2];
+    const pasa = FILTROS.find(([id]) => id === (filtro || "todos"))[2];
     const q = busqueda.trim().toLowerCase();
     return filas.filter((f) => pasa(f) && (!q || `${f.nombre} ${f.cuit}`.toLowerCase().includes(q)));
   }
@@ -71,6 +71,15 @@
   function render() {
     $("rsFiltros").innerHTML = FILTROS.map(([id, label, pasa, ayuda]) =>
       `<button type="button" class="rs-filtro" data-filtro="${id}" aria-pressed="${id === filtro}"><strong>${filas.filter(pasa).length}</strong><span>${typeof label === "function" ? label() : label}</span>${ayuda ? `<span class="rs-info" aria-hidden="true">i<span class="rs-tip">${esc(typeof ayuda === "function" ? ayuda() : ayuda)}</span></span>` : ""}</button>`).join("");
+    // Sin filtro ni búsqueda: panel de inicio con accesos a los filtros que piden atención, en lugar del listado.
+    const inicio = !filtro && !busqueda.trim();
+    $("rsInicio").hidden = !inicio;
+    $("rsTabla").hidden = inicio;
+    $("rsPie").hidden = inicio;
+    if (inicio) {
+      $("rsInicio").innerHTML = renderInicio();
+      return;
+    }
     const items = visibles();
     $("rsEmpty").hidden = items.length > 0;
     if (!items.length) {
@@ -98,12 +107,26 @@
     }).join("");
   }
 
-  $("rsFiltros").addEventListener("click", (event) => {
+  function renderInicio() {
+    const atencion = FILTROS.filter(([id]) => ["deuda", "uso_alto", "suben", "sin_datos"].includes(id)).map(([id, label, pasa]) => {
+      const n = filas.filter(pasa).length;
+      return `<button type="button" data-filtro="${id}"${n ? "" : " disabled"}>${esc(typeof label === "function" ? label() : label)} <b class="${n ? "" : "cero"}">${n}</b></button>`;
+    }).join("");
+    return `<div class="rs-inicio-ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h18l-7 8.5V19l-4 2v-8.5z"/></svg></div>
+      <h3>Elegí un filtro para ver los clientes</h3>
+      <p>Hacé clic en una de las tarjetas de arriba o buscá un cliente por nombre o CUIT.</p>
+      <div class="rs-inicio-atajos"><span class="rs-inicio-lbl">Requieren atención</span>${atencion}</div>`;
+  }
+
+  function elegirFiltro(event) {
     const boton = event.target.closest("[data-filtro]");
-    if (!boton || event.target.closest(".rs-info")) return;   // el ícono de ayuda no cambia el filtro
-    filtro = boton.dataset.filtro;
+    if (!boton || boton.disabled || event.target.closest(".rs-info")) return;   // el ícono de ayuda no cambia el filtro
+    // Un clic en el filtro ya elegido lo quita y vuelve al panel de inicio.
+    filtro = filtro === boton.dataset.filtro && !busqueda.trim() ? null : boton.dataset.filtro;
     render();
-  });
+  }
+  $("rsFiltros").addEventListener("click", elegirFiltro);
+  $("rsInicio").addEventListener("click", elegirFiltro);
   $("rsBuscar").addEventListener("input", (event) => { busqueda = event.target.value; render(); });
   $("rsRows").addEventListener("click", (event) => {
     const boton = event.target.closest("[data-detalle]");
@@ -290,7 +313,7 @@
     const textoLimite = diferencia == null ? "" : sobreLimite ? `Tu promedio supera el límite en ${NUM(porcDif, 1)}%` : "Tu promedio está dentro del límite";
     const ipc = r.ipc ? `IPC ${r.ipc.variacion_pct.toLocaleString("es-AR")}%${r.ipc.estimativo ? " est." : ""}` : "";
     const saldos = deuda.saldos.length
-      ? `<table class="rs-mini"><thead><tr><th>Período</th><th class="amount-cell">ARCA</th><th class="amount-cell">Ingresos Brutos</th><th class="amount-cell">Municipalidad</th><th class="amount-cell">Saldo acumulado</th><th>Estado</th></tr></thead><tbody>${deuda.saldos.map((s) => `<tr><td>${esc(String(s.periodo).slice(5, 7))}/${esc(String(s.periodo).slice(0, 4))}</td>${["saldo_arca", "saldo_iibb", "saldo_municipal"].map((k) => `<td class="amount-cell">${money(s[k])}</td>`).join("")}<td class="amount-cell"><strong>${money(s.saldo_acumulado)}</strong></td><td>${esc(s.estado)}</td></tr>`).join("")}</tbody></table><p class="rs-nota">Ingresos Brutos y Municipalidad según ARCA (Monotributo Unificado).</p>` : "";
+      ? `<table class="rs-mini"><thead><tr><th>Período</th><th class="amount-cell">ARCA</th><th class="amount-cell">Ingresos Brutos</th><th class="amount-cell">Municipalidad</th><th class="amount-cell rs-total">Saldo acumulado</th><th>Estado</th></tr></thead><tbody>${deuda.saldos.map((s) => `<tr><td>${esc(String(s.periodo).slice(5, 7))}/${esc(String(s.periodo).slice(0, 4))}</td>${["saldo_arca", "saldo_iibb", "saldo_municipal"].map((k) => `<td class="amount-cell">${money(s[k])}</td>`).join("")}<td class="amount-cell rs-total"><strong>${money(s.saldo_acumulado)}</strong></td><td>${esc(s.estado)}</td></tr>`).join("")}</tbody></table><p class="rs-nota">Ingresos Brutos y Municipalidad según ARCA (Monotributo Unificado).</p>` : "";
     return `
       <button class="button button-quiet" type="button" data-volver>← Volver al listado</button>
       <header class="rs-cab">
