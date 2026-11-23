@@ -95,3 +95,6 @@
 .mt-proy-button { margin-left: auto; border-color: #cbd8cd; color: #234e3c; background: #fff; }
 .mt-trend { margin-left: 5px; color: #6b58b0; font-weight: 700; }
 #mtThProy .mt-sub { font-weight: 500; letter-spacing: 0; text-transform: none; }
+
+/* Tabla de CUIT seguidos: todo centrado salvo Contribuyente (23/11/2026) */
+table:has(#mtRows) th:not(:first-child), #mtRows > tr > td:not(:first-child) { text-align: center; }

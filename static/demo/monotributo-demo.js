@@ -250,7 +250,7 @@
       datos = d;
       $("mtEscalaMsg").textContent = `Escala de muestra vigente desde ${fmtFecha(d.escala.vigencia)}. En la versión real se lee de ARCA y una persona la aprueba antes de usarla.`;
       renderPeriodo(d.periodo);
-      $("mtThProy").innerHTML = `PROYECTADA<span class="mt-sub">a ${esc(fmtMes(d.proyeccion.actualizacion))} · ${esc(String(d.proyeccion.variacion_pct).replace(".", ","))}% est.</span>`;
+      $("mtThProy").innerHTML = `PROYECTADA<span class="mt-sub" title="Variación proyectada de los topes hasta la actualización de ${esc(fmtMes(d.proyeccion.actualizacion))} (estimada)">${esc(String(d.proyeccion.variacion_pct).replace(".", ","))}% (${esc(d.proyeccion.actualizacion.slice(5, 7))}-${esc(d.proyeccion.actualizacion.slice(0, 4))})</span>`;
       renderAlertas(d.alertas);
       renderFilas(d.contribuyentes);
       loaded = true;
