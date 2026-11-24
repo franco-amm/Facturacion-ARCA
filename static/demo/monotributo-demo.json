@@ -275,6 +275,11 @@
           "desde": "2026-01-07",
           "hasta": "2026-09-29"
         }
+      },
+      "acceso": {
+        "nivel": "accion",
+        "motivo": "clave_incorrecta",
+        "texto": "Clave rechazada por ARCA"
       }
     },
     {
@@ -661,7 +666,7 @@
       "tope": 12009410.45,
       "uso": null,
       "categoria_corresponde": null,
-      "estado": "sin_facturacion",
+      "estado": "requiere_accion",
       "alertas": [
         {
           "tipo": "sin_facturacion",
@@ -698,6 +703,11 @@
         "disponible": true,
         "con_datos": false,
         "ruta": null
+      },
+      "acceso": {
+        "nivel": "accion",
+        "motivo": "sin_delegacion",
+        "texto": "Sin delegación"
       }
     }
   ],

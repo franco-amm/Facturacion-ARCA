@@ -13,6 +13,7 @@
   const fmtPct = (uso) => (uso == null ? "—" : `${pct(uso)}%`);
 
   const ESTADOS = {
+    requiere_accion: ["Requiere acción", "bad"],
     revisar: ["Revisar", "bad"],
     atencion: ["Atención", "warn"],
     al_dia: ["Al día", "ok"],
@@ -20,6 +21,8 @@
   };
   const FILTROS = [
     ["todos", "Clientes", () => true],
+    ["requiere_accion", "Requiere acción", (f) => f.estado === "requiere_accion",
+      "Clientes sin acceso a ARCA: clave rechazada o vencida, segundo factor o sin delegación. No se sincronizan hasta que el Estudio lo resuelva, así que sus datos quedan congelados."],
     ["deuda", "Con deuda ARCA", (f) => f.deuda_arca > 0],
     ["comunicaciones", "Con comunicaciones", (f) => f.comunicaciones_sin_ver > 0,
       "Clientes con comunicaciones del Domicilio Fiscal Electrónico que todavía no se vieron."],
@@ -50,14 +53,29 @@
     return filas.filter((f) => pasa(f) && (!q || `${f.nombre} ${f.cuit}`.toLowerCase().includes(q)));
   }
 
+  // Sin acceso a ARCA (requiere acción) las fechas de facturación y deuda quedan congeladas: van en rojo.
+  const congelado = (f) => f.acceso && f.acceso.nivel === "accion";
+
+  function notaAcceso(f) {
+    if (!f.acceso) return f.sincronizacion_error ? '<span class="rs-acceso warn"><i></i>Falló el último intento</span>' : "";
+    if (f.acceso.nivel === "accion") return `<span class="rs-acceso bad"><i></i>${esc(f.acceso.texto)}</span>`;
+    if (f.acceso.nivel === "fallo") return '<span class="rs-acceso warn"><i></i>Falló el último intento</span>';
+    return "";
+  }
+
   function celdaSync(f) {
+    const frio = congelado(f);
+    const clase = frio ? "rs-congelada" : f.desactualizado ? "rs-viejo" : "";
+    const ayuda = frio ? "Datos congelados: no se sincroniza hasta resolver el acceso a ARCA" : f.desactualizado ? "Más de 3 días sin sincronizar" : "Última sincronización de Mis Comprobantes";
     const fact = f.sincronizado_el
-      ? `<span class="${f.desactualizado ? "rs-viejo" : ""}" title="${f.desactualizado ? "Más de 3 días sin sincronizar" : "Última sincronización de Mis Comprobantes"}">${esc(fmtFecha(f.sincronizado_el))}</span>`
+      ? `<span class="${clase}" title="${ayuda}">${esc(fmtFecha(f.sincronizado_el))}</span>`
       : "—";
-    const deuda = f.deuda_consultada_el ? esc(fmtFecha(f.deuda_consultada_el)) : "—";
+    const deuda = f.deuda_consultada_el
+      ? (frio ? `<span class="rs-congelada" title="${ayuda}">${esc(fmtFecha(f.deuda_consultada_el))}</span>` : esc(fmtFecha(f.deuda_consultada_el)))
+      : "—";
     return `<span class="rs-fecha"><em>Facturación al</em> ${fact}</span>
       <span class="rs-fecha"><em>Deuda al</em> ${deuda}</span>
-      <span class="rs-fecha"><em>Comunicaciones al</em> ${f.comunicaciones_consultadas_el ? esc(fmtFecha(f.comunicaciones_consultadas_el)) : "—"}</span>${f.sincronizacion_error ? '<span class="mt-sub mt-warn">Último intento falló</span>' : ""}`;
+      <span class="rs-fecha"><em>Comunicaciones al</em> ${f.comunicaciones_consultadas_el ? esc(fmtFecha(f.comunicaciones_consultadas_el)) : "—"}</span>${notaAcceso(f)}`;
   }
 
   function celdaComunicaciones(f) {
@@ -108,7 +126,7 @@
   }
 
   function renderInicio() {
-    const atencion = FILTROS.filter(([id]) => ["deuda", "uso_alto", "suben", "sin_datos"].includes(id)).map(([id, label, pasa]) => {
+    const atencion = FILTROS.filter(([id]) => ["requiere_accion", "deuda", "uso_alto", "suben", "sin_datos"].includes(id)).map(([id, label, pasa]) => {
       const n = filas.filter(pasa).length;
       return `<button type="button" data-filtro="${id}"${n ? "" : " disabled"}>${esc(typeof label === "function" ? label() : label)} <b class="${n ? "" : "cero"}">${n}</b></button>`;
     }).join("");
@@ -297,6 +315,29 @@
     return `${corto(meses[0].mes)} – ${corto(meses[meses.length - 1].mes)} · ${meses.length} ${meses.length === 1 ? "mes" : "meses"}`;
   }
 
+  const AVISO_ACCESO = {
+    clave_incorrecta: ["ARCA rechazó la clave fiscal de este cliente", "No se reintenta para no bloquear la clave en ARCA.", "Cambiar clave en Configuraciones"],
+    clave_vencida: ["ARCA pide cambiar la clave fiscal de este cliente", "Hay que cambiarla en ARCA y cargar la nueva; no se reintenta hasta entonces.", "Cambiar clave en Configuraciones"],
+    segundo_factor: ["ARCA pide un segundo factor para ingresar", "La sincronización automática no puede resolverlo; no se reintenta.", "Ver en Configuraciones"],
+    sin_delegacion: ["El representante no ve este CUIT en ARCA", "Revisá en ARCA la delegación de Mis Comprobantes y CCMA a su representante.", "Ver en Configuraciones"],
+  };
+
+  // Detalle de un cliente sin acceso a ARCA: qué pasó, desde cuándo las cifras están congeladas y dónde se arregla.
+  function avisoAcceso(e, deuda) {
+    if (!e.acceso || e.acceso.nivel !== "accion") return "";
+    const [titulo, extra, boton] = AVISO_ACCESO[e.acceso.motivo] || AVISO_ACCESO.clave_incorrecta;
+    const desde = e.sincronizado_el || deuda.consultada_el;
+    const cuando = desde
+      ? `Desde el ${esc(fmtFecha(desde))} no se sincronizan Mis Comprobantes ni CCMA: las cifras de abajo son de esa fecha y no se actualizan.`
+      : "Todavía no hay datos de Mis Comprobantes ni CCMA de este cliente.";
+    return `<div class="rs-alerta" role="alert"><span class="rs-alerta-ic" aria-hidden="true">!</span>
+      <div><h4>${esc(titulo)}</h4><p>${cuando} ${esc(extra)}</p></div>
+      <a class="button button-primary" href="#configuraciones">${esc(boton)}</a></div>`;
+  }
+
+  const etiquetaAl = (e, texto, fecha) =>
+    e.acceso && e.acceso.nivel === "accion" && fecha ? `<span class="rs-al">${texto} ${esc(fmtFecha(fecha))}</span>` : "";
+
   function renderDetalle(d) {
     const c = d.cliente, u = d.utilizacion, e = d.estado, r = d.recategorizacion, deuda = d.deuda;
     const [estadoTxt, tono] = ESTADOS[e.estado] || [e.estado, "muted"];
@@ -320,14 +361,15 @@
         <div><h2>${esc(c.nombre || fmtCuit(c.cuit))}</h2><p>${esc(fmtCuit(c.cuit))}${c.actividad ? ` · ${esc(c.actividad)}` : ""}</p></div>
         <div>${c.categoria ? `<span class="mt-cat">${esc(c.categoria)}</span>` : ""} <span class="mt-state ${tono}">${esc(estadoTxt)}</span>${e.motivo ? `<p class="mt-sub">${esc(e.motivo)}</p>` : ""}</div>
       </header>
+      ${avisoAcceso(e, deuda)}
       <div class="rs-tarjetas">
         <article class="rs-tarjeta"><h3>Utilización del límite</h3><strong class="rs-grande">${fmtPct(u.uso)}</strong>${barra}
           ${u.facturacion_periodo != null ? `<p>Facturado ${money(u.facturacion_periodo)} de ${money(u.tope)}</p>` : `<p class="mt-sub">Tope de la categoría: ${money(u.tope)}</p>`}
-          <p class="mt-sub">${u.margen != null ? (u.margen >= 0 ? `Podés facturar sin pasarte ${money(u.margen)}` : `Superás el tope por ${money(-u.margen)}`) : "—"}${u.origen_facturacion ? ` · ${esc(u.origen_facturacion)}` : ""}</p></article>
+          <p class="mt-sub">${u.margen != null ? (u.margen >= 0 ? `Podés facturar sin pasarte ${money(u.margen)}` : `Superás el tope por ${money(-u.margen)}`) : "—"}${u.origen_facturacion ? ` · ${esc(u.origen_facturacion)}` : ""}</p>${etiquetaAl(e, "Datos al", e.sincronizado_el)}</article>
         <article class="rs-tarjeta"><h3>Deuda ARCA</h3><strong class="rs-grande">${money(deuda.monto)}</strong>
-          <p class="mt-sub">${deuda.monto == null ? "Sin consultar CCMA" : `${deuda.periodos_deudores ?? 0} período(s) deudor(es) · consultada ${esc(fmtFecha(deuda.consultada_el))}`}</p></article>
+          <p class="mt-sub">${deuda.monto == null ? "Sin consultar CCMA" : `${deuda.periodos_deudores ?? 0} período(s) deudor(es) · consultada ${esc(fmtFecha(deuda.consultada_el))}`}</p>${etiquetaAl(e, "Consultada el", deuda.consultada_el)}</article>
         <article class="rs-tarjeta"><h3>Categoría proyectada</h3><strong class="rs-grande">${esc(r.categoria_proyectada || "—")}</strong>
-          <p>${esc(mantiene)}</p><p class="mt-sub">Recategorización de ${esc(r.recategorizacion || "—")} ${ipc ? "· " + esc(ipc) : ""}</p></article>
+          <p>${esc(mantiene)}</p><p class="mt-sub">Recategorización de ${esc(r.recategorizacion || "—")} ${ipc ? "· " + esc(ipc) : ""}</p>${etiquetaAl(e, "Con datos al", e.sincronizado_el)}</article>
       </div>
       <section class="rs-seccion">
         <header class="rs-seccion-cab"><h3>Detalle de ventas del período</h3><span>${esc(rangoMeses(d.ventas.meses))}</span></header>

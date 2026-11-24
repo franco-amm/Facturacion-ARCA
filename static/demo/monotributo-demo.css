@@ -98,3 +98,6 @@
 
 /* Tabla de CUIT seguidos: todo centrado salvo Contribuyente (23/11/2026) */
 table:has(#mtRows) th:not(:first-child), #mtRows > tr > td:not(:first-child) { text-align: center; }
+
+/* Sin acceso a ARCA (24/11/2026): la fecha de la última sincronización queda congelada. */
+.mt-sub.mt-congelada { color: #8c2f27; font-weight: 700; }

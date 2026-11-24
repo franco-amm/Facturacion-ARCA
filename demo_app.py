@@ -124,7 +124,7 @@ def demo_monotributo_proyeccion() -> dict[str, Any]:
 
 
 _ORDEN = list("ABCDEFGHIJK")
-_ESTADO_ORDEN = {"revisar": 0, "atencion": 1, "sin_datos": 2, "al_dia": 3}
+_ESTADO_ORDEN = {"requiere_accion": 0, "revisar": 1, "atencion": 2, "sin_datos": 3, "al_dia": 4}
 
 
 UMBRAL_ATENCION, UMBRAL_REVISAR = 0.85, 0.95  # mismos que el Resumen real
@@ -136,8 +136,11 @@ def _nivel_uso(uso: Optional[float]) -> str:
     return "bad" if uso >= UMBRAL_REVISAR else "warn" if uso >= UMBRAL_ATENCION else ""
 
 
-def _estado_resumen(uso: Optional[float], deuda: Optional[float], sube: bool, viejo: bool) -> tuple[str, Optional[str]]:
+def _estado_resumen(uso: Optional[float], deuda: Optional[float], sube: bool, viejo: bool,
+                    acceso: Optional[dict[str, Any]] = None) -> tuple[str, Optional[str]]:
     """Mismos umbrales que el Resumen real (propuestos: 85 % atención, 95 % revisar)."""
+    if acceso and acceso.get("nivel") == "accion":
+        return "requiere_accion", acceso["texto"]
     if uso is None:
         return "sin_datos", "Sin facturación sincronizada"
     con_deuda = bool(deuda and deuda > 0)
@@ -173,7 +176,8 @@ def _fila_resumen(c: dict[str, Any], ccma: dict[str, Any], hoy: str, dfe: Option
     deuda = None if saldo is None else (-saldo if saldo < 0 else 0.0)
     sync = c.get("sincronizado_el")
     viejo = bool(sync) and (date.fromisoformat(hoy) - date.fromisoformat(sync)).days > 3
-    estado, motivo = _estado_resumen(uso, deuda, sube, viejo)
+    acceso = c.get("acceso") or {"nivel": "ok", "motivo": None, "texto": None}
+    estado, motivo = _estado_resumen(uso, deuda, sube, viejo, acceso)
     com = (dfe or {}).get(cuit)
     return {
         "comunicaciones_sin_ver": com["sin_ver"] if com else None,
@@ -186,7 +190,8 @@ def _fila_resumen(c: dict[str, Any], ccma: dict[str, Any], hoy: str, dfe: Option
         "deuda_arca": deuda, "saldo_ccma": saldo,
         "deuda_consultada_el": deuda_ccma["ultima_deuda"]["consultado_en"] if deuda_ccma else None,
         "periodos_deudores": sum(1 for x in deuda_ccma["saldos"] if x["estado"] == "deudor") if deuda_ccma else None,
-        "sincronizado_el": sync, "sincronizacion_error": False, "desactualizado": viejo,
+        "sincronizado_el": sync, "sincronizacion_error": acceso["nivel"] in ("accion", "fallo"), "desactualizado": viejo,
+        "acceso": acceso,
         "estado": estado, "motivo": motivo,
     }
 
@@ -205,7 +210,8 @@ def demo_resumen() -> dict[str, Any]:
                            "consultado": cl["ultima_consulta"]}
     filas = [_fila_resumen(c, ccma, mono["periodo"]["hasta"], dfe) for c in mono["contribuyentes"]]
     filas.sort(key=lambda f: (_ESTADO_ORDEN[f["estado"]], -(f["uso"] or 0), f["nombre"]))
-    return {"periodo": mono["periodo"], "clientes": filas, "conteo": {"clientes": len(filas)},
+    conteo = {"clientes": len(filas), "requiere_accion": sum(1 for f in filas if f["estado"] == "requiere_accion")}
+    return {"periodo": mono["periodo"], "clientes": filas, "conteo": conteo,
             "umbrales": {"atencion": round(UMBRAL_ATENCION * 100), "revisar": round(UMBRAL_REVISAR * 100)}}
 
 
@@ -230,7 +236,7 @@ def demo_resumen_detalle(cuit: str) -> dict[str, Any]:
     saldos = sorted(ccma[cuit]["saldos"], key=lambda s: s["periodo"], reverse=True)[:12] if cuit in ccma else []
     return {
         "cliente": {k: fila[k] for k in ("cuit", "nombre", "actividad", "categoria")},
-        "estado": {k: fila[k] for k in ("estado", "motivo", "sincronizado_el", "desactualizado", "sincronizacion_error")},
+        "estado": {k: fila[k] for k in ("estado", "motivo", "sincronizado_el", "desactualizado", "sincronizacion_error", "acceso")},
         "periodo": mono["periodo"],
         "utilizacion": {k: fila[k] for k in ("facturacion_periodo", "origen_facturacion", "tope", "uso", "uso_nivel", "margen")},
         "deuda": {"monto": fila["deuda_arca"], "saldo_neto": fila["saldo_ccma"], "periodos_deudores": fila["periodos_deudores"],

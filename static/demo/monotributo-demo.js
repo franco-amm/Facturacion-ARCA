@@ -10,10 +10,13 @@
   const ESTADOS = {
     ok: ["En regla", "ok"], cercano: ["Cerca del tope", "warn"], excedido: ["Supera el tope", "bad"],
     sin_facturacion: ["Falta facturación", "muted"], sin_datos: ["Sin consultar", "muted"],
+    requiere_accion: ["Requiere acción", "bad"], sin_sincronizar: ["Sin sincronizar", "muted"],
   };
   const HINT = {
-    sin_facturacion: "No hay facturación para comparar contra el tope. Falta cargar el CUIT y su clave fiscal en Configuraciones → Clientes · Mis Comprobantes (o todavía no se sincronizó). También podés cargar el monto a mano.",
+    sin_facturacion: "No hay facturación para comparar contra el tope. Falta cargar el CUIT y su clave fiscal en Configuraciones → Clientes · Mis Comprobantes. También podés cargar el monto a mano.",
+    sin_sincronizar: "Tiene la clave cargada pero todavía no se sincronizó: se hace esta noche, o con «Sincronizar ahora» en Configuraciones.",
   };
+  const ayudaEstado = (c) => (c.estado === "requiere_accion" && c.acceso ? `${c.acceso.texto}: no se sincroniza hasta resolverlo en Configuraciones.` : HINT[c.estado]);
   const NUM = new Intl.NumberFormat("es-AR", { maximumFractionDigits: 0 });
   let loaded = false;
 
@@ -37,7 +40,10 @@
   function subFacturacion(c) {
     if (c.facturacion_periodo == null) return "";
     const enLinea = c.facturacion_en_linea > 0 ? ` · incluye ${money(c.facturacion_en_linea)} de Comprobantes en línea` : "";
-    const sync = c.sincronizado_el ? `<span class="mt-sub">Sincronizado ${fmtFecha(c.sincronizado_el)}</span>` : "";
+    const frio = c.acceso && c.acceso.nivel === "accion";
+    const sync = c.sincronizado_el
+      ? `<span class="mt-sub${frio ? " mt-congelada" : ""}"${frio ? ` title="${esc(c.acceso.texto)}: datos congelados"` : ""}>Sincronizado ${fmtFecha(c.sincronizado_el)}</span>`
+      : "";
     return `<span class="mt-sub">${esc(c.origen_facturacion)}${enLinea}</span>${sync}`;
   }
 
@@ -236,7 +242,7 @@
         <td class="amount-cell">${celdaCompras(c)}</td>
         <td class="mt-use">${bar}</td>
         <td>${corresponde}</td>
-        <td><span class="mt-state ${tone}"${HINT[c.estado] ? ` title="${esc(HINT[c.estado])}" style="cursor:help"` : ""}>${esc(label)}</span></td>
+        <td><span class="mt-state ${tone}"${ayudaEstado(c) ? ` title="${esc(ayudaEstado(c))}" style="cursor:help"` : ""}>${esc(label)}</span></td>
         <td class="mt-actions"><button class="button button-quiet" data-detalle="${esc(c.cuit)}" type="button" aria-expanded="${expandidos.has(c.cuit)}">${expandidos.has(c.cuit) ? "Ocultar" : "Detalle"}</button></td>
       </tr>${expandidos.has(c.cuit) ? filaDetalle(c) : ""}`;
     }).join("");
