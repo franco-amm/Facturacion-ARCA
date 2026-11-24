@@ -45,7 +45,7 @@
 .rs-info:hover .rs-tip, .rs-filtro:focus-visible .rs-tip { display: block; }
 
 .rs-info-th { position: relative; top: auto; right: auto; display: inline-grid; margin-left: 4px; vertical-align: middle; }
-.rs-info-th .rs-tip { top: 22px; right: auto; left: -6px; text-transform: none; letter-spacing: normal; }
+.rs-info-th .rs-tip { top: 22px; right: auto; left: -6px; text-transform: none; letter-spacing: normal; white-space: normal; }  /* el th no corta líneas: el tooltip sí */
 .rs-info-th:focus .rs-tip { display: block; }
 
 /* ---- Gráficos del detalle ---- */
@@ -152,3 +152,13 @@
 .rs-alerta .button { flex: none; margin-left: auto; padding: 9px 14px; height: auto; line-height: 1.2; white-space: nowrap; }
 .rs-tarjeta .rs-al { display: inline-block; margin-top: 6px; padding: 2px 7px; border-radius: 9px; background: #fbf0ee; color: #8c2f27; font-size: 10.5px; font-weight: 700; }
 @media (max-width: 720px) { .rs-alerta { flex-wrap: wrap; } .rs-alerta .button { width: 100%; margin-left: 0; } }
+
+/* Orden por columna (24/11/2026): clic en el encabezado alterna ascendente / descendente. */
+.rs-orden { display: inline-flex; align-items: center; gap: 5px; padding: 0; border: 0; background: none; color: inherit; font: inherit; letter-spacing: inherit; text-transform: inherit; cursor: pointer; }
+.rs-orden:hover { color: var(--ink, #1d2b24); }
+.rs-orden i { width: 0; height: 0; border-left: 4px solid transparent; border-right: 4px solid transparent; border-top: 5px solid currentColor; opacity: .25; }
+.rs-orden[data-dir="asc"] i { border-top: 0; border-bottom: 5px solid currentColor; opacity: 1; }
+.rs-orden[data-dir="desc"] i { opacity: 1; }
+.rs-orden[data-dir="asc"], .rs-orden[data-dir="desc"] { color: var(--forest, #1f4d3a); }
+.rs-orden:focus-visible { outline: 2px solid var(--forest, #1f4d3a); outline-offset: 2px; border-radius: 2px; }
+.amount-cell .rs-orden { justify-content: flex-end; }

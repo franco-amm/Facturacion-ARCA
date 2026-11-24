@@ -222,14 +222,14 @@
         <div class="rs-inicio" id="rsInicio" hidden></div>
         <div class="table-wrap" id="rsTabla">
           <table>
-            <thead><tr>
-              <th scope="col">CLIENTE</th>
-              <th scope="col">CATEGORÍA</th>
-              <th scope="col">USO DEL TOPE <span class="rs-info rs-info-th" tabindex="0" aria-label="Facturación del período de recategorización como porcentaje del tope anual de la categoría actual.">i<span class="rs-tip">Facturación del período de recategorización como porcentaje del tope anual de la categoría actual.</span></span></th>
-              <th scope="col" class="amount-cell">DEUDA ARCA</th>
-              <th scope="col" class="amount-cell">COMUNICACIONES</th>
-              <th scope="col">DATOS AL</th>
-              <th scope="col">ESTADO</th>
+            <thead id="rsCabecera"><tr>
+              <th scope="col"><button type="button" class="rs-orden" data-orden="cliente">CLIENTE<i aria-hidden="true"></i></button></th>
+              <th scope="col"><button type="button" class="rs-orden" data-orden="categoria">CATEGORÍA<i aria-hidden="true"></i></button></th>
+              <th scope="col"><button type="button" class="rs-orden" data-orden="uso">USO DEL TOPE<i aria-hidden="true"></i></button> <span class="rs-info rs-info-th" tabindex="0" aria-label="Facturación del período de recategorización como porcentaje del tope anual de la categoría actual.">i<span class="rs-tip">Facturación del período de recategorización como porcentaje del tope anual de la categoría actual.</span></span></th>
+              <th scope="col" class="amount-cell"><button type="button" class="rs-orden" data-orden="deuda">DEUDA ARCA<i aria-hidden="true"></i></button></th>
+              <th scope="col" class="amount-cell"><button type="button" class="rs-orden" data-orden="comunicaciones">COMUNICACIONES<i aria-hidden="true"></i></button></th>
+              <th scope="col"><button type="button" class="rs-orden" data-orden="datos">DATOS AL<i aria-hidden="true"></i></button></th>
+              <th scope="col"><button type="button" class="rs-orden" data-orden="estado">ESTADO<i aria-hidden="true"></i></button></th>
               <th scope="col"><span class="sr-only">Acciones</span></th>
             </tr></thead>
             <tbody id="rsRows"></tbody>

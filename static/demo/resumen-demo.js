@@ -47,11 +47,52 @@
     render();
   }
 
+  // Orden por columna (clic en el encabezado: ascendente, otro clic descendente). Sin elegir, manda el estado.
+  const ORDEN_ESTADO = { requiere_accion: 0, revisar: 1, atencion: 2, sin_datos: 3, al_dia: 4 };
+  const CLAVE_ORDEN = {
+    cliente: (f) => (f.nombre || f.cuit).toLowerCase(),
+    categoria: (f) => f.categoria || null,
+    uso: (f) => f.uso,
+    deuda: (f) => f.deuda_arca,
+    comunicaciones: (f) => f.comunicaciones_sin_ver,
+    datos: (f) => f.sincronizado_el || null,
+    estado: (f) => ORDEN_ESTADO[f.estado] ?? 9,
+  };
+  let orden = null;   // { campo, dir: 1 | -1 }
+
+  function ordenar(lista) {
+    if (!orden) return lista;
+    const clave = CLAVE_ORDEN[orden.campo];
+    return [...lista].sort((x, y) => {
+      const a = clave(x), b = clave(y);
+      if (a == null || b == null) return a == null && b == null ? 0 : a == null ? 1 : -1;   // sin dato, siempre al final
+      const c = typeof a === "string" ? a.localeCompare(b, "es") : a - b;
+      return c * orden.dir;
+    });
+  }
+
   function visibles() {
     const pasa = FILTROS.find(([id]) => id === (filtro || "todos"))[2];
     const q = busqueda.trim().toLowerCase();
-    return filas.filter((f) => pasa(f) && (!q || `${f.nombre} ${f.cuit}`.toLowerCase().includes(q)));
+    return ordenar(filas.filter((f) => pasa(f) && (!q || `${f.nombre} ${f.cuit}`.toLowerCase().includes(q))));
   }
+
+  function pintarOrden() {
+    document.querySelectorAll("#rsCabecera .rs-orden").forEach((boton) => {
+      const activo = orden && orden.campo === boton.dataset.orden;
+      boton.closest("th").setAttribute("aria-sort", activo ? (orden.dir > 0 ? "ascending" : "descending") : "none");
+      boton.dataset.dir = activo ? (orden.dir > 0 ? "asc" : "desc") : "";
+    });
+  }
+
+  $("rsCabecera").addEventListener("click", (event) => {
+    const boton = event.target.closest(".rs-orden");
+    if (!boton) return;
+    const campo = boton.dataset.orden;
+    orden = orden && orden.campo === campo ? { campo, dir: -orden.dir } : { campo, dir: 1 };
+    pintarOrden();
+    render();
+  });
 
   // Sin acceso a ARCA (requiere acción) las fechas de facturación y deuda quedan congeladas: van en rojo.
   const congelado = (f) => f.acceso && f.acceso.nivel === "accion";
