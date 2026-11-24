@@ -54,7 +54,7 @@
         : l === true ? `<button class="button button-quiet" data-contenido="${esc(c.id)}" type="button">Ver contenido</button>`
         : '<span class="mt-sub">—</span>';
       return `<tr class="${c.vista ? "dfe-vista" : ""}">
-        <td><span class="mt-name">${esc(nombreDe(c.cuit))}</span><span class="mt-doc">${esc(fmtCuit(c.cuit))}</span></td>
+        <td><span class="mt-name" data-persona="${esc(c.cuit)}">${esc(nombreDe(c.cuit))}</span><span class="mt-doc">${esc(fmtCuit(c.cuit))}</span></td>
         <td>${esc(c.asunto)}<span class="mt-sub">${esc(c.organismo)}${c.con_adjunto ? " · con adjunto" : ""} ${etiquetaArca(c)}</span></td>
         <td>${fmtFecha(c.publicada)}</td><td>${limiteTexto(c)}</td>
         <td>${esc(TIPO[c.tipo] || c.tipo)}</td>

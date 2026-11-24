@@ -43,7 +43,7 @@
       const [etiqueta, detalle] = estado(c);
       const ocupado = c.estado === "sincronizando";
       return `<div class="cfg-cliente-row">
-        <div><strong>${esc(c.nombre || fmtCuit(c.cuit))}</strong> <span class="emisor-cuit">${esc(fmtCuit(c.cuit))}</span><br>
+        <div><strong data-persona="${esc(c.cuit)}">${esc(c.nombre || fmtCuit(c.cuit))}</strong> <span class="emisor-cuit">${esc(fmtCuit(c.cuit))}</span><br>
           ${etiqueta} <small class="gr-estado">${esc(detalle)} · ${c.emitidos} emitidos · ${c.recibidos} recibidos</small></div>
         <div class="cfg-cliente-actions">
           <button class="button button-secondary" data-sync="${esc(c.cuit)}" type="button"${ocupado || c.estado === "bloqueado" ? " disabled" : ""}>Sincronizar ahora</button>

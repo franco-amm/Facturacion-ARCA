@@ -234,7 +234,7 @@
         ? `<span class="mt-cat ${sube ? "diff" : baja ? "lower" : ""}" title="${sube ? "Subiría con los topes proyectados" : baja ? "Bajaría con los topes proyectados" : "Se mantiene con los topes proyectados"}">${esc(c.categoria_proyectada)}</span>${sube ? '<span class="mt-trend" aria-hidden="true">↑</span>' : baja ? '<span class="mt-trend" aria-hidden="true">↓</span>' : ""}`
         : c.facturacion_periodo != null && c.categoria_padron ? '<span class="mt-sub">Fuera de escala</span>' : "—";
       return `<tr>
-        <td><span class="mt-name">${esc(c.nombre)}</span><span class="mt-doc">${esc(fmtCuit(c.cuit))}</span>
+        <td><span class="mt-name" data-persona="${esc(c.cuit)}">${esc(c.nombre)}</span><span class="mt-doc">${esc(fmtCuit(c.cuit))}</span>
           <span class="mt-sub">${esc(c.actividad)} (según padrón)</span></td>
         <td><span class="mt-cat">${esc(c.categoria_padron)}</span></td>
         <td class="amount-cell">${money(c.tope)}</td>

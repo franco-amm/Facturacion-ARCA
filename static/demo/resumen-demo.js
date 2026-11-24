@@ -154,7 +154,7 @@
         : `<div class="mt-bar ${f.uso_nivel || ""}"><i style="width:${Math.min(p, 100)}%"></i></div><span class="mt-pct">${fmtPct(f.uso)}</span>`;
       const proy = f.sube_categoria ? `<span class="mt-trend" aria-hidden="true">→</span><span class="mt-cat diff" title="Subiría con el límite proyectado">${esc(f.categoria_proyectada)}</span>` : "";
       return `<tr>
-        <td><span class="recipient-name">${esc(f.nombre || fmtCuit(f.cuit))}</span>${f.nombre ? `<span class="recipient-doc">${esc(fmtCuit(f.cuit))}</span>` : ""}</td>
+        <td><span class="recipient-name" data-persona="${esc(f.cuit)}">${esc(f.nombre || fmtCuit(f.cuit))}</span>${f.nombre ? `<span class="recipient-doc">${esc(fmtCuit(f.cuit))}</span>` : ""}</td>
         <td>${f.categoria ? `<span class="mt-cat">${esc(f.categoria)}</span>` : "—"}${proy}</td>
         <td class="mt-use">${barra}</td>
         <td class="amount-cell">${money(f.deuda_arca)}</td>
@@ -399,7 +399,7 @@
     return `
       <button class="button button-quiet" type="button" data-volver>← Volver al listado</button>
       <header class="rs-cab">
-        <div><h2>${esc(c.nombre || fmtCuit(c.cuit))}</h2><p>${esc(fmtCuit(c.cuit))}${c.actividad ? ` · ${esc(c.actividad)}` : ""}</p></div>
+        <div><h2 data-persona="${esc(c.cuit)}">${esc(c.nombre || fmtCuit(c.cuit))}</h2><p>${esc(fmtCuit(c.cuit))}${c.actividad ? ` · ${esc(c.actividad)}` : ""}</p></div>
         <div>${c.categoria ? `<span class="mt-cat">${esc(c.categoria)}</span>` : ""} <span class="mt-state ${tono}">${esc(estadoTxt)}</span>${e.motivo ? `<p class="mt-sub">${esc(e.motivo)}</p>` : ""}</div>
       </header>
       ${avisoAcceso(e, deuda)}

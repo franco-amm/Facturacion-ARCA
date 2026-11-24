@@ -256,7 +256,7 @@
          ${wa}
          ${origen}`;
     return `<tr class="ntf-${esc(a.estado)}">
-      <td><span class="recipient-name">${esc(a.nombre || "Sin nombre")}</span><span class="recipient-doc">${esc(fmtCuit(a.cuit))}</span></td>
+      <td><span class="recipient-name" data-persona="${esc(a.cuit)}">${esc(a.nombre || "Sin nombre")}</span><span class="recipient-doc">${esc(fmtCuit(a.cuit))}</span></td>
       <td>${esc(a.titulo)}${a.detalle ? `<span class="mt-sub">${esc(a.detalle)}</span>` : ""}</td>
       <td>${fmtFecha(a.fecha_hecho)}</td>
       <td>${etiquetaSeveridad(a) || '<span class="mt-sub">—</span>'}</td>

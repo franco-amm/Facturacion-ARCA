@@ -27,7 +27,7 @@
     $("ccmaDatos").hidden = !d;
     if (!d) return;
     const u = d.ultima_deuda;
-    const cliente = `${esc(fmtCuit(d.cuit))} - ${esc(d.nombre)}`;
+    const cliente = `<span data-persona="${esc(d.cuit)}">${esc(fmtCuit(d.cuit))} - ${esc(d.nombre)}</span>`;
     $("ccmaDeudaBody").innerHTML = `<tr><td>${cliente}</td><td>${esc(u.fecha_calculo)}</td>
       <td>${fmtPeriodo(u.periodo_desde)} - ${fmtPeriodo(u.periodo_hasta)}</td>
       <td class="amount-cell">${money(u.total_deudor)}</td><td class="amount-cell">${money(u.total_acreedor)}</td>
