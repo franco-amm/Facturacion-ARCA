@@ -73,19 +73,14 @@
         <select class="emisor-picker-select" id="emisorSelect"></select>
       </section>
 
-      <section class="account-strip" aria-label="Cuenta de demostración">
-        <div class="account-item"><span class="account-label">EMISOR</span><strong id="issuerName">Cargando demo…</strong></div>
+      <section class="account-strip" id="accountStrip" aria-label="Cuenta emisora y sincronización">
+        <div class="account-item"><span class="account-label">CUIT EMISOR</span><strong id="issuerCuit">Cargando demo…</strong></div>
         <span class="strip-divider" aria-hidden="true"></span>
-        <div class="account-item"><span class="account-label">IDENTIFICADOR</span><strong id="issuerCuit">—</strong></div>
-        <span class="strip-divider" aria-hidden="true"></span>
-        <div class="account-item"><span class="account-label">PUNTO DE VENTA</span><strong id="pointOfSale">—</strong></div>
-        <div class="account-count"><strong id="totalCount">—</strong><span>ejemplos</span></div>
-      </section>
-
-      <section class="demo-status" aria-label="Datos de muestra">
-        <div class="status-mark" aria-hidden="true">✓</div>
-        <div><h2 id="demoTitle">Conjunto de muestra cargado</h2><p id="demoMessage">Los ejemplos incluyen facturas y notas asociadas.</p></div>
-        <button class="button button-secondary" id="reloadDemo" type="button"><span aria-hidden="true">↻</span> Recargar demo</button>
+        <div class="account-item sync-account">
+          <span class="account-label">ÚLTIMA SINCRONIZACIÓN</span><strong id="lastSync">—</strong>
+          <span class="sync-estado" id="syncEstado" data-tono="ok" role="status"><i aria-hidden="true"></i><span><span class="sync-estado-titulo" id="demoTitle">Al día</span><span id="demoMessage">Datos de muestra.</span></span></span>
+        </div>
+        <div class="sync-actions"><button class="button button-secondary" id="reloadDemo" type="button"><span aria-hidden="true">↻</span> Recargar demo</button></div>
       </section>
 
       <section class="filter-section" aria-label="Filtros de comprobantes">

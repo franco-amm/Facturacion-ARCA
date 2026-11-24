@@ -75,3 +75,20 @@ h1,h2,p { margin-top:0; }h1 { margin-bottom:4px; font-family:Georgia,"Times New 
 .emisores + .account-strip { margin-top: 15px; }
 .origin-tag { display: inline-block; margin-left: 4px; padding: 3px 6px; border-radius: 2px; font-size: 9px; font-weight: 700; white-space: nowrap; color: #3d5a73; background: #e6eef5; }
 .origin-tag.origin-mis_comprobantes { color: #7a5a1e; background: #f6ecd6; }
+
+/* Comprobantes (24/11/2026): CUIT, última sincronización con su estado y el botón, en un solo recuadro. */
+#accountStrip { flex-wrap: wrap; row-gap: 10px; }
+#accountStrip .sync-account { flex: 1; min-width: 0; }
+#accountStrip .sync-actions { margin-left: auto; }
+#accountStrip .sync-progress { position: static; flex-basis: 100%; transform: none; padding-top: 2px; }
+.sync-estado { display: flex; align-items: baseline; gap: 6px; margin-top: 2px; color: #65786b; font-size: 11px; font-weight: 500; line-height: 1.45; }
+.sync-estado i { flex: none; width: 7px; height: 7px; border-radius: 50%; background: #b8c2bb; transform: translateY(-1px); }
+.sync-estado-titulo { font-weight: 600; }
+.sync-estado-titulo:not(:empty) + span:not(:empty)::before { content: " · "; font-weight: 500; }
+.sync-estado[data-tono="ok"] i { background: #4f9a6b; }
+.sync-estado[data-tono="warn"] { color: #7a5a12; } .sync-estado[data-tono="warn"] i { background: #c99a2e; }
+.sync-estado[data-tono="bad"] { color: #8c2f27; } .sync-estado[data-tono="bad"] i { background: #b5483d; }
+.sync-estado[data-tono="sync"] i { background: #c99a2e; animation: pulso 1.2s ease-in-out infinite; }
+.sync-estado a { color: var(--forest, #1f4d3a); font-weight: 600; }
+@keyframes pulso { 50% { opacity: .35; } }
+@media (max-width: 720px) { #accountStrip .sync-actions { width: 100%; } #accountStrip .sync-actions .button { width: 100%; } }

@@ -4,7 +4,7 @@ const TYPE_LABELS = {
   11: "Factura C", 12: "Nota de Débito C", 13: "Nota de Crédito C",
 };
 const ui = Object.fromEntries([
-  "issuerName", "issuerCuit", "pointOfSale", "totalCount", "demoMessage",
+  "issuerCuit", "lastSync", "syncEstado", "demoMessage",
   "filterForm", "fromDate", "toDate", "searchInput", "resultSummary",
   "visibleCount", "invoiceRows", "tableWrap", "tableState", "footerCount",
   "csvButton", "xlsxButton", "reloadDemo", "detailDialog", "detailTitle",
@@ -63,20 +63,22 @@ function invoicesOfSelected() {
 function renderIssuer() {
   const issuer = dataset.emisores.find((item) => item.id === selectedId);
   const invoices = invoicesOfSelected();
-  ui.issuerName.textContent = issuer.name;
   ui.issuerCuit.textContent = issuer.cuit;
-  ui.pointOfSale.textContent = issuer.punto_venta;
-  ui.totalCount.textContent = new Intl.NumberFormat("es-AR").format(invoices.length);
+  // Como en producción: la última sincronización correcta (en la demo, la nocturna de hoy a las 5:00) y su estado.
+  const nocturna = new Date(); nocturna.setHours(5, 0, 0, 0);
+  ui.lastSync.textContent = nocturna.toLocaleString("es-AR", { dateStyle: "short", timeStyle: "short" });
   ui.tableTitle.textContent = issuer.propio ? "Historial de emisión" : `Historial de emisión · ${issuer.name.replace(" (DEMO)", "")}`;
   const fuente = issuer.source || "wsfe";
   const base = `${invoices.length} registros ficticios de este CUIT · sin conexión a ARCA`;
-  const titulo = { mixto: "WSFEv1 y Mis Comprobantes", mis_comprobantes: "Datos de Mis Comprobantes" }[fuente] || "Conjunto de muestra cargado";
+  const titulo = "Al día";
   const nota = {
     mixto: "Se combinan los comprobantes de WSFEv1 con los de Mis Comprobantes que WSFEv1 no ve (por ejemplo, Comprobantes en línea). La etiqueta de cada fila indica el origen; si están en los dos, manda WSFEv1.",
     mis_comprobantes: "Este CUIT se consulta solo desde Mis Comprobantes (Comprobantes en línea): no usa WSFEv1 ni necesita delegar «Facturación Electrónica».",
   }[fuente];
   document.getElementById("demoTitle").textContent = titulo;
-  ui.demoMessage.textContent = nota ? `${base}. ${nota}` : base;
+  const origen = { mixto: "WSFEv1 + Mis Comprobantes", mis_comprobantes: "Mis Comprobantes (emitidos, recibidos y CCMA) · se sincroniza solo cada noche" }[fuente] || "WSFEv1";
+  ui.demoMessage.textContent = `${origen} · ${base}`;
+  ui.syncEstado.title = nota || "";
   ui.footerCount.nextElementSibling.textContent = { mixto: "WSFEv1 + scraper de Mis Comprobantes (datos ficticios)", mis_comprobantes: "Datos del scraper de Mis Comprobantes (ficticios)" }[fuente] || "Conjunto de datos ficticio";
 }
 
