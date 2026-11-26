@@ -43,47 +43,157 @@
   "categorias": {
     "A": {
       "actual": 12009410.45,
-      "proyectado": 13362550.11
+      "proyectado": 13362550.11,
+      "impuesto": {
+        "servicios": {
+          "actual": 5585.77,
+          "proyectado": 6215.14
+        },
+        "bienes": {
+          "actual": 5585.77,
+          "proyectado": 6215.14
+        }
+      }
     },
     "B": {
       "actual": 17595182.74,
-      "proyectado": 19577689.69
+      "proyectado": 19577689.69,
+      "impuesto": {
+        "servicios": {
+          "actual": 10612.98,
+          "proyectado": 11808.78
+        },
+        "bienes": {
+          "actual": 10612.98,
+          "proyectado": 11808.78
+        }
+      }
     },
     "C": {
       "actual": 24670494.31,
-      "proyectado": 27450199.82
+      "proyectado": 27450199.82,
+      "impuesto": {
+        "servicios": {
+          "actual": 18246.86,
+          "proyectado": 20302.79
+        },
+        "bienes": {
+          "actual": 16757.32,
+          "proyectado": 18645.42
+        }
+      }
     },
     "D": {
       "actual": 30628651.43,
-      "proyectado": 34079682.04
+      "proyectado": 34079682.04,
+      "impuesto": {
+        "servicios": {
+          "actual": 29790.79,
+          "proyectado": 33147.42
+        },
+        "bienes": {
+          "actual": 27742.67,
+          "proyectado": 30868.53
+        }
+      }
     },
     "E": {
       "actual": 36028231.33,
-      "proyectado": 40087650.32
+      "proyectado": 40087650.32,
+      "impuesto": {
+        "servicios": {
+          "actual": 55857.73,
+          "proyectado": 62151.4
+        },
+        "bienes": {
+          "actual": 44313.79,
+          "proyectado": 49306.77
+        }
+      }
     },
     "F": {
       "actual": 45151659.41,
-      "proyectado": 50239044.96
+      "proyectado": 50239044.96,
+      "impuesto": {
+        "servicios": {
+          "actual": 78573.2,
+          "proyectado": 87426.3
+        },
+        "bienes": {
+          "actual": 57719.64,
+          "proyectado": 64223.1
+        }
+      }
     },
     "G": {
       "actual": 53995798.87,
-      "proyectado": 60079682.62
+      "proyectado": 60079682.62,
+      "impuesto": {
+        "servicios": {
+          "actual": 142995.76,
+          "proyectado": 159107.56
+        },
+        "bienes": {
+          "actual": 71497.87,
+          "proyectado": 79553.77
+        }
+      }
     },
     "H": {
       "actual": 81924660.37,
-      "proyectado": 91155380.55
+      "proyectado": 91155380.55,
+      "impuesto": {
+        "servicios": {
+          "actual": 409623.31,
+          "proyectado": 455776.91
+        },
+        "bienes": {
+          "actual": 204811.64,
+          "proyectado": 227888.44
+        }
+      }
     },
     "I": {
       "actual": 91699761.9,
-      "proyectado": 102031874.83
+      "proyectado": 102031874.83,
+      "impuesto": {
+        "servicios": {
+          "actual": 814591.79,
+          "proyectado": 906374.52
+        },
+        "bienes": {
+          "actual": 325836.71,
+          "proyectado": 362549.8
+        }
+      }
     },
     "J": {
       "actual": 105012519.2,
-      "proyectado": 116844624.16
+      "proyectado": 116844624.16,
+      "impuesto": {
+        "servicios": {
+          "actual": 977510.14,
+          "proyectado": 1087649.41
+        },
+        "bienes": {
+          "actual": 391004.07,
+          "proyectado": 435059.78
+        }
+      }
     },
     "K": {
       "actual": 126610838.75,
-      "proyectado": 140876497.21
+      "proyectado": 140876497.21,
+      "impuesto": {
+        "servicios": {
+          "actual": 1368514.2,
+          "proyectado": 1522709.18
+        },
+        "bienes": {
+          "actual": 456171.4,
+          "proyectado": 507569.73
+        }
+      }
     }
   },
   "origen_ipc": "INDEC (datos.gob.ar)"

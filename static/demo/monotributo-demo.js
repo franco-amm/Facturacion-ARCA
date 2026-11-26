@@ -218,11 +218,12 @@
   }
 
   let ultimos = [];
+  const pag = Paginador.crear($("mtRows").closest("table"), { etiqueta: "Paginación de CUIT", alCambiar: () => renderFilas(ultimos) });
 
   function renderFilas(items) {
     ultimos = items;
     $("mtFooter").textContent = `${items.length} CUIT de muestra`;
-    $("mtRows").innerHTML = items.map((c) => {
+    $("mtRows").innerHTML = pag.cortar(items).map((c) => {
       const [label, tone] = ESTADOS[c.estado] || [c.estado, "muted"];
       const usoBarra = c.uso_max ?? c.uso;
       const pct = usoBarra == null ? null : Math.round(usoBarra * 100);
@@ -295,10 +296,12 @@
   function renderProyeccion(p) {
     const meses = p.meses.map((m) =>
       `<li class="${m.fuente === "INDEC" ? "" : "mt-proy-est"}"><span>${esc(fmtMes(m.mes))}</span><strong>${pctFmt(m.variacion_pct)}</strong><em>${esc(m.fuente)}</em></li>`).join("");
+    const conImpuesto = Object.values(p.categorias).every((c) => c.impuesto);
     const filas = Object.entries(p.categorias).map(([letra, c]) => `<tr>
       <th scope="row">${esc(letra)}</th>
       <td class="amount-cell">${money(c.actual)}<span class="mt-proy-next">Proy: ${money(c.proyectado)}</span></td>
-      <td class="amount-cell">${money(c.actual / 12)}<span class="mt-proy-next">Proy: ${money(c.proyectado / 12)}</span></td></tr>`).join("");
+      <td class="amount-cell">${money(c.actual / 12)}<span class="mt-proy-next">Proy: ${money(c.proyectado / 12)}</span></td>${conImpuesto ? ["servicios", "bienes"].map((a) => `
+      <td class="amount-cell mt-proy-imp">${money(c.impuesto[a].actual)}<span class="mt-proy-next">Proy: ${money(c.impuesto[a].proyectado)}</span></td>`).join("") : ""}</tr>`).join("");
     $("mtProyPanel").innerHTML = `
       <header class="mt-proy-head">
         <div><h3>Topes proyectados · actualización de ${esc(mesLargo(p.actualizacion))}</h3>
@@ -307,7 +310,7 @@
       </header>
       <ul class="mt-proy-months" aria-label="IPC mensual del semestre">${meses}</ul>
       <div class="table-wrap mt-proy-wrap"><table class="mt-proy-table">
-        <thead><tr><th scope="col">CAT.</th><th scope="col" class="amount-cell">INGRESOS BRUTOS <span class="mt-sub">(tope anual)</span></th><th scope="col" class="amount-cell">INGRESOS BRUTOS <span class="mt-sub">(tope mensual)</span></th></tr></thead>
+        <thead><tr><th scope="col">CAT.</th><th scope="col" class="amount-cell">INGRESOS BRUTOS <span class="mt-sub">(tope anual)</span></th><th scope="col" class="amount-cell">INGRESOS BRUTOS <span class="mt-sub">(tope mensual)</span></th>${conImpuesto ? '<th scope="col" class="amount-cell mt-proy-imp">IMPUESTO INTEGRADO <span class="mt-sub">(mensual · servicios)</span></th><th scope="col" class="amount-cell">IMPUESTO INTEGRADO <span class="mt-sub">(mensual · venta de bienes)</span></th>' : ""}</tr></thead>
         <tbody>${filas}</tbody></table></div>
       <p class="mt-detail-note">Estimación, no es un dato oficial de ARCA. En la versión real el IPC se lee de INDEC, los meses que faltan se completan con el REM del BCRA y se reemplazan solos cuando INDEC publica el dato.</p>`;
   }

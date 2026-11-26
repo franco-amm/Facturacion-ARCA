@@ -15,8 +15,16 @@
 .rs-fecha em { color: var(--muted); font-size: 10px; font-style: normal; font-weight: 600; margin-right: 4px; }
 
 .rs-cargando { color: var(--muted); }
+.rs-volver { display: flex; justify-content: flex-end; }
 .rs-cab { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; margin: 14px 0; padding: 16px 18px; border: 1px solid var(--line); border-radius: 4px; background: var(--paper); }
 .rs-cab h2 { margin: 0; font-size: 20px; } .rs-cab p { margin: 2px 0 0; color: var(--muted); }
+.rs-cab { align-items: center; }
+.rs-cab-estado { display: flex; align-items: center; gap: 14px; }
+.rs-cab-estado > div { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; }
+.rs-cab-letra { display: grid; place-items: center; width: 60px; height: 60px; border: 1px solid #d9e4dc; border-radius: 6px; color: #234e3c; background: #f4f8f4; font-family: Georgia, serif; font-size: 32px; font-weight: 700; }
+.rs-cab-etiqueta { color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+.rs-cab .rs-cab-pill { padding: 5px 12px; border-radius: 4px; font-size: 14px; }
+.rs-cab-motivo { color: var(--muted); font-size: 13px; }
 .rs-tarjetas { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin-bottom: 14px; }
 .rs-tarjeta { padding: 14px 16px; border: 1px solid var(--line); border-radius: 4px; background: var(--paper); }
 .rs-tarjeta h3, .rs-seccion h3 { margin: 0 0 8px; color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
@@ -162,3 +170,5 @@
 .rs-orden[data-dir="asc"], .rs-orden[data-dir="desc"] { color: var(--forest, #1f4d3a); }
 .rs-orden:focus-visible { outline: 2px solid var(--forest, #1f4d3a); outline-offset: 2px; border-radius: 2px; }
 .amount-cell .rs-orden { justify-content: flex-end; }
+.rs-imp-dif { display: block; margin-top: 2px; white-space: nowrap; color: var(--muted); font-size: 12px; font-weight: 400; }
+.rs-imp-dif.sube { color: #8a5a00; }

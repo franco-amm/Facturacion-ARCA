@@ -104,8 +104,22 @@ function selectEmisor(id) {
   renderInvoices();
 }
 
+// Paginación de 25 en 25: cada render nuevo (filtros, búsqueda) vuelve a la página 1; solo los botones del paginador la mantienen.
+let paginadorComprobantes = null;
+let mantenerPagina = false;
+function paginador() {
+  paginadorComprobantes ||= Paginador.crear(ui.tableWrap, {
+    etiqueta: "Paginación de comprobantes",
+    alCambiar: () => { mantenerPagina = true; renderInvoices(); },
+  });
+  if (!mantenerPagina) paginadorComprobantes.reiniciar();
+  mantenerPagina = false;
+  return paginadorComprobantes;
+}
+
 function renderInvoices() {
   if (!dataset) return;
+  const pag = paginador();
   const start = ui.fromDate.value;
   const end = ui.toDate.value;
   const types = selectedTypes();
@@ -126,6 +140,7 @@ function renderInvoices() {
 
   if (!count) {
     ui.invoiceRows.replaceChildren();
+    pag.cortar([]);
     ui.tableState.innerHTML = `<strong>Sin comprobantes en este período</strong><p>Prueba otro intervalo de fechas o modifica los tipos seleccionados.</p>`;
     ui.tableState.hidden = false;
     ui.tableWrap.classList.add("is-empty");
@@ -134,7 +149,7 @@ function renderInvoices() {
 
   ui.tableState.hidden = true;
   ui.tableWrap.classList.remove("is-empty");
-  ui.invoiceRows.replaceChildren(...filteredInvoices.map((invoice) => {
+  ui.invoiceRows.replaceChildren(...pag.cortar(filteredInvoices).map((invoice) => {
     const type = String(invoice.TipoComprobante);
     const number = String(invoice.Numero).padStart(8, "0");
     const point = String(invoice.PuntoVenta).padStart(5, "0");

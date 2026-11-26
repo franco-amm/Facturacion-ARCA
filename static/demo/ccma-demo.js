@@ -22,6 +22,8 @@
     }).join("");
   }
 
+  const pag = Paginador.crear($("ccmaSaldosBody").closest("table"), { etiqueta: "Paginación de períodos", alCambiar: () => renderDatos() });
+
   function renderDatos() {
     const d = data.clientes.find((c) => c.cuit === seleccion);
     $("ccmaDatos").hidden = !d;
@@ -32,7 +34,7 @@
       <td>${fmtPeriodo(u.periodo_desde)} - ${fmtPeriodo(u.periodo_hasta)}</td>
       <td class="amount-cell">${money(u.total_deudor)}</td><td class="amount-cell">${money(u.total_acreedor)}</td>
       <td class="amount-cell ${clase(u.saldo_neto)}">${money(u.saldo_neto)}</td></tr>`;
-    $("ccmaSaldosBody").innerHTML = [...d.saldos].reverse().map((s) => {
+    $("ccmaSaldosBody").innerHTML = pag.cortar([...d.saldos].reverse()).map((s) => {
       const [t, tono] = ESTADOS[s.estado] || [s.estado, "muted"];
       const partes = ["saldo_arca", "saldo_iibb", "saldo_municipal"].map((k) => `<td class="amount-cell ccma-parte ${clase(s[k])}">${money(s[k])}</td>`).join("");
       return `<tr><td>${cliente}</td><td>${fmtPeriodo(s.periodo)}</td>${partes}
@@ -59,6 +61,7 @@
   $("ccmaList").addEventListener("change", (event) => {
     if (!data || !event.target.value) return;
     seleccion = event.target.value;
+    pag.reiniciar();
     render();
   });
   $("ccmaSync").addEventListener("click", () => {

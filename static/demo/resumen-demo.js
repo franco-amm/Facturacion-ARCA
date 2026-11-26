@@ -91,6 +91,7 @@
     const campo = boton.dataset.orden;
     orden = orden && orden.campo === campo ? { campo, dir: -orden.dir } : { campo, dir: 1 };
     pintarOrden();
+    pag.reiniciar();
     render();
   });
 
@@ -127,6 +128,8 @@
     return `<span class="rs-com${f.comunicaciones_urgentes ? " urgente" : ""}"${urg}>${f.comunicaciones_sin_ver}</span>`;
   }
 
+  const pag = Paginador.crear($("rsRows").closest("table"), { etiqueta: "Paginación de clientes", alCambiar: () => render() });
+
   function render() {
     $("rsFiltros").innerHTML = FILTROS.map(([id, label, pasa, ayuda]) =>
       `<button type="button" class="rs-filtro" data-filtro="${id}" aria-pressed="${id === filtro}"><strong>${filas.filter(pasa).length}</strong><span>${typeof label === "function" ? label() : label}</span>${ayuda ? `<span class="rs-info" aria-hidden="true">i<span class="rs-tip">${esc(typeof ayuda === "function" ? ayuda() : ayuda)}</span></span>` : ""}</button>`).join("");
@@ -147,7 +150,7 @@
         : "<strong>Sin clientes</strong><p>Agregá CUIT en Monotributo para verlos acá.</p>";
     }
     $("rsFooter").textContent = `${items.length} de ${filas.length} clientes`;
-    $("rsRows").innerHTML = items.map((f) => {
+    $("rsRows").innerHTML = pag.cortar(items).map((f) => {
       const [label, tono] = ESTADOS[f.estado] || [f.estado, "muted"];
       const p = pct(f.uso);
       const barra = p == null ? "—"
@@ -182,11 +185,12 @@
     if (!boton || boton.disabled || event.target.closest(".rs-info")) return;   // el ícono de ayuda no cambia el filtro
     // Un clic en el filtro ya elegido lo quita y vuelve al panel de inicio.
     filtro = filtro === boton.dataset.filtro && !busqueda.trim() ? null : boton.dataset.filtro;
+    pag.reiniciar();
     render();
   }
   $("rsFiltros").addEventListener("click", elegirFiltro);
   $("rsInicio").addEventListener("click", elegirFiltro);
-  $("rsBuscar").addEventListener("input", (event) => { busqueda = event.target.value; render(); });
+  $("rsBuscar").addEventListener("input", (event) => { busqueda = event.target.value; pag.reiniciar(); render(); });
   $("rsRows").addEventListener("click", (event) => {
     const boton = event.target.closest("[data-detalle]");
     if (boton) abrirDetalle(boton.dataset.detalle);
@@ -393,14 +397,26 @@
     const porcDif = diferencia != null && lim ? (diferencia / lim) * 100 : 0;
     const sobreLimite = diferencia != null && diferencia > 0;
     const textoLimite = diferencia == null ? "" : sobreLimite ? `Tu promedio supera el límite en ${NUM(porcDif, 1)}%` : "Tu promedio está dentro del límite";
+    const imp = r.impuesto_integrado_proyectado;
+    // Aumento contra lo que paga hoy (impuesto vigente de su categoría actual), en pesos y en %.
+    const difImp = imp && imp.hoy ? imp.proyectado - imp.hoy : null;
+    const aumentoImp = difImp == null ? ""
+      : `<span class="rs-imp-dif ${difImp > 0 ? "sube" : ""}" title="Hoy paga ${money(imp.hoy)} por mes (categoría ${esc(r.categoria || "")} vigente)">${difImp >= 0 ? "+" : "−"} ${money(Math.abs(difImp))} (${difImp >= 0 ? "+" : "−"}${NUM(Math.abs(difImp / imp.hoy) * 100, 1)}%) vs. hoy</span>`;
     const ipc = r.ipc ? `IPC ${r.ipc.variacion_pct.toLocaleString("es-AR")}%${r.ipc.estimativo ? " est." : ""}` : "";
     const saldos = deuda.saldos.length
       ? `<table class="rs-mini"><thead><tr><th>Período</th><th class="amount-cell">ARCA</th><th class="amount-cell">Ingresos Brutos</th><th class="amount-cell">Municipalidad</th><th class="amount-cell rs-total">Saldo acumulado</th><th>Estado</th></tr></thead><tbody>${deuda.saldos.map((s) => `<tr><td>${esc(String(s.periodo).slice(5, 7))}/${esc(String(s.periodo).slice(0, 4))}</td>${["saldo_arca", "saldo_iibb", "saldo_municipal"].map((k) => `<td class="amount-cell">${money(s[k])}</td>`).join("")}<td class="amount-cell rs-total"><strong>${money(s.saldo_acumulado)}</strong></td><td>${esc(s.estado)}</td></tr>`).join("")}</tbody></table><p class="rs-nota">Ingresos Brutos y Municipalidad según ARCA (Monotributo Unificado).</p>` : "";
     return `
-      <button class="button button-quiet" type="button" data-volver>← Volver al listado</button>
+      <div class="rs-volver"><button class="button button-quiet" type="button" data-volver>← Volver al listado</button></div>
       <header class="rs-cab">
         <div><h2 data-persona="${esc(c.cuit)}">${esc(c.nombre || fmtCuit(c.cuit))}</h2><p>${esc(fmtCuit(c.cuit))}${c.actividad ? ` · ${esc(c.actividad)}` : ""}</p></div>
-        <div>${c.categoria ? `<span class="mt-cat">${esc(c.categoria)}</span>` : ""} <span class="mt-state ${tono}">${esc(estadoTxt)}</span>${e.motivo ? `<p class="mt-sub">${esc(e.motivo)}</p>` : ""}</div>
+        <div class="rs-cab-estado">
+          ${c.categoria ? `<span class="rs-cab-letra">${esc(c.categoria)}</span>` : ""}
+          <div>
+            <span class="rs-cab-etiqueta">${c.categoria ? `Categoría ${esc(c.categoria)}` : "Sin categoría"}${c.actividad ? ` · ${esc(c.actividad)}` : ""}</span>
+            <span class="mt-state rs-cab-pill ${tono}">${esc(estadoTxt)}</span>
+            ${e.motivo ? `<span class="rs-cab-motivo">${esc(e.motivo)}</span>` : ""}
+          </div>
+        </div>
       </header>
       ${avisoAcceso(e, deuda)}
       <div class="rs-tarjetas">
@@ -454,6 +470,7 @@
               <div><dt>Límite promedio · proyectado</dt><dd>${money(r.limite_proyectado)}</dd></div>
               <div><dt>Tope anual vigente</dt><dd>${money(r.tope_anual)}</dd></div>
               <div><dt>Tope anual proyectado</dt><dd>${money(r.tope_anual_proyectado)}</dd></div>
+              <div><dt>Impuesto integrado proyectado${imp ? ` <span class="mt-sub" title="Impuesto integrado mensual de la categoría ${esc(imp.categoria)} (${esc(imp.actividad === "bienes" ? "venta de bienes" : "servicios")}), proyectado con el mismo IPC que los topes. Vigente: ${money(imp.actual)}">(cat. ${esc(imp.categoria)} · mensual)</span>` : ""}</dt><dd>${imp ? money(imp.proyectado) : "—"}${aumentoImp}</dd></div>
               <div><dt>Meses del período</dt><dd>${d.ventas.meses_promedio ?? "—"}</dd></div>
             </dl>
           </article>

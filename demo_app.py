@@ -215,6 +215,17 @@ def demo_resumen() -> dict[str, Any]:
             "umbrales": {"atencion": round(UMBRAL_ATENCION * 100), "revisar": round(UMBRAL_REVISAR * 100)}}
 
 
+def _impuesto_demo(proy: dict[str, Any], categoria: Optional[str], actividad: Optional[str],
+                   categoria_actual: Optional[str] = None) -> Optional[dict[str, Any]]:
+    """Impuesto integrado mensual proyectado de la categoría que correspondería, como en la app."""
+    impuesto = (proy["categorias"].get(categoria or "") or {}).get("impuesto")
+    if not impuesto:
+        return None
+    actividad = actividad if actividad in ("servicios", "bienes") else "servicios"
+    hoy = ((proy["categorias"].get(categoria_actual or categoria) or {}).get("impuesto") or {}).get(actividad) or {}
+    return {"categoria": categoria, "actividad": actividad, **impuesto[actividad], "hoy": hoy.get("actual")}
+
+
 @app.get("/api/demo/resumen/clientes/{cuit}")
 def demo_resumen_detalle(cuit: str) -> dict[str, Any]:
     mono, ccma, proy = _resumen_base()
@@ -249,6 +260,7 @@ def demo_resumen_detalle(cuit: str) -> dict[str, Any]:
             "limite_proyectado": c.get("limite_mensual_proyectado"),
             "tope_anual": fila["tope"], "tope_anual_proyectado": proy["categorias"].get(cat, {}).get("proyectado"),
             "ipc": {"variacion_pct": proy["variacion_pct"], "estimativo": proy["estimativo"], "actualizacion": proy["actualizacion"]},
+            "impuesto_integrado_proyectado": _impuesto_demo(proy, fila["categoria_proyectada"] or cat, fila["actividad"], cat),
             "categorias": categorias,
         },
     }

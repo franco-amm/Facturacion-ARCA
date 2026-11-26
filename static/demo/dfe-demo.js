@@ -44,10 +44,13 @@
     return null;
   }
 
+  const pagCom = Paginador.crear($("dfeRows").closest("table"), { etiqueta: "Paginación de comunicaciones", alCambiar: () => render() });
+  const pagCli = Paginador.crear($("dfeClientes").closest("table"), { etiqueta: "Paginación de clientes", alCambiar: () => render() });
+
   function render() {
     const items = ordenadas();
     $("dfeFooter").textContent = `${items.length} comunicaciones de muestra · ${items.filter((c) => leidaEnArca(c) === false).length} sin leer en ARCA`;
-    $("dfeRows").innerHTML = items.map((c) => {
+    $("dfeRows").innerHTML = pagCom.cortar(items).map((c) => {
       const [etiqueta, tono] = URGENCIA[c.urgencia] || [c.urgencia, "muted"];
       const l = leidaEnArca(c);
       const accion = l === false ? `<button class="button button-quiet" data-leer="${esc(c.id)}" type="button">Marcar como leído</button>`
@@ -62,7 +65,7 @@
     }).join("");
 
     $("dfeClientesFooter").textContent = `${data.clientes.length} clientes de muestra`;
-    $("dfeClientes").innerHTML = data.clientes.map((cl) => {
+    $("dfeClientes").innerHTML = pagCli.cortar(data.clientes).map((cl) => {
       const propias = data.comunicaciones.filter((c) => c.cuit === cl.cuit);
       const sinVer = propias.filter((c) => !c.vista).length;
       const urg = propias.filter((c) => !c.vista && c.urgencia === "alta").length;

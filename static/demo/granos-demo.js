@@ -24,7 +24,7 @@
     return `<div class="gr-tabla-scroll"><table class="gr-detail-table"><thead><tr>${head}</tr></thead><tbody>${body}</tbody></table></div>`;
   }
 
-  const POR_PAGINA = 10;
+  const POR_PAGINA = Paginador.POR_PAGINA;
   let pagina = 1;
 
   // ---- Fechas del filtro: campo de texto flexible + calendario. El <input type="date"> nativo no entrega
@@ -378,7 +378,7 @@
     }, 1200);
   });
 
-  const CE_POR_PAGINA = 15;
+  const CE_POR_PAGINA = Paginador.POR_PAGINA;
   let cePagina = 1;
   function ceFiltrados() {
     const coe = $("grdCeCoe").value.replace(/\D/g, ""), desde = fechaIso("grdCeDesde"), hasta = fechaIso("grdCeHasta");
